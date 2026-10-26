@@ -10,6 +10,7 @@ import torch.nn as nn
 from ultralytics import YOLO
 
 from test_rank_detector_unseen import detect_full_frame
+from card_tracking import CardIdentityMatcher
 
 
 # =========================================================
@@ -79,8 +80,6 @@ PAD_FRAC = 0.20
 
 # Tracking parameters.
 MAX_GAP_SAMPLES = 3
-
-MAX_CENTER_DISTANCE_FACTOR = 2.0
 
 MIN_TRACK_OBSERVATIONS = 3
 
@@ -794,263 +793,47 @@ class CardTrack:
 
 
 # =========================================================
-# MATCH DETECTIONS TO EXISTING TRACKS
-# =========================================================
-
-def assign_detections_to_tracks(
-    detections,
-    tracks,
-    sample_index,
-):
-    active_tracks = []
-
-    for track in tracks:
-
-        gap = (
-            sample_index
-            - track.last_sample_index
-        )
-
-        if (
-            gap
-            <= MAX_GAP_SAMPLES
-        ):
-            active_tracks.append(
-                track
-            )
-
-    possible_matches = []
-
-    for detection_index, detection in enumerate(
-        detections
-    ):
-        for track in active_tracks:
-
-            score = center_distance_score(
-                detection[
-                    "box"
-                ],
-                track.last_box,
-            )
-
-            if (
-                score
-                <= MAX_CENTER_DISTANCE_FACTOR
-            ):
-                possible_matches.append(
-                    (
-                        score,
-                        detection_index,
-                        track,
-                    )
-                )
-
-    possible_matches.sort(
-        key=lambda item:
-            item[0]
-    )
-
-    assigned_detections = set()
-    assigned_tracks = set()
-
-    matches = {}
-
-    for (
-        score,
-        detection_index,
-        track,
-    ) in possible_matches:
-
-        if (
-            detection_index
-            in assigned_detections
-        ):
-            continue
-
-        if (
-            track.track_id
-            in assigned_tracks
-        ):
-            continue
-
-        assigned_detections.add(
-            detection_index
-        )
-
-        assigned_tracks.add(
-            track.track_id
-        )
-
-        matches[
-            detection_index
-        ] = track
-
-    return matches
-
-
-# =========================================================
 # SUMMARY IMAGE
 # =========================================================
 
-def make_track_summary(
-    tracks,
-):
+def make_track_summary(tracks):
+    """Show temporal evidence, including short tracks, rather than one crop."""
     tiles = []
-
     for track in tracks:
-
-        result = (
-            track.final_result()
-        )
-
+        result = track.final_result()
         if result is None:
             continue
-
-        if (
-            len(
-                track.observations
-            )
-            < MIN_TRACK_OBSERVATIONS
-        ):
-            continue
-
-        # Pick the observation where the classifier
-        # itself was most confident for visualization.
-        best_observation = max(
-            track.observations,
-            key=lambda obs:
-                obs[
-                    "classifier_confidence"
-                ],
-        )
-
-        crop = (
-            best_observation[
-                "crop"
-            ]
-        )
-
-        if crop is None:
-            continue
-
-        preview = cv2.resize(
-            crop,
-            (140, 140),
-            interpolation=cv2.INTER_NEAREST,
-        )
-
-        tile = np.full(
-            (
-                210,
-                180,
-                3,
-            ),
-            25,
-            dtype=np.uint8,
-        )
-
-        tile[
-            55:195,
-            20:160
-        ] = preview
-
-        cv2.putText(
-            tile,
-            (
-                f"Track {track.track_id}"
-            ),
-            (10, 22),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.45,
-            (220, 220, 220),
-            1,
-        )
-
-        cv2.putText(
-            tile,
-            (
-                f"{result['final_rank']} "
-                f"({result['observations']} obs)"
-            ),
-            (10, 45),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.55,
-            (
-                0,
-                255,
-                0,
-            )
-            if (
-                result[
-                    "final_rank"
-                ]
-                != "UNKNOWN"
-            )
-            else (
-                0,
-                180,
-                255,
-            ),
-            2,
-        )
-
-        tiles.append(
-            tile
-        )
-
+        tile = np.full((190, 420, 3), 25, dtype=np.uint8)
+        cv2.putText(tile, f"Track {track.track_id}: {result['final_rank']} "
+                    f"({result['observations']} observations)", (8, 20),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.48, (220, 220, 220), 1)
+        observations = track.observations
+        selected = [observations[0], observations[len(observations) // 2], observations[-1]]
+        for column, observation in enumerate(selected):
+            crop = observation["crop"]
+            x = column * 140
+            if crop is None or crop.size == 0:
+                continue
+            h, w = crop.shape[:2]
+            scale = min(120 / w, 100 / h)
+            preview = cv2.resize(crop, (max(1, round(w * scale)), max(1, round(h * scale))),
+                                 interpolation=cv2.INTER_NEAREST)
+            tile[50:50 + preview.shape[0], x + 8:x + 8 + preview.shape[1]] = preview
+            cv2.putText(tile, f"sample {observation['sample_index']}", (x + 8, 42),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.38, (220, 220, 220), 1)
+            cv2.putText(tile, f"pred: {observation['prediction']}", (x + 8, 175),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.4, (220, 220, 220), 1)
+        tiles.append(tile)
     if not tiles:
         return
+    columns = 3
+    while len(tiles) % columns:
+        tiles.append(np.full_like(tiles[0], 25))
+    image = np.vstack([np.hstack(tiles[i:i + columns])
+                       for i in range(0, len(tiles), columns)])
+    if not cv2.imwrite(str(SUMMARY_IMAGE), image):
+        raise RuntimeError(f"Could not save review image: {SUMMARY_IMAGE}")
 
-    columns = 5
-
-    blank = np.full(
-        (
-            210,
-            180,
-            3,
-        ),
-        25,
-        dtype=np.uint8,
-    )
-
-    while (
-        len(tiles)
-        % columns
-    ):
-        tiles.append(
-            blank.copy()
-        )
-
-    rows = []
-
-    for i in range(
-        0,
-        len(tiles),
-        columns,
-    ):
-        rows.append(
-            np.hstack(
-                tiles[
-                    i:i + columns
-                ]
-            )
-        )
-
-    sheet = np.vstack(
-        rows
-    )
-
-    cv2.imwrite(
-        str(
-            SUMMARY_IMAGE
-        ),
-        sheet,
-    )
-
-
-# =========================================================
-# MAIN
-# =========================================================
 
 def main():
     frame_paths = sorted(
@@ -1058,6 +841,9 @@ def main():
             "*.png"
         )
     )
+
+    if not frame_paths:
+        raise FileNotFoundError(f"No PNG frames found in {CAPTURES_DIR}")
 
     sampled_paths = (
         frame_paths[
@@ -1100,6 +886,9 @@ def main():
     )
 
     tracks = []
+    matcher = CardIdentityMatcher(
+        max_gap_samples=MAX_GAP_SAMPLES,
+    )
 
     next_track_id = 1
 
@@ -1182,7 +971,7 @@ def main():
             )
 
         matches = (
-            assign_detections_to_tracks(
+            matcher.match(
                 frame_detections,
                 tracks,
                 sample_index,
@@ -1490,13 +1279,26 @@ def main():
             observation_rows
         )
 
-    make_track_summary(
-        [
-            track
-            for track, _
-            in valid_tracks
-        ]
-    )
+    # Retain short tracks explicitly; they may contain real briefly visible cards.
+    all_track_path = OUTPUT_DIR / "all_tracks.csv"
+    with all_track_path.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "track_id", "observations", "status", "final_rank", "first_frame", "last_frame",
+        ])
+        writer.writeheader()
+        for track in tracks:
+            result = track.final_result()
+            if result is None:
+                continue
+            status = ("insufficient_observations" if result["observations"] < MIN_TRACK_OBSERVATIONS
+                      else "unknown" if result["final_rank"] == "UNKNOWN" else "accepted")
+            writer.writerow(dict(track_id=track.track_id,
+                                 observations=result["observations"], status=status,
+                                 final_rank=result["final_rank"],
+                                 first_frame=track.observations[0]["frame_name"],
+                                 last_frame=track.observations[-1]["frame_name"]))
+    make_track_summary(tracks)
+    print(f"Saved all tracks, including short tracks: {all_track_path}")
 
     print()
     print(
@@ -1516,4 +1318,25 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Replay rank detection and appearance-based card tracking.")
+    parser.add_argument("--input", type=Path, default=CAPTURES_DIR)
+    parser.add_argument("--detector", type=Path, default=DETECTOR_PATH)
+    parser.add_argument("--classifier", type=Path, default=CLASSIFIER_PATH)
+    parser.add_argument("--output", type=Path, default=OUTPUT_DIR)
+    parser.add_argument("--every", type=int, default=EVERY_N_FRAMES)
+    parser.add_argument("--threads", type=int, default=None, help="Optional CPU thread limit")
+    args = parser.parse_args()
+    if args.every < 1 or (args.threads is not None and args.threads < 1):
+        parser.error("--every and --threads must be positive")
+    CAPTURES_DIR, DETECTOR_PATH, CLASSIFIER_PATH = args.input, args.detector, args.classifier
+    OUTPUT_DIR = args.output
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    TRACK_CSV = OUTPUT_DIR / "tracks.csv"
+    OBSERVATION_CSV = OUTPUT_DIR / "observations.csv"
+    SUMMARY_IMAGE = OUTPUT_DIR / "track_summary.jpg"
+    EVERY_N_FRAMES = args.every
+    if args.threads is not None:
+        torch.set_num_threads(args.threads)
     main()
