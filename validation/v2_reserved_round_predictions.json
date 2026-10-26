@@ -1,0 +1,176 @@
+[
+  {
+    "key": "train_train_005_frame_000114_00.png",
+    "actual": "6",
+    "predicted": "6",
+    "confidence": 0.6665231585502625
+  },
+  {
+    "key": "train_train_005_frame_000114_01.png",
+    "actual": "J",
+    "predicted": "J",
+    "confidence": 0.3700326383113861
+  },
+  {
+    "key": "train_train_005_frame_000114_02.png",
+    "actual": "J",
+    "predicted": "4",
+    "confidence": 0.8101496696472168
+  },
+  {
+    "key": "candidate_0015_frame_20261025_025234_424101_000115_04.png",
+    "actual": "6",
+    "predicted": "6",
+    "confidence": 0.6096984148025513
+  },
+  {
+    "key": "candidate_0016_frame_20261025_025249_532026_000145_03.png",
+    "actual": "8",
+    "predicted": "8",
+    "confidence": 0.32691317796707153
+  },
+  {
+    "key": "candidate_0017_frame_20261025_025254_565442_000155_02.png",
+    "actual": "9",
+    "predicted": "9",
+    "confidence": 0.6856527924537659
+  },
+  {
+    "key": "candidate_0018_frame_20261025_025254_565442_000155_06.png",
+    "actual": "6",
+    "predicted": "6",
+    "confidence": 0.7654159069061279
+  },
+  {
+    "key": "t11_f110",
+    "actual": "J",
+    "predicted": "4",
+    "confidence": 0.7707356810569763
+  },
+  {
+    "key": "t12_f110",
+    "actual": "J",
+    "predicted": "5",
+    "confidence": 0.395027756690979
+  },
+  {
+    "key": "t11_f115",
+    "actual": "9",
+    "predicted": "9",
+    "confidence": 0.7282297611236572
+  },
+  {
+    "key": "t12_f115",
+    "actual": "9",
+    "predicted": "8",
+    "confidence": 0.28981804847717285
+  },
+  {
+    "key": "t13_f115",
+    "actual": "J",
+    "predicted": "4",
+    "confidence": 0.4735843539237976
+  },
+  {
+    "key": "t14_f115",
+    "actual": "6",
+    "predicted": "5",
+    "confidence": 0.49539268016815186
+  },
+  {
+    "key": "t15_f115",
+    "actual": "J",
+    "predicted": "5",
+    "confidence": 0.7429587244987488
+  },
+  {
+    "key": "t11_f135",
+    "actual": "9",
+    "predicted": "9",
+    "confidence": 0.7282297611236572
+  },
+  {
+    "key": "t12_f135",
+    "actual": "9",
+    "predicted": "5",
+    "confidence": 0.5999666452407837
+  },
+  {
+    "key": "t13_f135",
+    "actual": "J",
+    "predicted": "4",
+    "confidence": 0.4735843539237976
+  },
+  {
+    "key": "t14_f135",
+    "actual": "6",
+    "predicted": "5",
+    "confidence": 0.49539268016815186
+  },
+  {
+    "key": "t15_f135",
+    "actual": "J",
+    "predicted": "J",
+    "confidence": 0.4724615514278412
+  },
+  {
+    "key": "t16_f145",
+    "actual": "8",
+    "predicted": "8",
+    "confidence": 0.32691317796707153
+  },
+  {
+    "key": "t16_f150",
+    "actual": "8",
+    "predicted": "8",
+    "confidence": 0.32691317796707153
+  },
+  {
+    "key": "t17_f150",
+    "actual": "6",
+    "predicted": "6",
+    "confidence": 0.6534489989280701
+  },
+  {
+    "key": "t11_f155",
+    "actual": "9",
+    "predicted": "9",
+    "confidence": 0.6856527924537659
+  },
+  {
+    "key": "t12_f155",
+    "actual": "9",
+    "predicted": "5",
+    "confidence": 0.5993692874908447
+  },
+  {
+    "key": "t13_f155",
+    "actual": "J",
+    "predicted": "J",
+    "confidence": 0.6052281260490417
+  },
+  {
+    "key": "t14_f155",
+    "actual": "6",
+    "predicted": "6",
+    "confidence": 0.6336790323257446
+  },
+  {
+    "key": "t15_f155",
+    "actual": "J",
+    "predicted": "5",
+    "confidence": 0.41341325640678406
+  },
+  {
+    "key": "t16_f155",
+    "actual": "8",
+    "predicted": "8",
+    "confidence": 0.3529229164123535
+  },
+  {
+    "key": "t17_f155",
+    "actual": "6",
+    "predicted": "6",
+    "confidence": 0.536270797252655
+  }
+]

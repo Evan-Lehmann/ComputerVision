@@ -1,0 +1,79 @@
+{
+  "result_type": "Development visual review confirmed through real browser workflow; not automatic inference accuracy",
+  "scope": "selected main dealer/player regions in uploaded round 1",
+  "cards": [
+    "8",
+    "10",
+    "J",
+    "4",
+    "A",
+    "8"
+  ],
+  "count_change": -2,
+  "automatic_result_had_unresolved_and_duplicate_candidates": true,
+  "corrections": [
+    {
+      "id": "1",
+      "rank": "8",
+      "excluded": false,
+      "first_frame": 18,
+      "last_frame": 23
+    },
+    {
+      "id": "2",
+      "rank": "10",
+      "excluded": false,
+      "first_frame": 22,
+      "last_frame": 69
+    },
+    {
+      "id": "3",
+      "rank": "8",
+      "excluded": true,
+      "first_frame": 24,
+      "last_frame": 69
+    },
+    {
+      "id": "4",
+      "rank": "UNKNOWN",
+      "excluded": true,
+      "first_frame": 24,
+      "last_frame": 24
+    },
+    {
+      "id": "5",
+      "rank": "J",
+      "excluded": false,
+      "first_frame": 25,
+      "last_frame": 69
+    },
+    {
+      "id": "6",
+      "rank": "4",
+      "excluded": false,
+      "first_frame": 52,
+      "last_frame": 69
+    },
+    {
+      "id": "7",
+      "rank": "A",
+      "excluded": false,
+      "first_frame": 55,
+      "last_frame": 69
+    },
+    {
+      "id": "8",
+      "rank": "8",
+      "excluded": false,
+      "first_frame": 60,
+      "last_frame": 60
+    },
+    {
+      "id": "9",
+      "rank": "8",
+      "excluded": true,
+      "first_frame": 61,
+      "last_frame": 69
+    }
+  ]
+}

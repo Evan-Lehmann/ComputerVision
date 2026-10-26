@@ -1,1 +1,2 @@
-Flask==3.1.0
+# Install the complete runtime from either the project root or this folder.
+-r ../requirements.txt

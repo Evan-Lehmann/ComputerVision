@@ -1,91 +1,18 @@
+"""Adapter from saved screenshots to the current vision pipeline."""
 from pathlib import Path
-
-from legacy_round_recognizer import (
-    recognize_round,
-)
-
-
-COUNT_VALUES = {
-    "A": -1,
-
-    "2": 1,
-    "3": 1,
-    "4": 1,
-    "5": 1,
-    "6": 1,
-
-    "7": 0,
-    "8": 0,
-    "9": 0,
-
-    "10": -1,
-    "J": -1,
-    "Q": -1,
-    "K": -1,
-
-    # Never alter the count for an uncertain card.
-    "UNKNOWN": 0,
-}
+import sys
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from round_pipeline import COUNT_VALUES, process_frames
 
 
 def calculate_count_change(cards):
-    return sum(
-        COUNT_VALUES.get(
-            rank,
-            0,
-        )
-        for rank in cards
-    )
+    return sum(COUNT_VALUES.get(rank, 0) for rank in cards)
 
 
-def process_round(round_dir):
-
-    round_dir = Path(
-        round_dir
-    )
-
-    frame_paths = sorted(
-        round_dir.glob(
-            "frame_*.png"
-        )
-    )
-
-    print()
-    print(
-        ">>> PROCESSING ROUND"
-    )
-
-    print(
-        f"Frames available: "
-        f"{len(frame_paths)}"
-    )
-
-    cards = recognize_round(
-        frame_paths
-    )
-
-    count_change = (
-        calculate_count_change(
-            cards
-        )
-    )
-
-    print(
-        f"Cards recognized: "
-        f"{cards}"
-    )
-
-    print(
-        f"Count change: "
-        f"{count_change:+d}"
-    )
-
-    return {
-        "cards": cards,
-
-        "count_change":
-            count_change,
-
-        "frames_processed":
-            len(frame_paths),
-    }
+def process_round(round_dir, output_dir=None, regions=None, progress=None, engine=None):
+    round_dir = Path(round_dir)
+    frames = sorted(p for p in round_dir.iterdir() if p.suffix.lower() in ['.png', '.jpg', '.jpeg'])
+    return process_frames(frames, output_dir or round_dir/'analysis', engine=engine,
+                          regions=regions, progress=progress)

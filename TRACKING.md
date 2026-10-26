@@ -1,8 +1,8 @@
 # Card identity tracking
 
 The temporal experiment now associates detections using crop appearance,
-geometry and a global one-to-one assignment. It checks both the initial and
-latest crop to resist identity drift. Rank classifier predictions are not used
+geometry and a global one-to-one assignment. It checks the two most recent crops to resist sudden identity changes while
+allowing the initial deal animation to settle. Rank classifier predictions are not used
 as identity keys. Matching rejects ambiguous candidates instead of forcing a
 card-to-card transition, and two consecutive empty sampled frames retire old
 tracks. A single empty sampled frame can recover.
@@ -27,8 +27,8 @@ Paths can also be supplied explicitly:
 ```sh
 python test_temporal_rank_tracking.py \
   --input captures \
-  --detector rank_detector_runs/rank_detector_v2/weights/best.pt \
-  --classifier rank_classifier_v2/best_rank_classifier.pt \
+  --detector models/rank_detector_v2.pt \
+  --classifier models/rank_classifier_v3.pt \
   --output temporal_rank_test \
   --every 5
 ```

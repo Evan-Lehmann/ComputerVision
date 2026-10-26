@@ -114,11 +114,11 @@ class CardIdentityMatcher:
                 distance = _geometry(detection["box"], track.last_box)
                 if distance is None or distance > self.max_distance:
                     continue
-                # Check both the original and latest appearance to prevent a
-                # series of locally plausible matches drifting into a new card.
+                # Check the two most recent appearances. Keeping a permanently
+                # blurred birth crop as an anchor fragments cards as they settle.
                 similarity = min(appearance_similarity(
                     appearance, crop_appearance(observation.get("crop")))
-                    for observation in (track.observations[0], track.observations[-1]))
+                    for observation in track.observations[-2:])
                 if similarity < self.min_similarity:
                     continue
                 costs[i, j] = 1.0 - similarity + 0.12 * distance
@@ -136,3 +136,63 @@ class CardIdentityMatcher:
         rows, columns = linear_sum_assignment(costs)
         return {int(i): active[j] for i, j in zip(rows, columns)
                 if j < len(active) and costs[i, j] < 0.65}
+
+
+def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
+    """Rejoin disjoint observations of one card without merging co-visible cards.
+
+    This is only same-region fragmentation repair. It deliberately does not
+    reconcile separate UI views or use predicted ranks as physical identity.
+    """
+    tracks = list(tracks)
+    changed = True
+    while changed:
+        changed = False
+        candidates = []
+        for i, left in enumerate(tracks):
+            for j in range(i + 1, len(tracks)):
+                right = tracks[j]
+                if left.region != right.region:
+                    continue
+                a, b = left.observations, right.observations
+                af, bf = {o['frame'] for o in a}, {o['frame'] for o in b}
+                if af & bf:
+                    continue
+                gap = max(min(af) - max(bf), min(bf) - max(af), 0)
+                if gap > max_gap:
+                    continue
+                overlap = max(min(af), min(bf)) <= min(max(af), max(bf))
+                # Interleaved fragments should occupy almost the same position;
+                # adjacent fragments may move as an overlapping hand grows.
+                limit = 0.6 if overlap else 3.0
+                best = 0.0
+                for oa in a[:2] + a[-2:]:
+                    for ob in b[:2] + b[-2:]:
+                        distance = _geometry(oa['box'], ob['box'])
+                        if distance is None or distance > limit:
+                            continue
+                        similarity = appearance_similarity(crop_appearance(oa['crop']),
+                                                           crop_appearance(ob['crop']))
+                        best = max(best, similarity)
+                if best >= min_similarity:
+                    candidates.append((best, i, j))
+        if not candidates:
+            break
+        # Only take an unambiguous best partner for either fragment.
+        candidates.sort(reverse=True)
+        for score, i, j in candidates:
+            alternatives = [s for s, x, y in candidates if (x, y) != (i, j)
+                            and (i in (x, y) or j in (x, y))]
+            if alternatives and score - max(alternatives) < 0.03:
+                continue
+            left, right = tracks[i], tracks[j]
+            left.observations = sorted(left.observations + right.observations,
+                                       key=lambda o: o['frame'])
+            left.merged_from = getattr(left, 'merged_from', [left.track_id]) + getattr(
+                right, 'merged_from', [right.track_id])
+            left.last_box = left.observations[-1]['box']
+            left.last_sample_index = left.observations[-1]['frame']
+            tracks.pop(j)
+            changed = True
+            break
+    return tracks

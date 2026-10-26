@@ -1,110 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>CardVision</title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
-</head>
-
-<body>
-
-    <main class="app">
-
-        <header>
-            <h1>CardVision</h1>
-            <p id="status">Ready</p>
-        </header>
-
-
-        <!-- ==========================================
-             SECTION 1 — RECORDING
-             ========================================== -->
-
-        <section class="panel recording-panel">
-
-            <h2>Round Recording</h2>
-
-            <div class="button-row">
-
-                <button
-                    id="startButton"
-                    class="primary"
-                >
-                    Start Recording
-                </button>
-
-                <button
-                    id="stopButton"
-                    disabled
-                >
-                    Stop Recording
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==========================================
-             SECTION 2 — CARDS
-             ========================================== -->
-
-        <section class="panel cards-panel">
-
-            <div class="section-header">
-                <h2>Cards Observed</h2>
-                <span class="small-label">
-                    Most recent first
-                </span>
-            </div>
-
-            <div
-                id="cards"
-                class="cards-list"
-            >
-
-                <div class="empty-state">
-                    No cards recorded
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==========================================
-             SECTION 3 — COUNT
-             ========================================== -->
-
-        <section class="panel count-panel">
-
-            <h2>Total Count Change</h2>
-
-            <div
-                id="countChange"
-                class="count-number"
-            >
-                0
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <script
-        src="{{ url_for('static', filename='app.js') }}"
-    ></script>
-
-</body>
-</html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CardVision</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><main class="app">
+<header><div><span class="eyebrow">PLAY-MONEY ROUND ANALYSIS</span><h1>CardVision</h1></div><p id="status" role="status">Ready</p></header>
+<div id="error" class="notice error" role="alert" hidden></div>
+<section class="panel"><h2>Record one round</h2><p class="muted">Start before cards are dealt. After the three-second countdown, switch to your table. Stop after all face-up cards have appeared.</p>
+<div class="button-row"><button id="startButton" class="primary">Start recording</button><button id="stopButton" disabled>Stop &amp; analyze</button><button id="resetButton">Reset</button></div><p id="progress" class="muted"></p>
+<details><summary>Analyze saved screenshots</summary><div class="button-row"><select id="sourceSelect" aria-label="Saved recording"><option value="">No frame folders registered</option></select><button id="replayButton">Analyze folder</button></div><p class="muted">Registered frame folders appear here when the app starts with <code>--replay /path/to/frames</code>.</p></details>
+</section>
+<section class="panel"><details id="calibration"><summary>Check which cards are counted</summary><p class="muted">Use the large main-hand cards as the source. Leave out the small duplicate hand. Defaults match the supplied recordings; check the preview when the window layout changes.</p>
+<div class="button-row"><button id="previewButton">Load preview</button><select id="regionSelect" aria-label="Region to draw"><option value="0">Dealer cards</option><option value="1">Your main hand</option></select><button id="saveRegions">Save boxes</button></div>
+<p class="muted">Choose a hand, then drag a box around its cards on the image. Include space for additional cards.</p><canvas id="preview" hidden aria-label="Draw card regions on the screenshot"></canvas></details></section>
+<section class="panel count-panel"><div><h2>Round Hi-Lo change</h2><p id="countStatus" class="muted">No round analyzed</p></div><div id="countChange" class="count-number">—</div></section>
+<section class="panel"><div class="section-header"><h2>Observed cards</h2><span class="small-label">First observed → last observed</span></div>
+<div id="warnings" class="notice" hidden></div><p class="muted">Inspect the first, middle and last view of each card. Correct ranks, exclude duplicates or false detections, add missed cards, and adjust order. Cards first visible in the same screenshot have uncertain relative order.</p>
+<div id="cards" class="cards-list"><p class="empty-state">No cards recorded</p></div>
+<div class="button-row"><button id="addCard">Add missed card</button><button id="saveReview" class="primary">Save review</button><a id="download" href="/api/result" hidden>Download result</a></div>
+<label class="confirmation"><input id="confirmReview" type="checkbox"> I checked the full round, including missing cards, duplicate views, and the order of cards.</label>
+<p class="muted">Unknown cards do not contribute to the known-card subtotal. A count with unknown cards is incomplete. A reviewed result confirms your corrections, not an independently verified model prediction.</p>
+</section>
+</main><dialog id="frameDialog"><button id="closeFrame">Close screenshot</button><img id="fullFrame" alt="Original screenshot for the selected card"><p>Use this screenshot to check the card in context.</p></dialog>
+<script src="{{ url_for('static', filename='app.js') }}"></script></body></html>

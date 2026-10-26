@@ -1,13 +1,14 @@
-# CardVision Local Dashboard
+# CardVision dashboard
 
-Install:
-    pip install -r requirements.txt
+Run from the project root:
 
-Run:
-    python app.py
+```sh
+python -m pip install -r requirements.txt
+python -m cardvision_webapp.app
+```
 
-Then open:
-    http://127.0.0.1:5000
+Or, from this folder, `python app.py` still starts the app.
 
-The dashboard currently uses filler values in STATE inside app.py.
-Later the tracker/shoe-state code can update the same fields.
+See the root [README](../README.md) for capture permissions, selecting card regions, replaying a recorded round and reviewing the results. Model paths default to the versioned files under `models/`.
+
+The app now runs analysis through `round_pipeline.py`. The legacy recognizer is retained only for historical comparison. A count is provisional until reviewed, and unresolved ranks prevent a complete count.

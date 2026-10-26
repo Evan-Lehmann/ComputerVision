@@ -1,18 +1,14 @@
-cat > .gitignore <<'EOF'
 .venv/
 __pycache__/
 *.pyc
 .DS_Store
-
 captures/
 round_captures/
-
 unseen_detector_test/
 temporal_rank_test/
 rank_detector_runs/
 rank_classifier/
 rank_classifier_v2/
+rank_classifier_v3/
 rank_template_classifier/
-
 *.zip
-EOF
