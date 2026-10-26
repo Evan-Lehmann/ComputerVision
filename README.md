@@ -67,6 +67,16 @@ Coordinates are fractions of screenshot width/height. Regions must not overlap. 
 
 Outputs under a reused CLI output directory are overwritten; input frames are not. The web app uses unique output directories.
 
+## Share a recording for debugging
+
+If a recording ZIP exceeds the workspace transfer limit, split it from the project root:
+
+```sh
+python split_recording_upload.py /path/to/round.zip
+```
+
+Upload the `part_01.zip`, `part_02.zip`, etc. printed by the command. Each is an independent ZIP under 24 MiB, with original filenames and analysis files retained. The original ZIP is untouched. No dependencies beyond Python are required.
+
 ## Validation
 
 ```sh
