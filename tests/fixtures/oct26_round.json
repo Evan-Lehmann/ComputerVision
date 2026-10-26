@@ -1,0 +1,3476 @@
+{
+  "sample_count": 84,
+  "scope": "Main player/dealer hand only. Central miniature view excluded; its relation to the main hand remains unresolved.",
+  "annotation": "Five visually checked physical cards: player K and 3; dealer 7, 8, 2. Added to development data after the original model failed. Not an independent test set for later revisions.",
+  "expected_cards": [
+    "K",
+    "7",
+    "3",
+    "8",
+    "2"
+  ],
+  "expected_count_change": 1,
+  "training_keys": [
+    "oct26_oct26_dealer_7_f026",
+    "oct26_oct26_dealer_7_f044",
+    "oct26_oct26_dealer_7_f080",
+    "oct26_oct26_dealer_8_f069",
+    "oct26_oct26_dealer_8_f073",
+    "oct26_oct26_dealer_8_f080",
+    "oct26_oct26_dealer_2_f073",
+    "oct26_oct26_dealer_2_f076",
+    "oct26_oct26_dealer_2_f080",
+    "oct26_oct26_player_K_f023",
+    "oct26_oct26_player_K_f042",
+    "oct26_oct26_player_K_f080",
+    "oct26_oct26_player_3_f027",
+    "oct26_oct26_player_3_f045",
+    "oct26_oct26_player_3_f080"
+  ],
+  "records": [
+    {
+      "key": "oct26_oct26_player_K_f004",
+      "sample_index": 4,
+      "frame": "frame_000005.png",
+      "box": [
+        962.9730834960938,
+        708.0584106445312,
+        977.4592895507812,
+        727.8375244140625
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_K_f005",
+      "sample_index": 5,
+      "frame": "frame_000006.png",
+      "box": [
+        942.7353515625,
+        708.2347412109375,
+        956.466064453125,
+        727.9070739746094
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_K_f006",
+      "sample_index": 6,
+      "frame": "frame_000007.png",
+      "box": [
+        942.7353515625,
+        708.2347412109375,
+        956.466064453125,
+        727.9070739746094
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_K_f007",
+      "sample_index": 7,
+      "frame": "frame_000008.png",
+      "box": [
+        942.7353515625,
+        708.2347412109375,
+        956.466064453125,
+        727.9070739746094
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f008",
+      "sample_index": 8,
+      "frame": "frame_000009.png",
+      "box": [
+        471.469295501709,
+        707.8106689453125,
+        485.0724754333496,
+        727.1104431152344
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f008",
+      "sample_index": 8,
+      "frame": "frame_000009.png",
+      "box": [
+        942.7354736328125,
+        708.2350463867188,
+        956.4657592773438,
+        727.9065856933594
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f009",
+      "sample_index": 9,
+      "frame": "frame_000010.png",
+      "box": [
+        452.470458984375,
+        708.5816040039062,
+        465.53289794921875,
+        726.9499816894531
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f009",
+      "sample_index": 9,
+      "frame": "frame_000010.png",
+      "box": [
+        942.7361450195312,
+        708.2353820800781,
+        956.4655151367188,
+        727.9065246582031
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f010",
+      "sample_index": 10,
+      "frame": "frame_000011.png",
+      "box": [
+        452.470458984375,
+        708.5816040039062,
+        465.53289794921875,
+        726.9499816894531
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f010",
+      "sample_index": 10,
+      "frame": "frame_000011.png",
+      "box": [
+        915.3878173828125,
+        708.5370788574219,
+        930.6864929199219,
+        727.4366455078125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f010",
+      "sample_index": 10,
+      "frame": "frame_000011.png",
+      "box": [
+        968.5465087890625,
+        707.7591857910156,
+        982.472900390625,
+        727.1784057617188
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f011",
+      "sample_index": 11,
+      "frame": "frame_000012.png",
+      "box": [
+        452.470458984375,
+        708.5816040039062,
+        465.53289794921875,
+        726.9499816894531
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f011",
+      "sample_index": 11,
+      "frame": "frame_000012.png",
+      "box": [
+        901.4450073242188,
+        708.5442199707031,
+        916.5911865234375,
+        727.30517578125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f011",
+      "sample_index": 11,
+      "frame": "frame_000012.png",
+      "box": [
+        943.1844787597656,
+        708.3468933105469,
+        955.3663330078125,
+        727.1551513671875
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f012",
+      "sample_index": 12,
+      "frame": "frame_000013.png",
+      "box": [
+        452.470458984375,
+        708.5816040039062,
+        465.53289794921875,
+        726.9499816894531
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f012",
+      "sample_index": 12,
+      "frame": "frame_000013.png",
+      "box": [
+        901.4450073242188,
+        708.5442199707031,
+        916.5911865234375,
+        727.30517578125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f012",
+      "sample_index": 12,
+      "frame": "frame_000013.png",
+      "box": [
+        943.1844787597656,
+        708.3468933105469,
+        955.3663330078125,
+        727.1551513671875
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f013",
+      "sample_index": 13,
+      "frame": "frame_000014.png",
+      "box": [
+        452.470458984375,
+        708.5816040039062,
+        465.53289794921875,
+        726.9499816894531
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f013",
+      "sample_index": 13,
+      "frame": "frame_000014.png",
+      "box": [
+        901.4327697753906,
+        708.5477294921875,
+        916.5650024414062,
+        727.3076477050781
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f013",
+      "sample_index": 13,
+      "frame": "frame_000014.png",
+      "box": [
+        943.2008056640625,
+        708.3623962402344,
+        955.3682861328125,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f014",
+      "sample_index": 14,
+      "frame": "frame_000015.png",
+      "box": [
+        452.470458984375,
+        708.5816040039062,
+        465.53289794921875,
+        726.9499816894531
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f014",
+      "sample_index": 14,
+      "frame": "frame_000015.png",
+      "box": [
+        901.4327697753906,
+        708.5477294921875,
+        916.5650024414062,
+        727.3076477050781
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f014",
+      "sample_index": 14,
+      "frame": "frame_000015.png",
+      "box": [
+        943.2008056640625,
+        708.3623962402344,
+        955.3682861328125,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f015",
+      "sample_index": 15,
+      "frame": "frame_000016.png",
+      "box": [
+        452.4803466796875,
+        708.6307983398438,
+        465.7496337890625,
+        727.1114501953125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f015",
+      "sample_index": 15,
+      "frame": "frame_000016.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f015",
+      "sample_index": 15,
+      "frame": "frame_000016.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f016",
+      "sample_index": 16,
+      "frame": "frame_000017.png",
+      "box": [
+        452.4803466796875,
+        708.6307983398438,
+        465.7496337890625,
+        727.1114501953125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f016",
+      "sample_index": 16,
+      "frame": "frame_000017.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f016",
+      "sample_index": 16,
+      "frame": "frame_000017.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f017",
+      "sample_index": 17,
+      "frame": "frame_000018.png",
+      "box": [
+        453.08424186706543,
+        708.158203125,
+        465.89941024780273,
+        727.3822937011719
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f017",
+      "sample_index": 17,
+      "frame": "frame_000018.png",
+      "box": [
+        901.9782409667969,
+        708.8475952148438,
+        916.8718566894531,
+        727.4260864257812
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f017",
+      "sample_index": 17,
+      "frame": "frame_000018.png",
+      "box": [
+        943.2346801757812,
+        708.6654357910156,
+        955.59619140625,
+        727.461181640625
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f018",
+      "sample_index": 18,
+      "frame": "frame_000019.png",
+      "box": [
+        452.4812927246094,
+        708.6312255859375,
+        465.7493591308594,
+        727.1097717285156
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f018",
+      "sample_index": 18,
+      "frame": "frame_000019.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f018",
+      "sample_index": 18,
+      "frame": "frame_000019.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f019",
+      "sample_index": 19,
+      "frame": "frame_000020.png",
+      "box": [
+        452.48095703125,
+        708.6310424804688,
+        465.7494812011719,
+        727.1103820800781
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f019",
+      "sample_index": 19,
+      "frame": "frame_000020.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f019",
+      "sample_index": 19,
+      "frame": "frame_000020.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f020",
+      "sample_index": 20,
+      "frame": "frame_000021.png",
+      "box": [
+        452.4811706542969,
+        708.631103515625,
+        465.7494201660156,
+        727.1100463867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f020",
+      "sample_index": 20,
+      "frame": "frame_000021.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f020",
+      "sample_index": 20,
+      "frame": "frame_000021.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f021",
+      "sample_index": 21,
+      "frame": "frame_000022.png",
+      "box": [
+        452.4806823730469,
+        708.6309509277344,
+        465.7496032714844,
+        727.1110534667969
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f021",
+      "sample_index": 21,
+      "frame": "frame_000022.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f021",
+      "sample_index": 21,
+      "frame": "frame_000022.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f022",
+      "sample_index": 22,
+      "frame": "frame_000023.png",
+      "box": [
+        452.4806823730469,
+        708.6309509277344,
+        465.7496032714844,
+        727.1110534667969
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f022",
+      "sample_index": 22,
+      "frame": "frame_000023.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f022",
+      "sample_index": 22,
+      "frame": "frame_000023.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f023",
+      "sample_index": 23,
+      "frame": "frame_000024.png",
+      "box": [
+        452.4805908203125,
+        708.6308898925781,
+        465.7496337890625,
+        727.1111450195312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f023",
+      "sample_index": 23,
+      "frame": "frame_000024.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f023",
+      "sample_index": 23,
+      "frame": "frame_000024.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f024",
+      "sample_index": 24,
+      "frame": "frame_000025.png",
+      "box": [
+        452.4805908203125,
+        708.6308898925781,
+        465.7496337890625,
+        727.1111450195312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f024",
+      "sample_index": 24,
+      "frame": "frame_000025.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f024",
+      "sample_index": 24,
+      "frame": "frame_000025.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f025",
+      "sample_index": 25,
+      "frame": "frame_000026.png",
+      "box": [
+        453.08424186706543,
+        708.158203125,
+        465.89941024780273,
+        727.3822937011719
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f025",
+      "sample_index": 25,
+      "frame": "frame_000026.png",
+      "box": [
+        901.9782409667969,
+        708.8475952148438,
+        916.8718566894531,
+        727.4260864257812
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f025",
+      "sample_index": 25,
+      "frame": "frame_000026.png",
+      "box": [
+        943.2346801757812,
+        708.6654357910156,
+        955.59619140625,
+        727.461181640625
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f026",
+      "sample_index": 26,
+      "frame": "frame_000027.png",
+      "box": [
+        453.08424186706543,
+        708.158203125,
+        465.89941024780273,
+        727.3822937011719
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f026",
+      "sample_index": 26,
+      "frame": "frame_000027.png",
+      "box": [
+        901.9782409667969,
+        708.8475952148438,
+        916.8718566894531,
+        727.4260864257812
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f026",
+      "sample_index": 26,
+      "frame": "frame_000027.png",
+      "box": [
+        943.2346801757812,
+        708.6654357910156,
+        955.59619140625,
+        727.461181640625
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f027",
+      "sample_index": 27,
+      "frame": "frame_000028.png",
+      "box": [
+        452.4805908203125,
+        708.6308898925781,
+        465.7496337890625,
+        727.1111450195312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f027",
+      "sample_index": 27,
+      "frame": "frame_000028.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f027",
+      "sample_index": 27,
+      "frame": "frame_000028.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f028",
+      "sample_index": 28,
+      "frame": "frame_000029.png",
+      "box": [
+        452.4805908203125,
+        708.6308898925781,
+        465.7496337890625,
+        727.1111450195312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f028",
+      "sample_index": 28,
+      "frame": "frame_000029.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f028",
+      "sample_index": 28,
+      "frame": "frame_000029.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f029",
+      "sample_index": 29,
+      "frame": "frame_000030.png",
+      "box": [
+        452.4805908203125,
+        708.6308898925781,
+        465.7496337890625,
+        727.1112670898438
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f029",
+      "sample_index": 29,
+      "frame": "frame_000030.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f029",
+      "sample_index": 29,
+      "frame": "frame_000030.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f030",
+      "sample_index": 30,
+      "frame": "frame_000031.png",
+      "box": [
+        452.48046875,
+        708.6308288574219,
+        465.7496337890625,
+        727.1112670898438
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f030",
+      "sample_index": 30,
+      "frame": "frame_000031.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f030",
+      "sample_index": 30,
+      "frame": "frame_000031.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f031",
+      "sample_index": 31,
+      "frame": "frame_000032.png",
+      "box": [
+        452.4814147949219,
+        708.6312866210938,
+        465.7493591308594,
+        727.1096801757812
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f031",
+      "sample_index": 31,
+      "frame": "frame_000032.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f031",
+      "sample_index": 31,
+      "frame": "frame_000032.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f032",
+      "sample_index": 32,
+      "frame": "frame_000033.png",
+      "box": [
+        452.4815673828125,
+        708.6313171386719,
+        465.74932861328125,
+        727.1093444824219
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f032",
+      "sample_index": 32,
+      "frame": "frame_000033.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f032",
+      "sample_index": 32,
+      "frame": "frame_000033.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f033",
+      "sample_index": 33,
+      "frame": "frame_000034.png",
+      "box": [
+        452.4815673828125,
+        708.6313171386719,
+        465.74932861328125,
+        727.1093444824219
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f033",
+      "sample_index": 33,
+      "frame": "frame_000034.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f033",
+      "sample_index": 33,
+      "frame": "frame_000034.png",
+      "box": [
+        943.2010803222656,
+        708.3621215820312,
+        955.3679809570312,
+        727.1413269042969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f034",
+      "sample_index": 34,
+      "frame": "frame_000035.png",
+      "box": [
+        452.48040771484375,
+        708.6308288574219,
+        465.7496337890625,
+        727.1113891601562
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f034",
+      "sample_index": 34,
+      "frame": "frame_000035.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f034",
+      "sample_index": 34,
+      "frame": "frame_000035.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f035",
+      "sample_index": 35,
+      "frame": "frame_000036.png",
+      "box": [
+        452.48040771484375,
+        708.6308288574219,
+        465.7496337890625,
+        727.1113891601562
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f035",
+      "sample_index": 35,
+      "frame": "frame_000036.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f035",
+      "sample_index": 35,
+      "frame": "frame_000036.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f036",
+      "sample_index": 36,
+      "frame": "frame_000037.png",
+      "box": [
+        452.48040771484375,
+        708.6308288574219,
+        465.7496337890625,
+        727.1113891601562
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f036",
+      "sample_index": 36,
+      "frame": "frame_000037.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f036",
+      "sample_index": 36,
+      "frame": "frame_000037.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f037",
+      "sample_index": 37,
+      "frame": "frame_000038.png",
+      "box": [
+        452.4806823730469,
+        708.6309509277344,
+        465.7495422363281,
+        727.11083984375
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f037",
+      "sample_index": 37,
+      "frame": "frame_000038.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f037",
+      "sample_index": 37,
+      "frame": "frame_000038.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f038",
+      "sample_index": 38,
+      "frame": "frame_000039.png",
+      "box": [
+        452.48046875,
+        708.6307067871094,
+        465.7496337890625,
+        727.1112976074219
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f038",
+      "sample_index": 38,
+      "frame": "frame_000039.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f038",
+      "sample_index": 38,
+      "frame": "frame_000039.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f039",
+      "sample_index": 39,
+      "frame": "frame_000040.png",
+      "box": [
+        452.47991943359375,
+        708.6304931640625,
+        465.749755859375,
+        727.1121520996094
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f039",
+      "sample_index": 39,
+      "frame": "frame_000040.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f039",
+      "sample_index": 39,
+      "frame": "frame_000040.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f040",
+      "sample_index": 40,
+      "frame": "frame_000041.png",
+      "box": [
+        452.4808654785156,
+        708.6311645507812,
+        465.7494812011719,
+        727.1105041503906
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f040",
+      "sample_index": 40,
+      "frame": "frame_000041.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f040",
+      "sample_index": 40,
+      "frame": "frame_000041.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f041",
+      "sample_index": 41,
+      "frame": "frame_000042.png",
+      "box": [
+        452.4808654785156,
+        708.6311645507812,
+        465.7494812011719,
+        727.1105041503906
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f041",
+      "sample_index": 41,
+      "frame": "frame_000042.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f041",
+      "sample_index": 41,
+      "frame": "frame_000042.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f042",
+      "sample_index": 42,
+      "frame": "frame_000043.png",
+      "box": [
+        452.4808654785156,
+        708.6311645507812,
+        465.7494812011719,
+        727.1105041503906
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f042",
+      "sample_index": 42,
+      "frame": "frame_000043.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f042",
+      "sample_index": 42,
+      "frame": "frame_000043.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f043",
+      "sample_index": 43,
+      "frame": "frame_000044.png",
+      "box": [
+        452.4806213378906,
+        708.6310729980469,
+        465.7495422363281,
+        727.11083984375
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f043",
+      "sample_index": 43,
+      "frame": "frame_000044.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f043",
+      "sample_index": 43,
+      "frame": "frame_000044.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f044",
+      "sample_index": 44,
+      "frame": "frame_000045.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f044",
+      "sample_index": 44,
+      "frame": "frame_000045.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f044",
+      "sample_index": 44,
+      "frame": "frame_000045.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f045",
+      "sample_index": 45,
+      "frame": "frame_000046.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f045",
+      "sample_index": 45,
+      "frame": "frame_000046.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f045",
+      "sample_index": 45,
+      "frame": "frame_000046.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f046",
+      "sample_index": 46,
+      "frame": "frame_000047.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f046",
+      "sample_index": 46,
+      "frame": "frame_000047.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f046",
+      "sample_index": 46,
+      "frame": "frame_000047.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f047",
+      "sample_index": 47,
+      "frame": "frame_000048.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f047",
+      "sample_index": 47,
+      "frame": "frame_000048.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f047",
+      "sample_index": 47,
+      "frame": "frame_000048.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f048",
+      "sample_index": 48,
+      "frame": "frame_000049.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f048",
+      "sample_index": 48,
+      "frame": "frame_000049.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f048",
+      "sample_index": 48,
+      "frame": "frame_000049.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f049",
+      "sample_index": 49,
+      "frame": "frame_000050.png",
+      "box": [
+        453.0847396850586,
+        708.1585388183594,
+        465.8990287780762,
+        727.3818664550781
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f049",
+      "sample_index": 49,
+      "frame": "frame_000050.png",
+      "box": [
+        901.9779663085938,
+        708.8474731445312,
+        916.8721313476562,
+        727.4264831542969
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f049",
+      "sample_index": 49,
+      "frame": "frame_000050.png",
+      "box": [
+        943.2346496582031,
+        708.6653747558594,
+        955.5962524414062,
+        727.4612731933594
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f050",
+      "sample_index": 50,
+      "frame": "frame_000051.png",
+      "box": [
+        453.0847396850586,
+        708.1585388183594,
+        465.8990287780762,
+        727.3818664550781
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f050",
+      "sample_index": 50,
+      "frame": "frame_000051.png",
+      "box": [
+        901.9779663085938,
+        708.8474731445312,
+        916.8721313476562,
+        727.4264831542969
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f050",
+      "sample_index": 50,
+      "frame": "frame_000051.png",
+      "box": [
+        943.2346496582031,
+        708.6653747558594,
+        955.5962524414062,
+        727.4612731933594
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f051",
+      "sample_index": 51,
+      "frame": "frame_000052.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f051",
+      "sample_index": 51,
+      "frame": "frame_000052.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f051",
+      "sample_index": 51,
+      "frame": "frame_000052.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f052",
+      "sample_index": 52,
+      "frame": "frame_000053.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f052",
+      "sample_index": 52,
+      "frame": "frame_000053.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f052",
+      "sample_index": 52,
+      "frame": "frame_000053.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f053",
+      "sample_index": 53,
+      "frame": "frame_000054.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f053",
+      "sample_index": 53,
+      "frame": "frame_000054.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f053",
+      "sample_index": 53,
+      "frame": "frame_000054.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f054",
+      "sample_index": 54,
+      "frame": "frame_000055.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f054",
+      "sample_index": 54,
+      "frame": "frame_000055.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f054",
+      "sample_index": 54,
+      "frame": "frame_000055.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f055",
+      "sample_index": 55,
+      "frame": "frame_000056.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f055",
+      "sample_index": 55,
+      "frame": "frame_000056.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f055",
+      "sample_index": 55,
+      "frame": "frame_000056.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f056",
+      "sample_index": 56,
+      "frame": "frame_000057.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f056",
+      "sample_index": 56,
+      "frame": "frame_000057.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f056",
+      "sample_index": 56,
+      "frame": "frame_000057.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f057",
+      "sample_index": 57,
+      "frame": "frame_000058.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f057",
+      "sample_index": 57,
+      "frame": "frame_000058.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f057",
+      "sample_index": 57,
+      "frame": "frame_000058.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f058",
+      "sample_index": 58,
+      "frame": "frame_000059.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f058",
+      "sample_index": 58,
+      "frame": "frame_000059.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f058",
+      "sample_index": 58,
+      "frame": "frame_000059.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f059",
+      "sample_index": 59,
+      "frame": "frame_000060.png",
+      "box": [
+        453.0847396850586,
+        708.1585388183594,
+        465.8990287780762,
+        727.3818664550781
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f059",
+      "sample_index": 59,
+      "frame": "frame_000060.png",
+      "box": [
+        901.9779663085938,
+        708.8474731445312,
+        916.8721313476562,
+        727.4264831542969
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f059",
+      "sample_index": 59,
+      "frame": "frame_000060.png",
+      "box": [
+        943.2346496582031,
+        708.6653747558594,
+        955.5962524414062,
+        727.4612731933594
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f060",
+      "sample_index": 60,
+      "frame": "frame_000061.png",
+      "box": [
+        453.0847396850586,
+        708.1585388183594,
+        465.8990287780762,
+        727.3818664550781
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f060",
+      "sample_index": 60,
+      "frame": "frame_000061.png",
+      "box": [
+        901.9779663085938,
+        708.8474731445312,
+        916.8721313476562,
+        727.4264831542969
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f060",
+      "sample_index": 60,
+      "frame": "frame_000061.png",
+      "box": [
+        943.2346496582031,
+        708.6653747558594,
+        955.5962524414062,
+        727.4612731933594
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f061",
+      "sample_index": 61,
+      "frame": "frame_000062.png",
+      "box": [
+        452.48052978515625,
+        708.6310119628906,
+        465.7496032714844,
+        727.1109924316406
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f061",
+      "sample_index": 61,
+      "frame": "frame_000062.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f061",
+      "sample_index": 61,
+      "frame": "frame_000062.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f062",
+      "sample_index": 62,
+      "frame": "frame_000063.png",
+      "box": [
+        452.4748229980469,
+        708.6289672851562,
+        465.7513427734375,
+        727.1203918457031
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f062",
+      "sample_index": 62,
+      "frame": "frame_000063.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f062",
+      "sample_index": 62,
+      "frame": "frame_000063.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f063",
+      "sample_index": 63,
+      "frame": "frame_000064.png",
+      "box": [
+        452.47705078125,
+        708.6300354003906,
+        465.7505798339844,
+        727.1163940429688
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f063",
+      "sample_index": 63,
+      "frame": "frame_000064.png",
+      "box": [
+        901.4331359863281,
+        708.5478515625,
+        916.5646057128906,
+        727.3067626953125
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f063",
+      "sample_index": 63,
+      "frame": "frame_000064.png",
+      "box": [
+        943.2010803222656,
+        708.362060546875,
+        955.3678588867188,
+        727.1413879394531
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f064",
+      "sample_index": 64,
+      "frame": "frame_000065.png",
+      "box": [
+        452.477783203125,
+        708.6292114257812,
+        465.749267578125,
+        727.115478515625
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f064",
+      "sample_index": 64,
+      "frame": "frame_000065.png",
+      "box": [
+        901.4353332519531,
+        708.5492553710938,
+        916.5613098144531,
+        727.3017272949219
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f064",
+      "sample_index": 64,
+      "frame": "frame_000065.png",
+      "box": [
+        943.202392578125,
+        708.363037109375,
+        955.36669921875,
+        727.1395568847656
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f065",
+      "sample_index": 65,
+      "frame": "frame_000066.png",
+      "box": [
+        452.45513916015625,
+        708.6221008300781,
+        465.75628662109375,
+        727.1529541015625
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_player_K_f065",
+      "sample_index": 65,
+      "frame": "frame_000066.png",
+      "box": [
+        901.4322509765625,
+        708.5472412109375,
+        916.5664672851562,
+        727.3097839355469
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f065",
+      "sample_index": 65,
+      "frame": "frame_000066.png",
+      "box": [
+        943.2001342773438,
+        708.3615112304688,
+        955.3692626953125,
+        727.1423034667969
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f066",
+      "sample_index": 66,
+      "frame": "frame_000067.png",
+      "box": [
+        452.45587158203125,
+        708.6224975585938,
+        465.7577819824219,
+        727.1561889648438
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f066",
+      "sample_index": 66,
+      "frame": "frame_000067.png",
+      "box": [
+        496.1369857788086,
+        708.2076721191406,
+        509.3590621948242,
+        727.4733581542969
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_player_K_f066",
+      "sample_index": 66,
+      "frame": "frame_000067.png",
+      "box": [
+        901.4336853027344,
+        708.5482177734375,
+        916.5640563964844,
+        727.3061828613281
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f066",
+      "sample_index": 66,
+      "frame": "frame_000067.png",
+      "box": [
+        943.2009582519531,
+        708.3621520996094,
+        955.3683471679688,
+        727.1412353515625
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f067",
+      "sample_index": 67,
+      "frame": "frame_000068.png",
+      "box": [
+        452.46405029296875,
+        708.6278076171875,
+        465.7550354003906,
+        727.1380310058594
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f067",
+      "sample_index": 67,
+      "frame": "frame_000068.png",
+      "box": [
+        493.5799369812012,
+        707.634765625,
+        507.28785705566406,
+        727.3331298828125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_player_K_f067",
+      "sample_index": 67,
+      "frame": "frame_000068.png",
+      "box": [
+        901.4336853027344,
+        708.5482177734375,
+        916.5638427734375,
+        727.3059997558594
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f067",
+      "sample_index": 67,
+      "frame": "frame_000068.png",
+      "box": [
+        943.2010192871094,
+        708.3622131347656,
+        955.3681640625,
+        727.1411437988281
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f068",
+      "sample_index": 68,
+      "frame": "frame_000069.png",
+      "box": [
+        452.46405029296875,
+        708.6278076171875,
+        465.7550354003906,
+        727.1380310058594
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f068",
+      "sample_index": 68,
+      "frame": "frame_000069.png",
+      "box": [
+        493.5799369812012,
+        707.634765625,
+        507.28785705566406,
+        727.3331298828125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_player_K_f068",
+      "sample_index": 68,
+      "frame": "frame_000069.png",
+      "box": [
+        901.4336242675781,
+        708.5482177734375,
+        916.5639038085938,
+        727.3059997558594
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f068",
+      "sample_index": 68,
+      "frame": "frame_000069.png",
+      "box": [
+        943.2010803222656,
+        708.3622131347656,
+        955.3681030273438,
+        727.1411437988281
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f069",
+      "sample_index": 69,
+      "frame": "frame_000070.png",
+      "box": [
+        452.46405029296875,
+        708.6278076171875,
+        465.7550354003906,
+        727.1380310058594
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f069",
+      "sample_index": 69,
+      "frame": "frame_000070.png",
+      "box": [
+        493.5799369812012,
+        707.634765625,
+        507.28785705566406,
+        727.3331298828125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_player_K_f069",
+      "sample_index": 69,
+      "frame": "frame_000070.png",
+      "box": [
+        901.4336242675781,
+        708.5482177734375,
+        916.5639038085938,
+        727.3059997558594
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f069",
+      "sample_index": 69,
+      "frame": "frame_000070.png",
+      "box": [
+        943.2010803222656,
+        708.3622131347656,
+        955.3681030273438,
+        727.1411437988281
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f070",
+      "sample_index": 70,
+      "frame": "frame_000071.png",
+      "box": [
+        452.46405029296875,
+        708.6278076171875,
+        465.7550354003906,
+        727.1380310058594
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f070",
+      "sample_index": 70,
+      "frame": "frame_000071.png",
+      "box": [
+        493.5799369812012,
+        707.634765625,
+        507.28785705566406,
+        727.3331298828125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_player_K_f070",
+      "sample_index": 70,
+      "frame": "frame_000071.png",
+      "box": [
+        901.4336242675781,
+        708.5482177734375,
+        916.5639038085938,
+        727.3059997558594
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f070",
+      "sample_index": 70,
+      "frame": "frame_000071.png",
+      "box": [
+        943.2010803222656,
+        708.3622131347656,
+        955.3681030273438,
+        727.1411437988281
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f071",
+      "sample_index": 71,
+      "frame": "frame_000072.png",
+      "box": [
+        452.4696044921875,
+        708.6282958984375,
+        465.754150390625,
+        727.12841796875
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f071",
+      "sample_index": 71,
+      "frame": "frame_000072.png",
+      "box": [
+        493.61530685424805,
+        707.6692199707031,
+        507.26123046875,
+        727.3057861328125
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f071",
+      "sample_index": 71,
+      "frame": "frame_000072.png",
+      "box": [
+        543.1855545043945,
+        707.5672302246094,
+        557.7125091552734,
+        727.3427734375
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f071",
+      "sample_index": 71,
+      "frame": "frame_000072.png",
+      "box": [
+        901.4342346191406,
+        708.5484313964844,
+        916.563720703125,
+        727.3052368164062
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f071",
+      "sample_index": 71,
+      "frame": "frame_000072.png",
+      "box": [
+        943.2010803222656,
+        708.3619384765625,
+        955.3679809570312,
+        727.1412048339844
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f072",
+      "sample_index": 72,
+      "frame": "frame_000073.png",
+      "box": [
+        452.461669921875,
+        708.6259155273438,
+        465.7567443847656,
+        727.1412963867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f072",
+      "sample_index": 72,
+      "frame": "frame_000073.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f072",
+      "sample_index": 72,
+      "frame": "frame_000073.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f072",
+      "sample_index": 72,
+      "frame": "frame_000073.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f072",
+      "sample_index": 72,
+      "frame": "frame_000073.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f073",
+      "sample_index": 73,
+      "frame": "frame_000074.png",
+      "box": [
+        452.461669921875,
+        708.6259155273438,
+        465.7567443847656,
+        727.1412963867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f073",
+      "sample_index": 73,
+      "frame": "frame_000074.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f073",
+      "sample_index": 73,
+      "frame": "frame_000074.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f073",
+      "sample_index": 73,
+      "frame": "frame_000074.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f073",
+      "sample_index": 73,
+      "frame": "frame_000074.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f074",
+      "sample_index": 74,
+      "frame": "frame_000075.png",
+      "box": [
+        452.461669921875,
+        708.6259155273438,
+        465.7567443847656,
+        727.1412963867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f074",
+      "sample_index": 74,
+      "frame": "frame_000075.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f074",
+      "sample_index": 74,
+      "frame": "frame_000075.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f074",
+      "sample_index": 74,
+      "frame": "frame_000075.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f074",
+      "sample_index": 74,
+      "frame": "frame_000075.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f075",
+      "sample_index": 75,
+      "frame": "frame_000076.png",
+      "box": [
+        452.461669921875,
+        708.6259155273438,
+        465.7567443847656,
+        727.1412963867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f075",
+      "sample_index": 75,
+      "frame": "frame_000076.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f075",
+      "sample_index": 75,
+      "frame": "frame_000076.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f075",
+      "sample_index": 75,
+      "frame": "frame_000076.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f075",
+      "sample_index": 75,
+      "frame": "frame_000076.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f076",
+      "sample_index": 76,
+      "frame": "frame_000077.png",
+      "box": [
+        452.461669921875,
+        708.6259155273438,
+        465.7567443847656,
+        727.1412963867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f076",
+      "sample_index": 76,
+      "frame": "frame_000077.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f076",
+      "sample_index": 76,
+      "frame": "frame_000077.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f076",
+      "sample_index": 76,
+      "frame": "frame_000077.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f076",
+      "sample_index": 76,
+      "frame": "frame_000077.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f077",
+      "sample_index": 77,
+      "frame": "frame_000078.png",
+      "box": [
+        452.461669921875,
+        708.6259155273438,
+        465.7567443847656,
+        727.1412963867188
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f077",
+      "sample_index": 77,
+      "frame": "frame_000078.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f077",
+      "sample_index": 77,
+      "frame": "frame_000078.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f077",
+      "sample_index": 77,
+      "frame": "frame_000078.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f077",
+      "sample_index": 77,
+      "frame": "frame_000078.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f078",
+      "sample_index": 78,
+      "frame": "frame_000079.png",
+      "box": [
+        452.4616394042969,
+        708.626708984375,
+        465.7568359375,
+        727.1428527832031
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f078",
+      "sample_index": 78,
+      "frame": "frame_000079.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f078",
+      "sample_index": 78,
+      "frame": "frame_000079.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f078",
+      "sample_index": 78,
+      "frame": "frame_000079.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f078",
+      "sample_index": 78,
+      "frame": "frame_000079.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f079",
+      "sample_index": 79,
+      "frame": "frame_000080.png",
+      "box": [
+        452.456298828125,
+        708.6244506835938,
+        465.75811767578125,
+        727.1519165039062
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f079",
+      "sample_index": 79,
+      "frame": "frame_000080.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f079",
+      "sample_index": 79,
+      "frame": "frame_000080.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f079",
+      "sample_index": 79,
+      "frame": "frame_000080.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f079",
+      "sample_index": 79,
+      "frame": "frame_000080.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f080",
+      "sample_index": 80,
+      "frame": "frame_000081.png",
+      "box": [
+        452.456298828125,
+        708.6244506835938,
+        465.75811767578125,
+        727.1519165039062
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_7",
+      "rank": "7"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f080",
+      "sample_index": 80,
+      "frame": "frame_000081.png",
+      "box": [
+        493.61298751831055,
+        707.6667785644531,
+        507.2636260986328,
+        727.3084106445312
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_8",
+      "rank": "8"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f080",
+      "sample_index": 80,
+      "frame": "frame_000081.png",
+      "box": [
+        533.0388793945312,
+        708.2662658691406,
+        547.5101547241211,
+        727.1740417480469
+      ],
+      "region": "dealer",
+      "identity": "oct26_dealer_2",
+      "rank": "2"
+    },
+    {
+      "key": "oct26_oct26_player_K_f080",
+      "sample_index": 80,
+      "frame": "frame_000081.png",
+      "box": [
+        901.4336853027344,
+        708.5481567382812,
+        916.5642700195312,
+        727.3061218261719
+      ],
+      "region": "player",
+      "identity": "oct26_player_K",
+      "rank": "K"
+    },
+    {
+      "key": "oct26_oct26_player_3_f080",
+      "sample_index": 80,
+      "frame": "frame_000081.png",
+      "box": [
+        943.2008972167969,
+        708.3619384765625,
+        955.3681640625,
+        727.1414184570312
+      ],
+      "region": "player",
+      "identity": "oct26_player_3",
+      "rank": "3"
+    }
+  ]
+}

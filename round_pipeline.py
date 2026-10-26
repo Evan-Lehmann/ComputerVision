@@ -54,7 +54,7 @@ class VisionEngine:
         from rank_model import RankCNN, preprocess_crop
         from test_rank_detector_unseen import detect_full_frame
         detector_path = Path(detector_path or ROOT/'models/rank_detector_v2.pt')
-        classifier_path = Path(classifier_path or ROOT/'models/rank_classifier_v3.pt')
+        classifier_path = Path(classifier_path or ROOT/'models/rank_classifier_v4.pt')
         for path in (detector_path, classifier_path):
             if not path.is_file():
                 raise FileNotFoundError('Missing model: ' + str(path))

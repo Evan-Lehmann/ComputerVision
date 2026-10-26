@@ -6,7 +6,26 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
-## Classifier experiment
+## Oct-26 recording follow-up (current V4 default)
+
+The supplied round_20261026_103552_7d8b395b archive contained 84 frames. The original app reproduced the reported nine rows exactly: duplicated K/7/2 tracks plus an unresolved 3 suggested as Q. Visual review of the selected large-hand regions established five physical cards in first-observed order: **K, 7, 3, 8, 2**, with Hi-Lo **+1**. This scope excludes the ambiguous central miniature view.
+
+Tracking was too sensitive to card-border/background changes in its padded descriptor. The revision relaxes that view only when central-shape similarity is at least 0.90 and contextual similarity remains at least 0.68. It does not merge by rank. The original different-card transitions still pass, including K giving way to a newly dealt 3 at the old position. The new 246-observation crop regression produces five identity-pure tracks instead of nine fragments.
+
+The original rank-3 training set had only two noisy examples with neighboring fragments. V4 uses exactly V3's architecture, preprocessing, seed, 60-epoch budget and split, plus 15 visually checked crops: three views each of the new round's K, 7, 3, 8, 2. Checkpoint selection uses the same 17 historical validation observations, not this recording's evaluation score. Current V4 was selected at epoch 23. No supplied model is overwritten.
+
+| Model | Earlier reserved crop observations | Oct-26 development observations |
+|---|---:|---:|
+| V3 | 24/29 | 175/246 |
+| V4 | 29/29 | 245/246 |
+
+The new recording now belongs to development/training data. Its 246 observations are repeated views of just five physical cards, with 15 used for training. The sole V4 crop error is a transient 3→5 at frame index 10; aggregation over the card's track resolves 3 at approximately 94% mean model score. The recorded full CLI run using the unchanged detector/dedupe processes all 84 original frames and returns **K, 7, 3, 8, 2**, count **+1**, `count_verified: false`, without edits.
+
+There are now **27 passing tests**, including the new identity and real-checkpoint count regressions. The earlier full-round replays still produce unknowns/extra fragments: 29/29 crop accuracy does not establish perfect full-round performance. In particular, border/padding changes can alter rank predictions, and the earlier round-2 main 9 is still unresolved in the runtime crop stream. Fresh recordings excluded from all training and tuning remain necessary for independent acceptance.
+
+Reproduce with `python train_rank_classifier_v4.py`. Full per-crop predictions and the training split are stored in `validation/v4_evaluation.json` and `validation/v4_training_split.json`. The raw captures are retained outside Git; small cropped regression fixtures are under `tests/fixtures/oct26_round*`.
+
+## Earlier V3 classifier experiment
 
 The supplied V2 classifier reproduced its existing 15/22 (68.2%) validation result. The old split is not an independent measure: 13 source frames cross its train/validation boundary and four ranks have no validation examples.
 

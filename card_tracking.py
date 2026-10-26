@@ -61,7 +61,14 @@ def appearance_similarity(a, b):
     scores = cv2.matchTemplate(padded, aa, cv2.TM_CCORR_NORMED)
     context_scores = cv2.matchTemplate(np.pad(context_b, 2), context_a,
                                        cv2.TM_CCORR_NORMED)
-    return float(np.clip(min(scores.max(), context_scores.max()), 0.0, 1.0))
+    shape = float(scores.max())
+    context = float(context_scores.max())
+    # Rendering/border changes can alter the padded view while the glyph is
+    # effectively unchanged. Require very strong central-shape agreement and
+    # a context floor before relaxing the strict two-view minimum. A partial
+    # 10 resembling 6 or K changing to 3 must still fail the shape guard.
+    score = (shape + context) / 2 if shape >= 0.90 and context >= 0.68 else min(shape, context)
+    return float(np.clip(score, 0.0, 1.0))
 
 
 def _geometry(a, b):

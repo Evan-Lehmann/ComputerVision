@@ -28,7 +28,7 @@ Paths can also be supplied explicitly:
 python test_temporal_rank_tracking.py \
   --input captures \
   --detector models/rank_detector_v2.pt \
-  --classifier models/rank_classifier_v3.pt \
+  --classifier models/rank_classifier_v4.pt \
   --output temporal_rank_test \
   --every 5
 ```
@@ -68,3 +68,8 @@ them silently. Two empty detection samples are a tracking reset heuristic,
 not shoe-change detection. The Flask app still uses its legacy recognizer;
 this experiment is not yet an end-to-end round counter. Mac execution has not
 been tested in this cloud environment.
+
+The Oct-26 follow-up adds a strong central-glyph agreement gate to tolerate
+background/border changes. The added fresh-recording regression reduces nine
+fragment rows to five physical cards while preserving the original different-card
+regressions. See VALIDATION.md for the development-data scope and remaining limits.

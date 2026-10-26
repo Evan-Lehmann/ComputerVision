@@ -1,0 +1,2776 @@
+{
+  "train": [
+    {
+      "key": "train_train_003_frame_000024_00.png",
+      "rank": "8",
+      "frame": 24,
+      "group": "round1"
+    },
+    {
+      "key": "train_train_003_frame_000024_01.png",
+      "rank": "8",
+      "frame": 24,
+      "group": "round1"
+    },
+    {
+      "key": "train_train_003_frame_000024_02.png",
+      "rank": "10",
+      "frame": 24,
+      "group": "round1"
+    },
+    {
+      "key": "train_train_007_frame_000204_00.png",
+      "rank": "10",
+      "frame": 204,
+      "group": "round3"
+    },
+    {
+      "key": "train_train_007_frame_000204_01.png",
+      "rank": "6",
+      "frame": 204,
+      "group": "round3"
+    },
+    {
+      "key": "train_train_007_frame_000204_02.png",
+      "rank": "7",
+      "frame": 204,
+      "group": "round3"
+    },
+    {
+      "key": "train_train_007_frame_000204_03.png",
+      "rank": "6",
+      "frame": 204,
+      "group": "round3"
+    },
+    {
+      "key": "train_train_011_frame_000381_00.png",
+      "rank": "Q",
+      "frame": 381,
+      "group": "frame_000381"
+    },
+    {
+      "key": "train_train_011_frame_000381_01.png",
+      "rank": "K",
+      "frame": 381,
+      "group": "frame_000381"
+    },
+    {
+      "key": "train_train_011_frame_000381_02.png",
+      "rank": "K",
+      "frame": 381,
+      "group": "frame_000381"
+    },
+    {
+      "key": "train_train_013_frame_000505_00.png",
+      "rank": "5",
+      "frame": 505,
+      "group": "frame_000505"
+    },
+    {
+      "key": "train_train_013_frame_000505_01.png",
+      "rank": "4",
+      "frame": 505,
+      "group": "frame_000505"
+    },
+    {
+      "key": "train_train_013_frame_000505_02.png",
+      "rank": "9",
+      "frame": 505,
+      "group": "frame_000505"
+    },
+    {
+      "key": "train_train_013_frame_000505_03.png",
+      "rank": "9",
+      "frame": 505,
+      "group": "frame_000505"
+    },
+    {
+      "key": "train_train_013_frame_000505_04.png",
+      "rank": "4",
+      "frame": 505,
+      "group": "frame_000505"
+    },
+    {
+      "key": "train_train_015_frame_000653_00.png",
+      "rank": "7",
+      "frame": 653,
+      "group": "frame_000653"
+    },
+    {
+      "key": "train_train_015_frame_000653_01.png",
+      "rank": "8",
+      "frame": 653,
+      "group": "frame_000653"
+    },
+    {
+      "key": "train_train_015_frame_000653_02.png",
+      "rank": "8",
+      "frame": 653,
+      "group": "frame_000653"
+    },
+    {
+      "key": "train_train_015_frame_000653_03.png",
+      "rank": "8",
+      "frame": 653,
+      "group": "frame_000653"
+    },
+    {
+      "key": "train_train_015_frame_000653_04.png",
+      "rank": "8",
+      "frame": 653,
+      "group": "frame_000653"
+    },
+    {
+      "key": "train_train_017_frame_000689_00.png",
+      "rank": "8",
+      "frame": 689,
+      "group": "frame_000689"
+    },
+    {
+      "key": "train_train_017_frame_000689_01.png",
+      "rank": "8",
+      "frame": 689,
+      "group": "frame_000689"
+    },
+    {
+      "key": "train_train_017_frame_000689_02.png",
+      "rank": "J",
+      "frame": 689,
+      "group": "frame_000689"
+    },
+    {
+      "key": "train_train_017_frame_000689_03.png",
+      "rank": "8",
+      "frame": 689,
+      "group": "frame_000689"
+    },
+    {
+      "key": "train_train_017_frame_000689_04.png",
+      "rank": "7",
+      "frame": 689,
+      "group": "frame_000689"
+    },
+    {
+      "key": "train_train_018_frame_000704_00.png",
+      "rank": "7",
+      "frame": 704,
+      "group": "frame_000704"
+    },
+    {
+      "key": "train_train_018_frame_000704_01.png",
+      "rank": "8",
+      "frame": 704,
+      "group": "frame_000704"
+    },
+    {
+      "key": "train_train_018_frame_000704_02.png",
+      "rank": "8",
+      "frame": 704,
+      "group": "frame_000704"
+    },
+    {
+      "key": "train_train_018_frame_000704_03.png",
+      "rank": "J",
+      "frame": 704,
+      "group": "frame_000704"
+    },
+    {
+      "key": "train_train_018_frame_000704_04.png",
+      "rank": "9",
+      "frame": 704,
+      "group": "frame_000704"
+    },
+    {
+      "key": "train_train_019_frame_000705_00.png",
+      "rank": "7",
+      "frame": 705,
+      "group": "frame_000705"
+    },
+    {
+      "key": "train_train_019_frame_000705_01.png",
+      "rank": "9",
+      "frame": 705,
+      "group": "frame_000705"
+    },
+    {
+      "key": "train_train_019_frame_000705_02.png",
+      "rank": "J",
+      "frame": 705,
+      "group": "frame_000705"
+    },
+    {
+      "key": "train_train_019_frame_000705_03.png",
+      "rank": "8",
+      "frame": 705,
+      "group": "frame_000705"
+    },
+    {
+      "key": "train_train_019_frame_000705_04.png",
+      "rank": "8",
+      "frame": 705,
+      "group": "frame_000705"
+    },
+    {
+      "key": "train_train_022_frame_000797_00.png",
+      "rank": "A",
+      "frame": 797,
+      "group": "frame_000797"
+    },
+    {
+      "key": "train_train_022_frame_000797_01.png",
+      "rank": "6",
+      "frame": 797,
+      "group": "frame_000797"
+    },
+    {
+      "key": "train_train_022_frame_000797_02.png",
+      "rank": "K",
+      "frame": 797,
+      "group": "frame_000797"
+    },
+    {
+      "key": "train_train_022_frame_000797_03.png",
+      "rank": "6",
+      "frame": 797,
+      "group": "frame_000797"
+    },
+    {
+      "key": "train_train_022_frame_000797_04.png",
+      "rank": "K",
+      "frame": 797,
+      "group": "frame_000797"
+    },
+    {
+      "key": "val_val_001_frame_000831_00.png",
+      "rank": "A",
+      "frame": 831,
+      "group": "frame_000831"
+    },
+    {
+      "key": "val_val_001_frame_000831_01.png",
+      "rank": "8",
+      "frame": 831,
+      "group": "frame_000831"
+    },
+    {
+      "key": "val_val_001_frame_000831_02.png",
+      "rank": "6",
+      "frame": 831,
+      "group": "frame_000831"
+    },
+    {
+      "key": "val_val_001_frame_000831_03.png",
+      "rank": "K",
+      "frame": 831,
+      "group": "frame_000831"
+    },
+    {
+      "key": "val_val_001_frame_000831_04.png",
+      "rank": "3",
+      "frame": 831,
+      "group": "frame_000831"
+    },
+    {
+      "key": "candidate_0002_frame_20261025_025146_588374_000020_01.png",
+      "rank": "8",
+      "frame": 20,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0003_frame_20261025_025146_588374_000020_02.png",
+      "rank": "8",
+      "frame": 20,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0004_frame_20261025_025149_111307_000025_01.png",
+      "rank": "8",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0005_frame_20261025_025149_111307_000025_02.png",
+      "rank": "J",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0006_frame_20261025_025149_111307_000025_03.png",
+      "rank": "8",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0007_frame_20261025_025149_111307_000025_04.png",
+      "rank": "10",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0008_frame_20261025_025151_625761_000030_01.png",
+      "rank": "8",
+      "frame": 30,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0009_frame_20261025_025151_625761_000030_02.png",
+      "rank": "J",
+      "frame": 30,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0010_frame_20261025_025151_625761_000030_05.png",
+      "rank": "J",
+      "frame": 30,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0011_frame_20261025_025204_203717_000055_03.png",
+      "rank": "A",
+      "frame": 55,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0012_frame_20261025_025204_203717_000055_06.png",
+      "rank": "4",
+      "frame": 55,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0013_frame_20261025_025206_720458_000060_07.png",
+      "rank": "A",
+      "frame": 60,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0014_frame_20261025_025209_241546_000065_03.png",
+      "rank": "8",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "candidate_0019_frame_20261025_025317_219515_000200_01.png",
+      "rank": "10",
+      "frame": 200,
+      "group": "round3"
+    },
+    {
+      "key": "candidate_0020_frame_20261025_025317_219515_000200_04.png",
+      "rank": "10",
+      "frame": 200,
+      "group": "round3"
+    },
+    {
+      "key": "candidate_0021_frame_20261025_025319_732814_000205_01.png",
+      "rank": "6",
+      "frame": 205,
+      "group": "round3"
+    },
+    {
+      "key": "candidate_0023_frame_20261025_025322_246755_000210_03.png",
+      "rank": "7",
+      "frame": 210,
+      "group": "round3"
+    },
+    {
+      "key": "candidate_0024_frame_20261025_025334_849287_000235_01.png",
+      "rank": "J",
+      "frame": 235,
+      "group": "round3"
+    },
+    {
+      "key": "candidate_0025_frame_20261025_025334_849287_000235_02.png",
+      "rank": "6",
+      "frame": 235,
+      "group": "round3"
+    },
+    {
+      "key": "candidate_0028_frame_20261025_025410_111381_000305_03.png",
+      "rank": "A",
+      "frame": 305,
+      "group": "frame_20261025_025410_111381_000305"
+    },
+    {
+      "key": "candidate_0029_frame_20261025_025412_630323_000310_04.png",
+      "rank": "A",
+      "frame": 310,
+      "group": "frame_20261025_025412_630323_000310"
+    },
+    {
+      "key": "candidate_0030_frame_20261025_025420_169545_000325_02.png",
+      "rank": "7",
+      "frame": 325,
+      "group": "frame_20261025_025420_169545_000325"
+    },
+    {
+      "key": "candidate_0031_frame_20261025_025420_169545_000325_04.png",
+      "rank": "K",
+      "frame": 325,
+      "group": "frame_20261025_025420_169545_000325"
+    },
+    {
+      "key": "candidate_0032_frame_20261025_025447_874790_000380_02.png",
+      "rank": "Q",
+      "frame": 380,
+      "group": "frame_20261025_025447_874790_000380"
+    },
+    {
+      "key": "candidate_0033_frame_20261025_025450_399577_000385_02.png",
+      "rank": "Q",
+      "frame": 385,
+      "group": "frame_20261025_025450_399577_000385"
+    },
+    {
+      "key": "candidate_0034_frame_20261025_025450_399577_000385_03.png",
+      "rank": "K",
+      "frame": 385,
+      "group": "frame_20261025_025450_399577_000385"
+    },
+    {
+      "key": "candidate_0035_frame_20261025_025510_530306_000425_01.png",
+      "rank": "9",
+      "frame": 425,
+      "group": "frame_20261025_025510_530306_000425"
+    },
+    {
+      "key": "candidate_0036_frame_20261025_025510_530306_000425_02.png",
+      "rank": "4",
+      "frame": 425,
+      "group": "frame_20261025_025510_530306_000425"
+    },
+    {
+      "key": "candidate_0037_frame_20261025_025510_530306_000425_03.png",
+      "rank": "K",
+      "frame": 425,
+      "group": "frame_20261025_025510_530306_000425"
+    },
+    {
+      "key": "candidate_0038_frame_20261025_025518_065897_000440_08.png",
+      "rank": "2",
+      "frame": 440,
+      "group": "frame_20261025_025518_065897_000440"
+    },
+    {
+      "key": "candidate_0039_frame_20261025_025548_247027_000500_01.png",
+      "rank": "4",
+      "frame": 500,
+      "group": "frame_20261025_025548_247027_000500"
+    },
+    {
+      "key": "candidate_0041_frame_20261025_025608_390781_000540_02.png",
+      "rank": "4",
+      "frame": 540,
+      "group": "frame_20261025_025608_390781_000540"
+    },
+    {
+      "key": "candidate_0042_frame_20261025_025610_893366_000545_01.png",
+      "rank": "9",
+      "frame": 545,
+      "group": "frame_20261025_025610_893366_000545"
+    },
+    {
+      "key": "candidate_0043_frame_20261025_025620_983416_000565_01.png",
+      "rank": "2",
+      "frame": 565,
+      "group": "frame_20261025_025620_983416_000565"
+    },
+    {
+      "key": "candidate_0044_frame_20261025_025620_983416_000565_02.png",
+      "rank": "A",
+      "frame": 565,
+      "group": "frame_20261025_025620_983416_000565"
+    },
+    {
+      "key": "candidate_0045_frame_20261025_025620_983416_000565_03.png",
+      "rank": "9",
+      "frame": 565,
+      "group": "frame_20261025_025620_983416_000565"
+    },
+    {
+      "key": "candidate_0046_frame_20261025_025620_983416_000565_04.png",
+      "rank": "4",
+      "frame": 565,
+      "group": "frame_20261025_025620_983416_000565"
+    },
+    {
+      "key": "candidate_0047_frame_20261025_025628_507759_000580_01.png",
+      "rank": "2",
+      "frame": 580,
+      "group": "frame_20261025_025628_507759_000580"
+    },
+    {
+      "key": "candidate_0048_frame_20261025_025628_507759_000580_02.png",
+      "rank": "2",
+      "frame": 580,
+      "group": "frame_20261025_025628_507759_000580"
+    },
+    {
+      "key": "candidate_0049_frame_20261025_025628_507759_000580_03.png",
+      "rank": "A",
+      "frame": 580,
+      "group": "frame_20261025_025628_507759_000580"
+    },
+    {
+      "key": "candidate_0050_frame_20261025_025628_507759_000580_04.png",
+      "rank": "8",
+      "frame": 580,
+      "group": "frame_20261025_025628_507759_000580"
+    },
+    {
+      "key": "candidate_0051_frame_20261025_025628_507759_000580_05.png",
+      "rank": "9",
+      "frame": 580,
+      "group": "frame_20261025_025628_507759_000580"
+    },
+    {
+      "key": "candidate_0052_frame_20261025_025628_507759_000580_06.png",
+      "rank": "4",
+      "frame": 580,
+      "group": "frame_20261025_025628_507759_000580"
+    },
+    {
+      "key": "candidate_0056_frame_20261025_025723_897600_000690_02.png",
+      "rank": "9",
+      "frame": 690,
+      "group": "frame_20261025_025723_897600_000690"
+    },
+    {
+      "key": "candidate_0057_frame_20261025_025723_897600_000690_03.png",
+      "rank": "8",
+      "frame": 690,
+      "group": "frame_20261025_025723_897600_000690"
+    },
+    {
+      "key": "candidate_0058_frame_20261025_025726_417327_000695_05.png",
+      "rank": "8",
+      "frame": 695,
+      "group": "frame_20261025_025726_417327_000695"
+    },
+    {
+      "key": "candidate_0059_frame_20261025_025759_151986_000760_03.png",
+      "rank": "A",
+      "frame": 760,
+      "group": "frame_20261025_025759_151986_000760"
+    },
+    {
+      "key": "candidate_0060_frame_20261025_025801_668997_000765_02.png",
+      "rank": "K",
+      "frame": 765,
+      "group": "frame_20261025_025801_668997_000765"
+    },
+    {
+      "key": "candidate_0063_frame_20261025_025829_347033_000820_01.png",
+      "rank": "3",
+      "frame": 820,
+      "group": "frame_20261025_025829_347033_000820"
+    },
+    {
+      "key": "candidate_0064_frame_20261025_025902_084650_000885_01.png",
+      "rank": "A",
+      "frame": 885,
+      "group": "frame_20261025_025902_084650_000885"
+    },
+    {
+      "key": "candidate_0065_frame_20261025_025959_979579_001000_01.png",
+      "rank": "10",
+      "frame": 1000,
+      "group": "frame_20261025_025959_979579_001000"
+    },
+    {
+      "key": "candidate_0067_frame_20261025_025959_979579_001000_04.png",
+      "rank": "J",
+      "frame": 1000,
+      "group": "frame_20261025_025959_979579_001000"
+    },
+    {
+      "key": "candidate_0068_frame_20261025_030002_499861_001005_01.png",
+      "rank": "10",
+      "frame": 1005,
+      "group": "frame_20261025_030002_499861_001005"
+    },
+    {
+      "key": "candidate_0069_frame_20261025_030002_499861_001005_02.png",
+      "rank": "J",
+      "frame": 1005,
+      "group": "frame_20261025_030002_499861_001005"
+    },
+    {
+      "key": "candidate_0070_frame_20261025_030002_499861_001005_03.png",
+      "rank": "J",
+      "frame": 1005,
+      "group": "frame_20261025_030002_499861_001005"
+    },
+    {
+      "key": "candidate_0071_frame_20261025_030007_524384_001015_03.png",
+      "rank": "J",
+      "frame": 1015,
+      "group": "frame_20261025_030007_524384_001015"
+    },
+    {
+      "key": "candidate_0073_frame_20261025_030015_070873_001030_07.png",
+      "rank": "Q",
+      "frame": 1030,
+      "group": "frame_20261025_030015_070873_001030"
+    },
+    {
+      "key": "t2_f20",
+      "rank": "8",
+      "frame": 20,
+      "group": "round1"
+    },
+    {
+      "key": "t3_f20",
+      "rank": "8",
+      "frame": 20,
+      "group": "round1"
+    },
+    {
+      "key": "t2_f25",
+      "rank": "J",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "t3_f25",
+      "rank": "J",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "t4_f25",
+      "rank": "8",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "t5_f25",
+      "rank": "8",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "t6_f25",
+      "rank": "10",
+      "frame": 25,
+      "group": "round1"
+    },
+    {
+      "key": "t2_f45",
+      "rank": "J",
+      "frame": 45,
+      "group": "round1"
+    },
+    {
+      "key": "t3_f45",
+      "rank": "J",
+      "frame": 45,
+      "group": "round1"
+    },
+    {
+      "key": "t4_f45",
+      "rank": "8",
+      "frame": 45,
+      "group": "round1"
+    },
+    {
+      "key": "t5_f45",
+      "rank": "8",
+      "frame": 45,
+      "group": "round1"
+    },
+    {
+      "key": "t6_f45",
+      "rank": "10",
+      "frame": 45,
+      "group": "round1"
+    },
+    {
+      "key": "t7_f55",
+      "rank": "A",
+      "frame": 55,
+      "group": "round1"
+    },
+    {
+      "key": "t8_f55",
+      "rank": "4",
+      "frame": 55,
+      "group": "round1"
+    },
+    {
+      "key": "t8_f60",
+      "rank": "4",
+      "frame": 60,
+      "group": "round1"
+    },
+    {
+      "key": "t9_f60",
+      "rank": "8",
+      "frame": 60,
+      "group": "round1"
+    },
+    {
+      "key": "t10_f60",
+      "rank": "A",
+      "frame": 60,
+      "group": "round1"
+    },
+    {
+      "key": "t2_f65",
+      "rank": "J",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t3_f65",
+      "rank": "J",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t4_f65",
+      "rank": "8",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t5_f65",
+      "rank": "8",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t6_f65",
+      "rank": "10",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t7_f65",
+      "rank": "8",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t8_f65",
+      "rank": "4",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t10_f65",
+      "rank": "A",
+      "frame": 65,
+      "group": "round1"
+    },
+    {
+      "key": "t18_f200",
+      "rank": "10",
+      "frame": 200,
+      "group": "round3"
+    },
+    {
+      "key": "t19_f200",
+      "rank": "10",
+      "frame": 200,
+      "group": "round3"
+    },
+    {
+      "key": "t20_f200",
+      "rank": "7",
+      "frame": 200,
+      "group": "round3"
+    },
+    {
+      "key": "t21_f200",
+      "rank": "10",
+      "frame": 200,
+      "group": "round3"
+    },
+    {
+      "key": "t18_f205",
+      "rank": "6",
+      "frame": 205,
+      "group": "round3"
+    },
+    {
+      "key": "t21_f205",
+      "rank": "6",
+      "frame": 205,
+      "group": "round3"
+    },
+    {
+      "key": "t22_f205",
+      "rank": "10",
+      "frame": 205,
+      "group": "round3"
+    },
+    {
+      "key": "t18_f230",
+      "rank": "6",
+      "frame": 230,
+      "group": "round3"
+    },
+    {
+      "key": "t19_f230",
+      "rank": "10",
+      "frame": 230,
+      "group": "round3"
+    },
+    {
+      "key": "t20_f230",
+      "rank": "7",
+      "frame": 230,
+      "group": "round3"
+    },
+    {
+      "key": "t21_f230",
+      "rank": "6",
+      "frame": 230,
+      "group": "round3"
+    },
+    {
+      "key": "t22_f230",
+      "rank": "10",
+      "frame": 230,
+      "group": "round3"
+    },
+    {
+      "key": "t23_f235",
+      "rank": "10",
+      "frame": 235,
+      "group": "round3"
+    },
+    {
+      "key": "t23_f245",
+      "rank": "10",
+      "frame": 245,
+      "group": "round3"
+    },
+    {
+      "key": "t24_f245",
+      "rank": "7",
+      "frame": 245,
+      "group": "round3"
+    },
+    {
+      "key": "t24_f250",
+      "rank": "7",
+      "frame": 250,
+      "group": "round3"
+    },
+    {
+      "key": "t25_f250",
+      "rank": "5",
+      "frame": 250,
+      "group": "round3"
+    },
+    {
+      "key": "t26_f250",
+      "rank": "2",
+      "frame": 250,
+      "group": "round3"
+    },
+    {
+      "key": "t18_f255",
+      "rank": "J",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t19_f255",
+      "rank": "6",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t20_f255",
+      "rank": "7",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t21_f255",
+      "rank": "6",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t22_f255",
+      "rank": "10",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t23_f255",
+      "rank": "10",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t24_f255",
+      "rank": "7",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t25_f255",
+      "rank": "5",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "t26_f255",
+      "rank": "2",
+      "frame": 255,
+      "group": "round3"
+    },
+    {
+      "key": "oct26_oct26_player_K_f023",
+      "rank": "K",
+      "frame": 23,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f026",
+      "rank": "7",
+      "frame": 26,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f027",
+      "rank": "3",
+      "frame": 27,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f042",
+      "rank": "K",
+      "frame": 42,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f044",
+      "rank": "7",
+      "frame": 44,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f045",
+      "rank": "3",
+      "frame": 45,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f069",
+      "rank": "8",
+      "frame": 69,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f073",
+      "rank": "8",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f073",
+      "rank": "2",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f076",
+      "rank": "2",
+      "frame": 76,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f080",
+      "rank": "7",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f080",
+      "rank": "8",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f080",
+      "rank": "2",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f080",
+      "rank": "K",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f080",
+      "rank": "3",
+      "frame": 80,
+      "group": "oct26_round"
+    }
+  ],
+  "validation": [
+    {
+      "key": "train_train_016_frame_000660_00.png",
+      "rank": "7",
+      "frame": 660,
+      "group": "frame_000660"
+    },
+    {
+      "key": "train_train_016_frame_000660_01.png",
+      "rank": "8",
+      "frame": 660,
+      "group": "frame_000660"
+    },
+    {
+      "key": "train_train_016_frame_000660_02.png",
+      "rank": "8",
+      "frame": 660,
+      "group": "frame_000660"
+    },
+    {
+      "key": "train_train_016_frame_000660_03.png",
+      "rank": "8",
+      "frame": 660,
+      "group": "frame_000660"
+    },
+    {
+      "key": "val_val_004_frame_000886_00.png",
+      "rank": "7",
+      "frame": 886,
+      "group": "frame_000886"
+    },
+    {
+      "key": "val_val_004_frame_000886_01.png",
+      "rank": "A",
+      "frame": 886,
+      "group": "frame_000886"
+    },
+    {
+      "key": "val_val_004_frame_000886_02.png",
+      "rank": "A",
+      "frame": 886,
+      "group": "frame_000886"
+    },
+    {
+      "key": "val_val_007_frame_000968_00.png",
+      "rank": "J",
+      "frame": 968,
+      "group": "frame_000968"
+    },
+    {
+      "key": "val_val_007_frame_000968_01.png",
+      "rank": "4",
+      "frame": 968,
+      "group": "frame_000968"
+    },
+    {
+      "key": "val_val_007_frame_000968_02.png",
+      "rank": "J",
+      "frame": 968,
+      "group": "frame_000968"
+    },
+    {
+      "key": "candidate_0027_frame_20261025_025407_597373_000300_01.png",
+      "rank": "K",
+      "frame": 300,
+      "group": "frame_20261025_025407_597373_000300"
+    },
+    {
+      "key": "candidate_0053_frame_20261025_025633_549374_000590_10.png",
+      "rank": "4",
+      "frame": 590,
+      "group": "frame_20261025_025633_549374_000590"
+    },
+    {
+      "key": "candidate_0054_frame_20261025_025716_346758_000675_01.png",
+      "rank": "J",
+      "frame": 675,
+      "group": "frame_20261025_025716_346758_000675"
+    },
+    {
+      "key": "candidate_0055_frame_20261025_025716_346758_000675_02.png",
+      "rank": "8",
+      "frame": 675,
+      "group": "frame_20261025_025716_346758_000675"
+    },
+    {
+      "key": "candidate_0061_frame_20261025_025826_817357_000815_02.png",
+      "rank": "K",
+      "frame": 815,
+      "group": "frame_20261025_025826_817357_000815"
+    },
+    {
+      "key": "candidate_0062_frame_20261025_025826_817357_000815_03.png",
+      "rank": "6",
+      "frame": 815,
+      "group": "frame_20261025_025826_817357_000815"
+    },
+    {
+      "key": "candidate_0072_frame_20261025_030010_038328_001020_02.png",
+      "rank": "6",
+      "frame": 1020,
+      "group": "frame_20261025_030010_038328_001020"
+    }
+  ],
+  "test": [
+    {
+      "key": "train_train_005_frame_000114_00.png",
+      "rank": "6",
+      "frame": 114,
+      "group": "round2"
+    },
+    {
+      "key": "train_train_005_frame_000114_01.png",
+      "rank": "J",
+      "frame": 114,
+      "group": "round2"
+    },
+    {
+      "key": "train_train_005_frame_000114_02.png",
+      "rank": "J",
+      "frame": 114,
+      "group": "round2"
+    },
+    {
+      "key": "candidate_0015_frame_20261025_025234_424101_000115_04.png",
+      "rank": "6",
+      "frame": 115,
+      "group": "round2"
+    },
+    {
+      "key": "candidate_0016_frame_20261025_025249_532026_000145_03.png",
+      "rank": "8",
+      "frame": 145,
+      "group": "round2"
+    },
+    {
+      "key": "candidate_0017_frame_20261025_025254_565442_000155_02.png",
+      "rank": "9",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "candidate_0018_frame_20261025_025254_565442_000155_06.png",
+      "rank": "6",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t11_f110",
+      "rank": "J",
+      "frame": 110,
+      "group": "round2"
+    },
+    {
+      "key": "t12_f110",
+      "rank": "J",
+      "frame": 110,
+      "group": "round2"
+    },
+    {
+      "key": "t11_f115",
+      "rank": "9",
+      "frame": 115,
+      "group": "round2"
+    },
+    {
+      "key": "t12_f115",
+      "rank": "9",
+      "frame": 115,
+      "group": "round2"
+    },
+    {
+      "key": "t13_f115",
+      "rank": "J",
+      "frame": 115,
+      "group": "round2"
+    },
+    {
+      "key": "t14_f115",
+      "rank": "6",
+      "frame": 115,
+      "group": "round2"
+    },
+    {
+      "key": "t15_f115",
+      "rank": "J",
+      "frame": 115,
+      "group": "round2"
+    },
+    {
+      "key": "t11_f135",
+      "rank": "9",
+      "frame": 135,
+      "group": "round2"
+    },
+    {
+      "key": "t12_f135",
+      "rank": "9",
+      "frame": 135,
+      "group": "round2"
+    },
+    {
+      "key": "t13_f135",
+      "rank": "J",
+      "frame": 135,
+      "group": "round2"
+    },
+    {
+      "key": "t14_f135",
+      "rank": "6",
+      "frame": 135,
+      "group": "round2"
+    },
+    {
+      "key": "t15_f135",
+      "rank": "J",
+      "frame": 135,
+      "group": "round2"
+    },
+    {
+      "key": "t16_f145",
+      "rank": "8",
+      "frame": 145,
+      "group": "round2"
+    },
+    {
+      "key": "t16_f150",
+      "rank": "8",
+      "frame": 150,
+      "group": "round2"
+    },
+    {
+      "key": "t17_f150",
+      "rank": "6",
+      "frame": 150,
+      "group": "round2"
+    },
+    {
+      "key": "t11_f155",
+      "rank": "9",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t12_f155",
+      "rank": "9",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t13_f155",
+      "rank": "J",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t14_f155",
+      "rank": "6",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t15_f155",
+      "rank": "J",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t16_f155",
+      "rank": "8",
+      "frame": 155,
+      "group": "round2"
+    },
+    {
+      "key": "t17_f155",
+      "rank": "6",
+      "frame": 155,
+      "group": "round2"
+    }
+  ],
+  "oct26": [
+    {
+      "key": "oct26_oct26_player_K_f004",
+      "rank": "K",
+      "frame": 4,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f005",
+      "rank": "K",
+      "frame": 5,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f006",
+      "rank": "K",
+      "frame": 6,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f007",
+      "rank": "K",
+      "frame": 7,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f008",
+      "rank": "7",
+      "frame": 8,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f008",
+      "rank": "K",
+      "frame": 8,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f009",
+      "rank": "7",
+      "frame": 9,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f009",
+      "rank": "K",
+      "frame": 9,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f010",
+      "rank": "7",
+      "frame": 10,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f010",
+      "rank": "K",
+      "frame": 10,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f010",
+      "rank": "3",
+      "frame": 10,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f011",
+      "rank": "7",
+      "frame": 11,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f011",
+      "rank": "K",
+      "frame": 11,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f011",
+      "rank": "3",
+      "frame": 11,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f012",
+      "rank": "7",
+      "frame": 12,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f012",
+      "rank": "K",
+      "frame": 12,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f012",
+      "rank": "3",
+      "frame": 12,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f013",
+      "rank": "7",
+      "frame": 13,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f013",
+      "rank": "K",
+      "frame": 13,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f013",
+      "rank": "3",
+      "frame": 13,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f014",
+      "rank": "7",
+      "frame": 14,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f014",
+      "rank": "K",
+      "frame": 14,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f014",
+      "rank": "3",
+      "frame": 14,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f015",
+      "rank": "7",
+      "frame": 15,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f015",
+      "rank": "K",
+      "frame": 15,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f015",
+      "rank": "3",
+      "frame": 15,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f016",
+      "rank": "7",
+      "frame": 16,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f016",
+      "rank": "K",
+      "frame": 16,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f016",
+      "rank": "3",
+      "frame": 16,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f017",
+      "rank": "7",
+      "frame": 17,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f017",
+      "rank": "K",
+      "frame": 17,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f017",
+      "rank": "3",
+      "frame": 17,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f018",
+      "rank": "7",
+      "frame": 18,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f018",
+      "rank": "K",
+      "frame": 18,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f018",
+      "rank": "3",
+      "frame": 18,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f019",
+      "rank": "7",
+      "frame": 19,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f019",
+      "rank": "K",
+      "frame": 19,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f019",
+      "rank": "3",
+      "frame": 19,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f020",
+      "rank": "7",
+      "frame": 20,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f020",
+      "rank": "K",
+      "frame": 20,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f020",
+      "rank": "3",
+      "frame": 20,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f021",
+      "rank": "7",
+      "frame": 21,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f021",
+      "rank": "K",
+      "frame": 21,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f021",
+      "rank": "3",
+      "frame": 21,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f022",
+      "rank": "7",
+      "frame": 22,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f022",
+      "rank": "K",
+      "frame": 22,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f022",
+      "rank": "3",
+      "frame": 22,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f023",
+      "rank": "7",
+      "frame": 23,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f023",
+      "rank": "K",
+      "frame": 23,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f023",
+      "rank": "3",
+      "frame": 23,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f024",
+      "rank": "7",
+      "frame": 24,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f024",
+      "rank": "K",
+      "frame": 24,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f024",
+      "rank": "3",
+      "frame": 24,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f025",
+      "rank": "7",
+      "frame": 25,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f025",
+      "rank": "K",
+      "frame": 25,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f025",
+      "rank": "3",
+      "frame": 25,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f026",
+      "rank": "7",
+      "frame": 26,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f026",
+      "rank": "K",
+      "frame": 26,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f026",
+      "rank": "3",
+      "frame": 26,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f027",
+      "rank": "7",
+      "frame": 27,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f027",
+      "rank": "K",
+      "frame": 27,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f027",
+      "rank": "3",
+      "frame": 27,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f028",
+      "rank": "7",
+      "frame": 28,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f028",
+      "rank": "K",
+      "frame": 28,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f028",
+      "rank": "3",
+      "frame": 28,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f029",
+      "rank": "7",
+      "frame": 29,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f029",
+      "rank": "K",
+      "frame": 29,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f029",
+      "rank": "3",
+      "frame": 29,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f030",
+      "rank": "7",
+      "frame": 30,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f030",
+      "rank": "K",
+      "frame": 30,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f030",
+      "rank": "3",
+      "frame": 30,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f031",
+      "rank": "7",
+      "frame": 31,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f031",
+      "rank": "K",
+      "frame": 31,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f031",
+      "rank": "3",
+      "frame": 31,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f032",
+      "rank": "7",
+      "frame": 32,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f032",
+      "rank": "K",
+      "frame": 32,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f032",
+      "rank": "3",
+      "frame": 32,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f033",
+      "rank": "7",
+      "frame": 33,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f033",
+      "rank": "K",
+      "frame": 33,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f033",
+      "rank": "3",
+      "frame": 33,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f034",
+      "rank": "7",
+      "frame": 34,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f034",
+      "rank": "K",
+      "frame": 34,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f034",
+      "rank": "3",
+      "frame": 34,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f035",
+      "rank": "7",
+      "frame": 35,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f035",
+      "rank": "K",
+      "frame": 35,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f035",
+      "rank": "3",
+      "frame": 35,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f036",
+      "rank": "7",
+      "frame": 36,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f036",
+      "rank": "K",
+      "frame": 36,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f036",
+      "rank": "3",
+      "frame": 36,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f037",
+      "rank": "7",
+      "frame": 37,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f037",
+      "rank": "K",
+      "frame": 37,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f037",
+      "rank": "3",
+      "frame": 37,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f038",
+      "rank": "7",
+      "frame": 38,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f038",
+      "rank": "K",
+      "frame": 38,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f038",
+      "rank": "3",
+      "frame": 38,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f039",
+      "rank": "7",
+      "frame": 39,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f039",
+      "rank": "K",
+      "frame": 39,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f039",
+      "rank": "3",
+      "frame": 39,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f040",
+      "rank": "7",
+      "frame": 40,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f040",
+      "rank": "K",
+      "frame": 40,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f040",
+      "rank": "3",
+      "frame": 40,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f041",
+      "rank": "7",
+      "frame": 41,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f041",
+      "rank": "K",
+      "frame": 41,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f041",
+      "rank": "3",
+      "frame": 41,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f042",
+      "rank": "7",
+      "frame": 42,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f042",
+      "rank": "K",
+      "frame": 42,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f042",
+      "rank": "3",
+      "frame": 42,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f043",
+      "rank": "7",
+      "frame": 43,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f043",
+      "rank": "K",
+      "frame": 43,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f043",
+      "rank": "3",
+      "frame": 43,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f044",
+      "rank": "7",
+      "frame": 44,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f044",
+      "rank": "K",
+      "frame": 44,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f044",
+      "rank": "3",
+      "frame": 44,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f045",
+      "rank": "7",
+      "frame": 45,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f045",
+      "rank": "K",
+      "frame": 45,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f045",
+      "rank": "3",
+      "frame": 45,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f046",
+      "rank": "7",
+      "frame": 46,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f046",
+      "rank": "K",
+      "frame": 46,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f046",
+      "rank": "3",
+      "frame": 46,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f047",
+      "rank": "7",
+      "frame": 47,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f047",
+      "rank": "K",
+      "frame": 47,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f047",
+      "rank": "3",
+      "frame": 47,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f048",
+      "rank": "7",
+      "frame": 48,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f048",
+      "rank": "K",
+      "frame": 48,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f048",
+      "rank": "3",
+      "frame": 48,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f049",
+      "rank": "7",
+      "frame": 49,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f049",
+      "rank": "K",
+      "frame": 49,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f049",
+      "rank": "3",
+      "frame": 49,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f050",
+      "rank": "7",
+      "frame": 50,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f050",
+      "rank": "K",
+      "frame": 50,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f050",
+      "rank": "3",
+      "frame": 50,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f051",
+      "rank": "7",
+      "frame": 51,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f051",
+      "rank": "K",
+      "frame": 51,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f051",
+      "rank": "3",
+      "frame": 51,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f052",
+      "rank": "7",
+      "frame": 52,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f052",
+      "rank": "K",
+      "frame": 52,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f052",
+      "rank": "3",
+      "frame": 52,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f053",
+      "rank": "7",
+      "frame": 53,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f053",
+      "rank": "K",
+      "frame": 53,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f053",
+      "rank": "3",
+      "frame": 53,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f054",
+      "rank": "7",
+      "frame": 54,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f054",
+      "rank": "K",
+      "frame": 54,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f054",
+      "rank": "3",
+      "frame": 54,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f055",
+      "rank": "7",
+      "frame": 55,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f055",
+      "rank": "K",
+      "frame": 55,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f055",
+      "rank": "3",
+      "frame": 55,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f056",
+      "rank": "7",
+      "frame": 56,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f056",
+      "rank": "K",
+      "frame": 56,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f056",
+      "rank": "3",
+      "frame": 56,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f057",
+      "rank": "7",
+      "frame": 57,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f057",
+      "rank": "K",
+      "frame": 57,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f057",
+      "rank": "3",
+      "frame": 57,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f058",
+      "rank": "7",
+      "frame": 58,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f058",
+      "rank": "K",
+      "frame": 58,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f058",
+      "rank": "3",
+      "frame": 58,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f059",
+      "rank": "7",
+      "frame": 59,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f059",
+      "rank": "K",
+      "frame": 59,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f059",
+      "rank": "3",
+      "frame": 59,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f060",
+      "rank": "7",
+      "frame": 60,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f060",
+      "rank": "K",
+      "frame": 60,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f060",
+      "rank": "3",
+      "frame": 60,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f061",
+      "rank": "7",
+      "frame": 61,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f061",
+      "rank": "K",
+      "frame": 61,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f061",
+      "rank": "3",
+      "frame": 61,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f062",
+      "rank": "7",
+      "frame": 62,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f062",
+      "rank": "K",
+      "frame": 62,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f062",
+      "rank": "3",
+      "frame": 62,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f063",
+      "rank": "7",
+      "frame": 63,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f063",
+      "rank": "K",
+      "frame": 63,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f063",
+      "rank": "3",
+      "frame": 63,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f064",
+      "rank": "7",
+      "frame": 64,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f064",
+      "rank": "K",
+      "frame": 64,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f064",
+      "rank": "3",
+      "frame": 64,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f065",
+      "rank": "7",
+      "frame": 65,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f065",
+      "rank": "K",
+      "frame": 65,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f065",
+      "rank": "3",
+      "frame": 65,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f066",
+      "rank": "7",
+      "frame": 66,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f066",
+      "rank": "8",
+      "frame": 66,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f066",
+      "rank": "K",
+      "frame": 66,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f066",
+      "rank": "3",
+      "frame": 66,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f067",
+      "rank": "7",
+      "frame": 67,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f067",
+      "rank": "8",
+      "frame": 67,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f067",
+      "rank": "K",
+      "frame": 67,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f067",
+      "rank": "3",
+      "frame": 67,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f068",
+      "rank": "7",
+      "frame": 68,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f068",
+      "rank": "8",
+      "frame": 68,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f068",
+      "rank": "K",
+      "frame": 68,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f068",
+      "rank": "3",
+      "frame": 68,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f069",
+      "rank": "7",
+      "frame": 69,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f069",
+      "rank": "8",
+      "frame": 69,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f069",
+      "rank": "K",
+      "frame": 69,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f069",
+      "rank": "3",
+      "frame": 69,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f070",
+      "rank": "7",
+      "frame": 70,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f070",
+      "rank": "8",
+      "frame": 70,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f070",
+      "rank": "K",
+      "frame": 70,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f070",
+      "rank": "3",
+      "frame": 70,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f071",
+      "rank": "7",
+      "frame": 71,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f071",
+      "rank": "8",
+      "frame": 71,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f071",
+      "rank": "2",
+      "frame": 71,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f071",
+      "rank": "K",
+      "frame": 71,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f071",
+      "rank": "3",
+      "frame": 71,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f072",
+      "rank": "7",
+      "frame": 72,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f072",
+      "rank": "8",
+      "frame": 72,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f072",
+      "rank": "2",
+      "frame": 72,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f072",
+      "rank": "K",
+      "frame": 72,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f072",
+      "rank": "3",
+      "frame": 72,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f073",
+      "rank": "7",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f073",
+      "rank": "8",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f073",
+      "rank": "2",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f073",
+      "rank": "K",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f073",
+      "rank": "3",
+      "frame": 73,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f074",
+      "rank": "7",
+      "frame": 74,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f074",
+      "rank": "8",
+      "frame": 74,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f074",
+      "rank": "2",
+      "frame": 74,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f074",
+      "rank": "K",
+      "frame": 74,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f074",
+      "rank": "3",
+      "frame": 74,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f075",
+      "rank": "7",
+      "frame": 75,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f075",
+      "rank": "8",
+      "frame": 75,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f075",
+      "rank": "2",
+      "frame": 75,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f075",
+      "rank": "K",
+      "frame": 75,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f075",
+      "rank": "3",
+      "frame": 75,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f076",
+      "rank": "7",
+      "frame": 76,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f076",
+      "rank": "8",
+      "frame": 76,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f076",
+      "rank": "2",
+      "frame": 76,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f076",
+      "rank": "K",
+      "frame": 76,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f076",
+      "rank": "3",
+      "frame": 76,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f077",
+      "rank": "7",
+      "frame": 77,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f077",
+      "rank": "8",
+      "frame": 77,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f077",
+      "rank": "2",
+      "frame": 77,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f077",
+      "rank": "K",
+      "frame": 77,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f077",
+      "rank": "3",
+      "frame": 77,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f078",
+      "rank": "7",
+      "frame": 78,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f078",
+      "rank": "8",
+      "frame": 78,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f078",
+      "rank": "2",
+      "frame": 78,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f078",
+      "rank": "K",
+      "frame": 78,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f078",
+      "rank": "3",
+      "frame": 78,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f079",
+      "rank": "7",
+      "frame": 79,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f079",
+      "rank": "8",
+      "frame": 79,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f079",
+      "rank": "2",
+      "frame": 79,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f079",
+      "rank": "K",
+      "frame": 79,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f079",
+      "rank": "3",
+      "frame": 79,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_7_f080",
+      "rank": "7",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_8_f080",
+      "rank": "8",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_dealer_2_f080",
+      "rank": "2",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_K_f080",
+      "rank": "K",
+      "frame": 80,
+      "group": "oct26_round"
+    },
+    {
+      "key": "oct26_oct26_player_3_f080",
+      "rank": "3",
+      "frame": 80,
+      "group": "oct26_round"
+    }
+  ]
+}

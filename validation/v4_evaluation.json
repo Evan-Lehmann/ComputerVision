@@ -1,0 +1,3330 @@
+{
+  "v3": {
+    "test": {
+      "correct": 24,
+      "total": 29,
+      "predictions": [
+        {
+          "key": "train_train_005_frame_000114_00.png",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9335967898368835
+        },
+        {
+          "key": "train_train_005_frame_000114_01.png",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.5194289088249207
+        },
+        {
+          "key": "train_train_005_frame_000114_02.png",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9258173704147339
+        },
+        {
+          "key": "candidate_0015_frame_20261025_025234_424101_000115_04.png",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9433212876319885
+        },
+        {
+          "key": "candidate_0016_frame_20261025_025249_532026_000145_03.png",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8160771727561951
+        },
+        {
+          "key": "candidate_0017_frame_20261025_025254_565442_000155_02.png",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.6584420204162598
+        },
+        {
+          "key": "candidate_0018_frame_20261025_025254_565442_000155_06.png",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9781386256217957
+        },
+        {
+          "key": "t11_f110",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9361048936843872
+        },
+        {
+          "key": "t12_f110",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9215986132621765
+        },
+        {
+          "key": "t11_f115",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.8231990933418274
+        },
+        {
+          "key": "t12_f115",
+          "actual": "9",
+          "predicted": "8",
+          "confidence": 0.5457902550697327
+        },
+        {
+          "key": "t13_f115",
+          "actual": "J",
+          "predicted": "4",
+          "confidence": 0.25084882974624634
+        },
+        {
+          "key": "t14_f115",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.8825697898864746
+        },
+        {
+          "key": "t15_f115",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9118348360061646
+        },
+        {
+          "key": "t11_f135",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.8231990933418274
+        },
+        {
+          "key": "t12_f135",
+          "actual": "9",
+          "predicted": "8",
+          "confidence": 0.446914941072464
+        },
+        {
+          "key": "t13_f135",
+          "actual": "J",
+          "predicted": "4",
+          "confidence": 0.25084882974624634
+        },
+        {
+          "key": "t14_f135",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.8825697898864746
+        },
+        {
+          "key": "t15_f135",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9643758535385132
+        },
+        {
+          "key": "t16_f145",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8160771727561951
+        },
+        {
+          "key": "t16_f150",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8160771727561951
+        },
+        {
+          "key": "t17_f150",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9462139010429382
+        },
+        {
+          "key": "t11_f155",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.6584420204162598
+        },
+        {
+          "key": "t12_f155",
+          "actual": "9",
+          "predicted": "8",
+          "confidence": 0.3540251851081848
+        },
+        {
+          "key": "t13_f155",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.45706555247306824
+        },
+        {
+          "key": "t14_f155",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9732481837272644
+        },
+        {
+          "key": "t15_f155",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.8380924463272095
+        },
+        {
+          "key": "t16_f155",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8331716656684875
+        },
+        {
+          "key": "t17_f155",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9658140540122986
+        }
+      ]
+    },
+    "oct26": {
+      "correct": 175,
+      "total": 246,
+      "predictions": [
+        {
+          "key": "oct26_oct26_player_K_f004",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9567654728889465
+        },
+        {
+          "key": "oct26_oct26_player_K_f005",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.984638512134552
+        },
+        {
+          "key": "oct26_oct26_player_K_f006",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.984638512134552
+        },
+        {
+          "key": "oct26_oct26_player_K_f007",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.984638512134552
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f008",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9866639375686646
+        },
+        {
+          "key": "oct26_oct26_player_K_f008",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.984638512134552
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f009",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9800281524658203
+        },
+        {
+          "key": "oct26_oct26_player_K_f009",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.984638512134552
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f010",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9800281524658203
+        },
+        {
+          "key": "oct26_oct26_player_K_f010",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.987922728061676
+        },
+        {
+          "key": "oct26_oct26_player_3_f010",
+          "actual": "3",
+          "predicted": "5",
+          "confidence": 0.6197298169136047
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f011",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9800281524658203
+        },
+        {
+          "key": "oct26_oct26_player_K_f011",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f011",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f012",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9800281524658203
+        },
+        {
+          "key": "oct26_oct26_player_K_f012",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f012",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f013",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9800281524658203
+        },
+        {
+          "key": "oct26_oct26_player_K_f013",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f013",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f014",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9800281524658203
+        },
+        {
+          "key": "oct26_oct26_player_K_f014",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f014",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f015",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f015",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f015",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f016",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f016",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f016",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f017",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f017",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f017",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f018",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f018",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f018",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f019",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f019",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f019",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f020",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f020",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f020",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f021",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f021",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f021",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f022",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f022",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f022",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f023",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f023",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f023",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f024",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f024",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f024",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f025",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f025",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f025",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f026",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f026",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f026",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f027",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f027",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f027",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f028",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f028",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f028",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f029",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f029",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f029",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f030",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f030",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f030",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f031",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f031",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f031",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f032",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f032",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f032",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f033",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f033",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f033",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f034",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f034",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f034",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f035",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f035",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f035",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f036",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f036",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f036",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f037",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f037",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f037",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f038",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f038",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f038",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f039",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f039",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f039",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f040",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f040",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f040",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f041",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f041",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f041",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f042",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f042",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f042",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f043",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f043",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f043",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f044",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f044",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f044",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f045",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f045",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f045",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f046",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f046",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f046",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f047",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f047",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f047",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f048",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f048",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f048",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f049",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f049",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f049",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f050",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f050",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f050",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f051",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f051",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f051",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f052",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f052",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f052",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f053",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f053",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f053",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f054",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f054",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f054",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f055",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f055",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f055",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f056",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f056",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f056",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f057",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f057",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f057",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f058",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f058",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f058",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f059",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f059",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f059",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f060",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.97853022813797
+        },
+        {
+          "key": "oct26_oct26_player_K_f060",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9786761403083801
+        },
+        {
+          "key": "oct26_oct26_player_3_f060",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3573305010795593
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f061",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f061",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f061",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f062",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f062",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f062",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f063",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f063",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f063",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f064",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f064",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f064",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f065",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_player_K_f065",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f065",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f066",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f066",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8027378916740417
+        },
+        {
+          "key": "oct26_oct26_player_K_f066",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f066",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f067",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f067",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_player_K_f067",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f067",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f068",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f068",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_player_K_f068",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f068",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f069",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f069",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_player_K_f069",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f069",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f070",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f070",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_player_K_f070",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f070",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f071",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f071",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f071",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.8962156176567078
+        },
+        {
+          "key": "oct26_oct26_player_K_f071",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f071",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f072",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f072",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f072",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f072",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f072",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f073",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f073",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f073",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f073",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f073",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f074",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f074",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f074",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f074",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f074",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f075",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f075",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f075",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f075",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f075",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f076",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f076",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f076",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f076",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f076",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f077",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f077",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f077",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f077",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f077",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f078",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f078",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f078",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f078",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f078",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f079",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f079",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f079",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f079",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f079",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f080",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9799581170082092
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f080",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.9310768842697144
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f080",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9275251626968384
+        },
+        {
+          "key": "oct26_oct26_player_K_f080",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9901511669158936
+        },
+        {
+          "key": "oct26_oct26_player_3_f080",
+          "actual": "3",
+          "predicted": "Q",
+          "confidence": 0.3604303300380707
+        }
+      ]
+    }
+  },
+  "v4": {
+    "test": {
+      "correct": 29,
+      "total": 29,
+      "predictions": [
+        {
+          "key": "train_train_005_frame_000114_00.png",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.950128436088562
+        },
+        {
+          "key": "train_train_005_frame_000114_01.png",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.7163840532302856
+        },
+        {
+          "key": "train_train_005_frame_000114_02.png",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9513373970985413
+        },
+        {
+          "key": "candidate_0015_frame_20261025_025234_424101_000115_04.png",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9338406920433044
+        },
+        {
+          "key": "candidate_0016_frame_20261025_025249_532026_000145_03.png",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.774198055267334
+        },
+        {
+          "key": "candidate_0017_frame_20261025_025254_565442_000155_02.png",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.8009050488471985
+        },
+        {
+          "key": "candidate_0018_frame_20261025_025254_565442_000155_06.png",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9747256636619568
+        },
+        {
+          "key": "t11_f110",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.882895290851593
+        },
+        {
+          "key": "t12_f110",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9033854603767395
+        },
+        {
+          "key": "t11_f115",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.9056492447853088
+        },
+        {
+          "key": "t12_f115",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.5603251457214355
+        },
+        {
+          "key": "t13_f115",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.5325024724006653
+        },
+        {
+          "key": "t14_f115",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.911830484867096
+        },
+        {
+          "key": "t15_f115",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.8406437039375305
+        },
+        {
+          "key": "t11_f135",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.9056492447853088
+        },
+        {
+          "key": "t12_f135",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.41498836874961853
+        },
+        {
+          "key": "t13_f135",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.5325024724006653
+        },
+        {
+          "key": "t14_f135",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.911830484867096
+        },
+        {
+          "key": "t15_f135",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.9482638835906982
+        },
+        {
+          "key": "t16_f145",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.774198055267334
+        },
+        {
+          "key": "t16_f150",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.774198055267334
+        },
+        {
+          "key": "t17_f150",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9342904686927795
+        },
+        {
+          "key": "t11_f155",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.8009050488471985
+        },
+        {
+          "key": "t12_f155",
+          "actual": "9",
+          "predicted": "9",
+          "confidence": 0.45287567377090454
+        },
+        {
+          "key": "t13_f155",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.6127768158912659
+        },
+        {
+          "key": "t14_f155",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9582430124282837
+        },
+        {
+          "key": "t15_f155",
+          "actual": "J",
+          "predicted": "J",
+          "confidence": 0.8218469023704529
+        },
+        {
+          "key": "t16_f155",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.7557685971260071
+        },
+        {
+          "key": "t17_f155",
+          "actual": "6",
+          "predicted": "6",
+          "confidence": 0.9706854224205017
+        }
+      ]
+    },
+    "oct26": {
+      "correct": 245,
+      "total": 246,
+      "predictions": [
+        {
+          "key": "oct26_oct26_player_K_f004",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9722933769226074
+        },
+        {
+          "key": "oct26_oct26_player_K_f005",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9796314835548401
+        },
+        {
+          "key": "oct26_oct26_player_K_f006",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9796314835548401
+        },
+        {
+          "key": "oct26_oct26_player_K_f007",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9796314835548401
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f008",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9773042798042297
+        },
+        {
+          "key": "oct26_oct26_player_K_f008",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9796314835548401
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f009",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9703914523124695
+        },
+        {
+          "key": "oct26_oct26_player_K_f009",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9796314835548401
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f010",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9703914523124695
+        },
+        {
+          "key": "oct26_oct26_player_K_f010",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9914736747741699
+        },
+        {
+          "key": "oct26_oct26_player_3_f010",
+          "actual": "3",
+          "predicted": "5",
+          "confidence": 0.6775656342506409
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f011",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9703914523124695
+        },
+        {
+          "key": "oct26_oct26_player_K_f011",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f011",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f012",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9703914523124695
+        },
+        {
+          "key": "oct26_oct26_player_K_f012",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f012",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f013",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9703914523124695
+        },
+        {
+          "key": "oct26_oct26_player_K_f013",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f013",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f014",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9703914523124695
+        },
+        {
+          "key": "oct26_oct26_player_K_f014",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f014",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f015",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f015",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f015",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f016",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f016",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f016",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f017",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f017",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f017",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f018",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f018",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f018",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f019",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f019",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f019",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f020",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f020",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f020",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f021",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f021",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f021",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f022",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f022",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f022",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f023",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f023",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f023",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f024",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f024",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f024",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f025",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f025",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f025",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f026",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f026",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f026",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f027",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f027",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f027",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f028",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f028",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f028",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f029",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f029",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f029",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f030",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f030",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f030",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f031",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f031",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f031",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f032",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f032",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f032",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f033",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f033",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f033",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f034",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f034",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f034",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f035",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f035",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f035",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f036",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f036",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f036",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f037",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f037",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f037",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f038",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f038",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f038",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f039",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f039",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f039",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f040",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f040",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f040",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f041",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f041",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f041",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f042",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f042",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f042",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f043",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f043",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f043",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f044",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f044",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f044",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f045",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f045",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f045",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f046",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f046",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f046",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f047",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f047",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f047",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f048",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f048",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f048",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f049",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f049",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f049",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f050",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f050",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f050",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f051",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f051",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f051",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f052",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f052",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f052",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f053",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f053",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f053",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f054",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f054",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f054",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f055",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f055",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f055",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f056",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f056",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f056",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f057",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f057",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f057",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f058",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f058",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f058",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f059",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f059",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f059",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f060",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9637870788574219
+        },
+        {
+          "key": "oct26_oct26_player_K_f060",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.9803502559661865
+        },
+        {
+          "key": "oct26_oct26_player_3_f060",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.7012777924537659
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f061",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f061",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f061",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f062",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f062",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f062",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f063",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f063",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f063",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f064",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f064",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f064",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f065",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_player_K_f065",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f065",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f066",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f066",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.6974722743034363
+        },
+        {
+          "key": "oct26_oct26_player_K_f066",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f066",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f067",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f067",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_player_K_f067",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f067",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f068",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f068",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_player_K_f068",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f068",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f069",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f069",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_player_K_f069",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f069",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f070",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f070",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_player_K_f070",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f070",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f071",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f071",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f071",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.8370504379272461
+        },
+        {
+          "key": "oct26_oct26_player_K_f071",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f071",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f072",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f072",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f072",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f072",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f072",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f073",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f073",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f073",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f073",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f073",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f074",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f074",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f074",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f074",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f074",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f075",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f075",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f075",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f075",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f075",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f076",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f076",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f076",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f076",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f076",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f077",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f077",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f077",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f077",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f077",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f078",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f078",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f078",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f078",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f078",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f079",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f079",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f079",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f079",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f079",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        },
+        {
+          "key": "oct26_oct26_dealer_7_f080",
+          "actual": "7",
+          "predicted": "7",
+          "confidence": 0.9717367887496948
+        },
+        {
+          "key": "oct26_oct26_dealer_8_f080",
+          "actual": "8",
+          "predicted": "8",
+          "confidence": 0.8848119974136353
+        },
+        {
+          "key": "oct26_oct26_dealer_2_f080",
+          "actual": "2",
+          "predicted": "2",
+          "confidence": 0.9354654550552368
+        },
+        {
+          "key": "oct26_oct26_player_K_f080",
+          "actual": "K",
+          "predicted": "K",
+          "confidence": 0.995728075504303
+        },
+        {
+          "key": "oct26_oct26_player_3_f080",
+          "actual": "3",
+          "predicted": "3",
+          "confidence": 0.9774413704872131
+        }
+      ]
+    }
+  }
+}
