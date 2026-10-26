@@ -1,0 +1,134 @@
+source_deck,rank,original_file,processed_file
+deck1,ten,samples/cards/deck1/10 of clubs.png,output/processed_v2/deck1/ten/10 of clubs.png
+deck1,ten,samples/cards/deck1/10 of diamonds.png,output/processed_v2/deck1/ten/10 of diamonds.png
+deck1,ten,samples/cards/deck1/10 of hearts.png,output/processed_v2/deck1/ten/10 of hearts.png
+deck1,ten,samples/cards/deck1/10 of spades.png,output/processed_v2/deck1/ten/10 of spades.png
+deck1,two,samples/cards/deck1/2 of clubs.png,output/processed_v2/deck1/two/2 of clubs.png
+deck1,two,samples/cards/deck1/2 of diamonds.png,output/processed_v2/deck1/two/2 of diamonds.png
+deck1,two,samples/cards/deck1/2 of hearts.png,output/processed_v2/deck1/two/2 of hearts.png
+deck1,two,samples/cards/deck1/2 of spades.png,output/processed_v2/deck1/two/2 of spades.png
+deck1,three,samples/cards/deck1/3 of clubs.png,output/processed_v2/deck1/three/3 of clubs.png
+deck1,three,samples/cards/deck1/3 of diamonds.png,output/processed_v2/deck1/three/3 of diamonds.png
+deck1,three,samples/cards/deck1/3 of hearts.png,output/processed_v2/deck1/three/3 of hearts.png
+deck1,three,samples/cards/deck1/3 of spades.png,output/processed_v2/deck1/three/3 of spades.png
+deck1,four,samples/cards/deck1/4 of clubs.png,output/processed_v2/deck1/four/4 of clubs.png
+deck1,four,samples/cards/deck1/4 of diamonds.png,output/processed_v2/deck1/four/4 of diamonds.png
+deck1,four,samples/cards/deck1/4 of hearts.png,output/processed_v2/deck1/four/4 of hearts.png
+deck1,four,samples/cards/deck1/4 of spades.png,output/processed_v2/deck1/four/4 of spades.png
+deck1,five,samples/cards/deck1/5 of clubs.png,output/processed_v2/deck1/five/5 of clubs.png
+deck1,five,samples/cards/deck1/5 of diamonds.png,output/processed_v2/deck1/five/5 of diamonds.png
+deck1,five,samples/cards/deck1/5 of hearts.png,output/processed_v2/deck1/five/5 of hearts.png
+deck1,five,samples/cards/deck1/5 of spades.png,output/processed_v2/deck1/five/5 of spades.png
+deck1,six,samples/cards/deck1/6 of clubs.png,output/processed_v2/deck1/six/6 of clubs.png
+deck1,six,samples/cards/deck1/6 of diamonds.png,output/processed_v2/deck1/six/6 of diamonds.png
+deck1,six,samples/cards/deck1/6 of hearts.png,output/processed_v2/deck1/six/6 of hearts.png
+deck1,six,samples/cards/deck1/6 of spades.png,output/processed_v2/deck1/six/6 of spades.png
+deck1,seven,samples/cards/deck1/7 of clubs.png,output/processed_v2/deck1/seven/7 of clubs.png
+deck1,seven,samples/cards/deck1/7 of diamonds.png,output/processed_v2/deck1/seven/7 of diamonds.png
+deck1,seven,samples/cards/deck1/7 of hearts.png,output/processed_v2/deck1/seven/7 of hearts.png
+deck1,seven,samples/cards/deck1/7 of spades.png,output/processed_v2/deck1/seven/7 of spades.png
+deck1,eight,samples/cards/deck1/8 of clubs.png,output/processed_v2/deck1/eight/8 of clubs.png
+deck1,eight,samples/cards/deck1/8 of diamonds.png,output/processed_v2/deck1/eight/8 of diamonds.png
+deck1,eight,samples/cards/deck1/8 of hearts.png,output/processed_v2/deck1/eight/8 of hearts.png
+deck1,eight,samples/cards/deck1/8 of spades.png,output/processed_v2/deck1/eight/8 of spades.png
+deck1,nine,samples/cards/deck1/9 of clubs.png,output/processed_v2/deck1/nine/9 of clubs.png
+deck1,nine,samples/cards/deck1/9 of diamonds.png,output/processed_v2/deck1/nine/9 of diamonds.png
+deck1,nine,samples/cards/deck1/9 of hearts.png,output/processed_v2/deck1/nine/9 of hearts.png
+deck1,nine,samples/cards/deck1/9 of spades.png,output/processed_v2/deck1/nine/9 of spades.png
+deck1,ace,samples/cards/deck1/ace of clubs.png,output/processed_v2/deck1/ace/ace of clubs.png
+deck1,ace,samples/cards/deck1/ace of diamonds.png,output/processed_v2/deck1/ace/ace of diamonds.png
+deck1,ace,samples/cards/deck1/ace of hearts.png,output/processed_v2/deck1/ace/ace of hearts.png
+deck1,ace,samples/cards/deck1/ace of spades.png,output/processed_v2/deck1/ace/ace of spades.png
+deck1,jack,samples/cards/deck1/jack of clubs.png,output/processed_v2/deck1/jack/jack of clubs.png
+deck1,jack,samples/cards/deck1/jack of diamonds.png,output/processed_v2/deck1/jack/jack of diamonds.png
+deck1,jack,samples/cards/deck1/jack of hearts.png,output/processed_v2/deck1/jack/jack of hearts.png
+deck1,jack,samples/cards/deck1/jack of spades.png,output/processed_v2/deck1/jack/jack of spades.png
+deck1,king,samples/cards/deck1/king of clubs.png,output/processed_v2/deck1/king/king of clubs.png
+deck1,king,samples/cards/deck1/king of diamonds.png,output/processed_v2/deck1/king/king of diamonds.png
+deck1,king,samples/cards/deck1/king of hearts.png,output/processed_v2/deck1/king/king of hearts.png
+deck1,king,samples/cards/deck1/king of spades.png,output/processed_v2/deck1/king/king of spades.png
+deck1,queen,samples/cards/deck1/queen of clubs.png,output/processed_v2/deck1/queen/queen of clubs.png
+deck1,queen,samples/cards/deck1/queen of diamonds.png,output/processed_v2/deck1/queen/queen of diamonds.png
+deck1,queen,samples/cards/deck1/queen of hearts.png,output/processed_v2/deck1/queen/queen of hearts.png
+deck1,queen,samples/cards/deck1/queen of spades.png,output/processed_v2/deck1/queen/queen of spades.png
+deck2,ten,samples/cards/deck2/10_of_clubs.png,output/processed_v2/deck2/ten/10_of_clubs.png
+deck2,ten,samples/cards/deck2/10_of_diamonds.png,output/processed_v2/deck2/ten/10_of_diamonds.png
+deck2,ten,samples/cards/deck2/10_of_hearts.png,output/processed_v2/deck2/ten/10_of_hearts.png
+deck2,ten,samples/cards/deck2/10_of_spades.png,output/processed_v2/deck2/ten/10_of_spades.png
+deck2,two,samples/cards/deck2/2_of_clubs.png,output/processed_v2/deck2/two/2_of_clubs.png
+deck2,two,samples/cards/deck2/2_of_diamonds.png,output/processed_v2/deck2/two/2_of_diamonds.png
+deck2,two,samples/cards/deck2/2_of_hearts.png,output/processed_v2/deck2/two/2_of_hearts.png
+deck2,two,samples/cards/deck2/2_of_spades.png,output/processed_v2/deck2/two/2_of_spades.png
+deck2,three,samples/cards/deck2/3_of_clubs.png,output/processed_v2/deck2/three/3_of_clubs.png
+deck2,three,samples/cards/deck2/3_of_diamonds.png,output/processed_v2/deck2/three/3_of_diamonds.png
+deck2,three,samples/cards/deck2/3_of_hearts.png,output/processed_v2/deck2/three/3_of_hearts.png
+deck2,three,samples/cards/deck2/3_of_spades.png,output/processed_v2/deck2/three/3_of_spades.png
+deck2,four,samples/cards/deck2/4_of_clubs.png,output/processed_v2/deck2/four/4_of_clubs.png
+deck2,four,samples/cards/deck2/4_of_diamonds.png,output/processed_v2/deck2/four/4_of_diamonds.png
+deck2,four,samples/cards/deck2/4_of_hearts.png,output/processed_v2/deck2/four/4_of_hearts.png
+deck2,four,samples/cards/deck2/4_of_spades.png,output/processed_v2/deck2/four/4_of_spades.png
+deck2,five,samples/cards/deck2/5_of_clubs.png,output/processed_v2/deck2/five/5_of_clubs.png
+deck2,five,samples/cards/deck2/5_of_diamonds.png,output/processed_v2/deck2/five/5_of_diamonds.png
+deck2,five,samples/cards/deck2/5_of_hearts.png,output/processed_v2/deck2/five/5_of_hearts.png
+deck2,five,samples/cards/deck2/5_of_spades.png,output/processed_v2/deck2/five/5_of_spades.png
+deck2,six,samples/cards/deck2/6_of_clubs.png,output/processed_v2/deck2/six/6_of_clubs.png
+deck2,six,samples/cards/deck2/6_of_diamonds.png,output/processed_v2/deck2/six/6_of_diamonds.png
+deck2,six,samples/cards/deck2/6_of_hearts.png,output/processed_v2/deck2/six/6_of_hearts.png
+deck2,six,samples/cards/deck2/6_of_spades.png,output/processed_v2/deck2/six/6_of_spades.png
+deck2,seven,samples/cards/deck2/7_of_clubs.png,output/processed_v2/deck2/seven/7_of_clubs.png
+deck2,seven,samples/cards/deck2/7_of_diamonds.png,output/processed_v2/deck2/seven/7_of_diamonds.png
+deck2,seven,samples/cards/deck2/7_of_hearts.png,output/processed_v2/deck2/seven/7_of_hearts.png
+deck2,seven,samples/cards/deck2/7_of_spades.png,output/processed_v2/deck2/seven/7_of_spades.png
+deck2,eight,samples/cards/deck2/8_of_clubs.png,output/processed_v2/deck2/eight/8_of_clubs.png
+deck2,eight,samples/cards/deck2/8_of_diamonds.png,output/processed_v2/deck2/eight/8_of_diamonds.png
+deck2,eight,samples/cards/deck2/8_of_hearts.png,output/processed_v2/deck2/eight/8_of_hearts.png
+deck2,eight,samples/cards/deck2/8_of_spades.png,output/processed_v2/deck2/eight/8_of_spades.png
+deck2,nine,samples/cards/deck2/9_of_clubs.png,output/processed_v2/deck2/nine/9_of_clubs.png
+deck2,nine,samples/cards/deck2/9_of_diamonds.png,output/processed_v2/deck2/nine/9_of_diamonds.png
+deck2,nine,samples/cards/deck2/9_of_hearts.png,output/processed_v2/deck2/nine/9_of_hearts.png
+deck2,nine,samples/cards/deck2/9_of_spades.png,output/processed_v2/deck2/nine/9_of_spades.png
+deck2,ace,samples/cards/deck2/ace_of_clubs.png,output/processed_v2/deck2/ace/ace_of_clubs.png
+deck2,ace,samples/cards/deck2/ace_of_diamonds.png,output/processed_v2/deck2/ace/ace_of_diamonds.png
+deck2,ace,samples/cards/deck2/ace_of_hearts.png,output/processed_v2/deck2/ace/ace_of_hearts.png
+deck2,ace,samples/cards/deck2/ace_of_spades.png,output/processed_v2/deck2/ace/ace_of_spades.png
+deck2,ace,samples/cards/deck2/ace_of_spades2.png,output/processed_v2/deck2/ace/ace_of_spades2.png
+deck2,jack,samples/cards/deck2/jack_of_clubs.png,output/processed_v2/deck2/jack/jack_of_clubs.png
+deck2,jack,samples/cards/deck2/jack_of_clubs2.png,output/processed_v2/deck2/jack/jack_of_clubs2.png
+deck2,jack,samples/cards/deck2/jack_of_diamonds.png,output/processed_v2/deck2/jack/jack_of_diamonds.png
+deck2,jack,samples/cards/deck2/jack_of_diamonds2.png,output/processed_v2/deck2/jack/jack_of_diamonds2.png
+deck2,jack,samples/cards/deck2/jack_of_hearts.png,output/processed_v2/deck2/jack/jack_of_hearts.png
+deck2,jack,samples/cards/deck2/jack_of_hearts2.png,output/processed_v2/deck2/jack/jack_of_hearts2.png
+deck2,jack,samples/cards/deck2/jack_of_spades.png,output/processed_v2/deck2/jack/jack_of_spades.png
+deck2,jack,samples/cards/deck2/jack_of_spades2.png,output/processed_v2/deck2/jack/jack_of_spades2.png
+deck2,king,samples/cards/deck2/king_of_clubs.png,output/processed_v2/deck2/king/king_of_clubs.png
+deck2,king,samples/cards/deck2/king_of_clubs2.png,output/processed_v2/deck2/king/king_of_clubs2.png
+deck2,king,samples/cards/deck2/king_of_diamonds.png,output/processed_v2/deck2/king/king_of_diamonds.png
+deck2,king,samples/cards/deck2/king_of_diamonds2.png,output/processed_v2/deck2/king/king_of_diamonds2.png
+deck2,king,samples/cards/deck2/king_of_hearts.png,output/processed_v2/deck2/king/king_of_hearts.png
+deck2,king,samples/cards/deck2/king_of_hearts2.png,output/processed_v2/deck2/king/king_of_hearts2.png
+deck2,king,samples/cards/deck2/king_of_spades.png,output/processed_v2/deck2/king/king_of_spades.png
+deck2,king,samples/cards/deck2/king_of_spades2.png,output/processed_v2/deck2/king/king_of_spades2.png
+deck2,queen,samples/cards/deck2/queen_of_clubs.png,output/processed_v2/deck2/queen/queen_of_clubs.png
+deck2,queen,samples/cards/deck2/queen_of_clubs2.png,output/processed_v2/deck2/queen/queen_of_clubs2.png
+deck2,queen,samples/cards/deck2/queen_of_diamonds.png,output/processed_v2/deck2/queen/queen_of_diamonds.png
+deck2,queen,samples/cards/deck2/queen_of_diamonds2.png,output/processed_v2/deck2/queen/queen_of_diamonds2.png
+deck2,queen,samples/cards/deck2/queen_of_hearts.png,output/processed_v2/deck2/queen/queen_of_hearts.png
+deck2,queen,samples/cards/deck2/queen_of_hearts2.png,output/processed_v2/deck2/queen/queen_of_hearts2.png
+deck2,queen,samples/cards/deck2/queen_of_spades.png,output/processed_v2/deck2/queen/queen_of_spades.png
+deck2,queen,samples/cards/deck2/queen_of_spades2.png,output/processed_v2/deck2/queen/queen_of_spades2.png
+original,ace,samples/cards/original/ace_diamonds.png,output/processed_v2/original/ace/ace_diamonds.png
+original,ace,samples/cards/original/ace_spades.png,output/processed_v2/original/ace/ace_spades.png
+original,eight,samples/cards/original/eight_clubs.png,output/processed_v2/original/eight/eight_clubs.png
+original,eight,samples/cards/original/eight_hearts.png,output/processed_v2/original/eight/eight_hearts.png
+original,five,samples/cards/original/five_diamonds.png,output/processed_v2/original/five/five_diamonds.png
+original,jack,samples/cards/original/jack_clubs.png,output/processed_v2/original/jack/jack_clubs.png
+original,jack,samples/cards/original/jack_spades.png,output/processed_v2/original/jack/jack_spades.png
+original,king,samples/cards/original/king_hearts.png,output/processed_v2/original/king/king_hearts.png
+original,nine,samples/cards/original/nine_hearts.png,output/processed_v2/original/nine/nine_hearts.png
+original,nine,samples/cards/original/nine_spades.png,output/processed_v2/original/nine/nine_spades.png
+original,queen,samples/cards/original/queen_diamonds.png,output/processed_v2/original/queen/queen_diamonds.png
+original,six,samples/cards/original/six_hearts.png,output/processed_v2/original/six/six_hearts.png
+original,six,samples/cards/original/six_spades.png,output/processed_v2/original/six/six_spades.png
+original,two,samples/cards/original/two_diamonds.png,output/processed_v2/original/two/two_diamonds.png
+original,two,samples/cards/original/two_hearts.png,output/processed_v2/original/two/two_hearts.png
+original,two,samples/cards/original/two_spades.png,output/processed_v2/original/two/two_spades.png

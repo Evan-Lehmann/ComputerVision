@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CardVision</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="app">
+
+        <header>
+            <h1>CardVision</h1>
+            <p id="status">Ready</p>
+        </header>
+
+
+        <!-- ==========================================
+             SECTION 1 — RECORDING
+             ========================================== -->
+
+        <section class="panel recording-panel">
+
+            <h2>Round Recording</h2>
+
+            <div class="button-row">
+
+                <button
+                    id="startButton"
+                    class="primary"
+                >
+                    Start Recording
+                </button>
+
+                <button
+                    id="stopButton"
+                    disabled
+                >
+                    Stop Recording
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             SECTION 2 — CARDS
+             ========================================== -->
+
+        <section class="panel cards-panel">
+
+            <div class="section-header">
+                <h2>Cards Observed</h2>
+                <span class="small-label">
+                    Most recent first
+                </span>
+            </div>
+
+            <div
+                id="cards"
+                class="cards-list"
+            >
+
+                <div class="empty-state">
+                    No cards recorded
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             SECTION 3 — COUNT
+             ========================================== -->
+
+        <section class="panel count-panel">
+
+            <h2>Total Count Change</h2>
+
+            <div
+                id="countChange"
+                class="count-number"
+            >
+                0
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script
+        src="{{ url_for('static', filename='app.js') }}"
+    ></script>
+
+</body>
+</html>
