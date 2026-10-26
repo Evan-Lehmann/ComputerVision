@@ -13,6 +13,7 @@ def main():
     parser.add_argument('--classifier',type=Path)
     parser.add_argument('--regions',type=Path,help='JSON array of named relative regions')
     parser.add_argument('--review',type=Path,help='JSON containing events and confirmed fields')
+    parser.add_argument('--no-ocr',action='store_true',help='Disable optional Tesseract cross-check')
     args=parser.parse_args()
     if not args.frames.is_dir():
         parser.error('Frame directory does not exist.')
@@ -21,7 +22,7 @@ def main():
     paths=sorted(p for p in args.frames.iterdir() if p.suffix.lower() in ['.png','.jpg','.jpeg'])
     def progress(done,total):
         if done%25==0 or done==total:print('%d/%d frames' % (done,total),flush=True)
-    result=process_frames(paths,args.output,engine,regions,progress)
+    result=process_frames(paths,args.output,engine,regions,progress,ocr_reader=False if args.no_ocr else None)
     if args.review:
         review=json.loads(args.review.read_text())
         result=apply_review(result,review['events'],review.get('confirmed',False))

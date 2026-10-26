@@ -6,6 +6,16 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
+## Optional local OCR fallback
+
+The CNN stays V4. Additional crop-jitter and glyph-CNN candidates were investigated but rejected because they regressed on earlier checks or failed to confidently resolve the remaining case. None replaces the published CNN.
+
+A pretrained Tesseract reader now offers a narrow cross-check for uncertain red ranks. It isolates red ink, preserves both digits of 10, and requires at least two distinct first/middle/last frames with the same valid rank and at least 90% OCR confidence each. Conflicting high-confidence readings, unsupported text (including a clipped standalone 1), missing binaries and timeouts leave the rank unknown. Confident CNN ranks are not overridden. OCR scores and provenance are stored separately from the original CNN suggestion. The fallback is local and uses no recording-specific training.
+
+There are now **37 passing tests** in the environment with Tesseract installed. These include native OCR of a synthetic red glyph, TSV parsing, confidence/conflict/distinct-frame gates, component preservation for 10, missing/timeout behavior, CNN preservation and OCR-to-count integration. The native OCR test is explicitly skipped if Tesseract is not installed; it is not a required dependency for CNN-only processing. Original model, count and identity tests still pass. Frontend syntax and mobile display checks are also covered by the browser validation workflow.
+
+Tesseract is optional and must be installed separately on the Mac (see README). The new recording used for debugging this fallback was not added to the CNN training set. Its raw frames, crops and detailed derived fixtures are not included in this change. Validation on a development recording does not establish accuracy on future recordings. Black ranks and high-confidence CNN mistakes are outside this fallback's scope, and review remains required.
+
 ## Oct-26 recording follow-up (current V4 default)
 
 The supplied round_20261026_103552_7d8b395b archive contained 84 frames. The original app reproduced the reported nine rows exactly: duplicated K/7/2 tracks plus an unresolved 3 suggested as Q. Visual review of the selected large-hand regions established five physical cards in first-observed order: **K, 7, 3, 8, 2**, with Hi-Lo **+1**. This scope excludes the ambiguous central miniature view.

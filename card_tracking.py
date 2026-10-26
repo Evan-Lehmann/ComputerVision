@@ -64,10 +64,10 @@ def appearance_similarity(a, b):
     shape = float(scores.max())
     context = float(context_scores.max())
     # Rendering/border changes can alter the padded view while the glyph is
-    # effectively unchanged. Require very strong central-shape agreement and
-    # a context floor before relaxing the strict two-view minimum. A partial
-    # 10 resembling 6 or K changing to 3 must still fail the shape guard.
-    score = (shape + context) / 2 if shape >= 0.90 and context >= 0.68 else min(shape, context)
+    # effectively unchanged. When central-shape agreement is very strong,
+    # context is a continuous penalty rather than a hard border-dependent veto.
+    # A partial 10 resembling 6 or K changing to 3 still fails the shape guard.
+    score = 0.75 * shape + 0.25 * context if shape >= 0.90 else min(shape, context)
     return float(np.clip(score, 0.0, 1.0))
 
 

@@ -75,6 +75,29 @@ class RoundPipelineTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.process(frames=[])
         bad=self.root/'missing.png'
         with self.assertRaises(ValueError):self.process(frames=[bad])
+    def test_optional_ocr_resolves_unknown_and_preserves_cnn_provenance(self):
+        from unittest.mock import Mock
+        class Uncertain(Engine):
+            def classify(self,crops):return [np.full(13,1/13) for _ in crops]
+        reader=Mock(available=True,error=None)
+        reader.consensus.return_value=dict(rank='3',confidence=.95,votes=[dict(frame=0,rank='3',confidence=.96),dict(frame=2,rank='3',confidence=.95)])
+        result=process_frames(self.frames,self.root/'out',Uncertain(),REGIONS,ocr_reader=reader)
+        self.assertEqual(result['cards'],['3'])
+        self.assertEqual(result['count_change'],1)
+        self.assertFalse(result['count_verified'])
+        event=result['events'][0]
+        self.assertEqual(event['recognition_source'],'ocr_consensus')
+        self.assertEqual(event['suggested_rank'],'3')
+        self.assertLess(event['cnn_confidence'],.8)
+        self.assertEqual(len(event['ocr_votes']),2)
+
+    def test_optional_ocr_never_overrides_confident_cnn(self):
+        from unittest.mock import Mock
+        reader=Mock(available=True,error=None)
+        result=process_frames(self.frames,self.root/'out',Engine(),REGIONS,ocr_reader=reader)
+        self.assertEqual(result['cards'],['6'])
+        reader.consensus.assert_not_called()
+
     def test_fragment_repair_never_merges_two_observations_in_same_frame(self):
         image=cv2.imread(str(self.frames[0]))
         crop=image[18:42,18:37]

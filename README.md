@@ -26,6 +26,21 @@ Hi-Lo: A/10/J/Q/K = −1; 2–6 = +1; 7–9 = 0. UNKNOWN contributes zero to the
 
 Screenshots and analysis are saved under ignored `round_captures/`. They are not uploaded by the app. Existing recordings are preserved. Different recordings use distinct folders.
 
+### Optional OCR cross-check for uncertain red ranks
+
+The CNN remains V4. A local pretrained Tesseract reader can resolve an unknown **red** rank when at least two distinct first/middle/last frames agree at 90% or greater OCR confidence. It does not override a confident CNN result. The row says **OCR consensus**, and the JSON keeps both the CNN suggestion and OCR votes. Results remain provisional until reviewed.
+
+On a Mac with Homebrew:
+
+```sh
+brew install tesseract
+tesseract --version
+```
+
+Then restart Flask. Tesseract runs entirely on your machine; no screenshot is sent to an OCR service. The English language data must be installed (included by the Homebrew package). If Homebrew is unavailable, follow the [official Tesseract installation instructions](https://tesseract-ocr.github.io/tessdoc/Installation.html).
+
+If Tesseract is missing, times out, disagrees across frames or has insufficient confidence, the app keeps the rank unknown and displays a warning when appropriate. Installing the Python requirements alone does not install the native Tesseract binary. This fallback does not establish general OCR accuracy for all ranks/fonts.
+
 ### macOS screen recording
 
 Allow Screen Recording for the application launching Python (for example VS Code or Terminal) in System Settings → Privacy & Security → Screen Recording. Restart that application if required. The app now reports capture failures instead of pretending an empty recording succeeded.

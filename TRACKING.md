@@ -73,3 +73,9 @@ The Oct-26 follow-up adds a strong central-glyph agreement gate to tolerate
 background/border changes. The added fresh-recording regression reduces nine
 fragment rows to five physical cards while preserving the original different-card
 regressions. See VALIDATION.md for the development-data scope and remaining limits.
+
+When the central glyph matches strongly, padded-context similarity now acts as
+a continuous penalty rather than a hard veto. This reduces track splits caused
+by card-border changes while retaining the existing strong-shape guard. The
+rank classifier and its acceptance thresholds are unchanged by this tracking
+revision; unresolved recognition remains explicitly unknown.

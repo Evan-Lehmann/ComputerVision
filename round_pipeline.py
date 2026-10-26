@@ -90,7 +90,7 @@ def summarize(result):
     return result
 
 
-def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None):
+def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None, ocr_reader=None):
     """Process every frame; callers may inject an engine for replay/testing."""
     frame_paths = sorted(Path(p) for p in frame_paths)
     if not frame_paths:
@@ -99,6 +99,9 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     engine = engine or VisionEngine()
+    if ocr_reader is None:
+        from rank_ocr import TesseractRankReader
+        ocr_reader = TesseractRankReader()
     matchers = {r['name']: CardIdentityMatcher(clear_after_empty=4) for r in regions}
     tracks = {r['name']: [] for r in regions}
     next_id, read_frames = 1, 0
@@ -154,6 +157,15 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             confidence = float(average[order[0]])
             margin = float(average[order[0]] - average[order[1]])
             rank = RANKS[order[0]] if len(observations) >= 2 and confidence >= .8 and margin >= .2 else 'UNKNOWN'
+            cnn_rank,cnn_confidence = RANKS[order[0]],confidence
+            recognition_source,ocr_result = 'cnn',None
+            if rank == 'UNKNOWN' and ocr_reader:
+                ocr_result = ocr_reader.consensus(observations)
+                if ocr_result:
+                    rank = ocr_result['rank']
+                    confidence = ocr_result['confidence']
+                    recognition_source = 'ocr_consensus'
+
             evidence = []
             for label, observation in zip(['first','middle','last'], [observations[0], observations[len(observations)//2], observations[-1]]):
                 filename = 'card_%04d_%s.png' % (track.track_id, label)
@@ -162,7 +174,9 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 evidence.append(dict(image=filename, frame=observation['frame'], source=observation['source']))
             events.append(dict(id=str(track.track_id), region=track.region, rank=rank,
                 merged_from=getattr(track, 'merged_from', [track.track_id]),
-                suggested_rank=RANKS[order[0]], confidence=confidence, observations=len(observations),
+                suggested_rank=rank if ocr_result else cnn_rank, confidence=confidence, observations=len(observations),
+                recognition_source=recognition_source, cnn_suggested_rank=cnn_rank,
+                cnn_confidence=cnn_confidence, ocr_votes=ocr_result['votes'] if ocr_result else [],
                 first_frame=observations[0]['frame'], last_frame=observations[-1]['frame'],
                 evidence=evidence, excluded=False, reviewed=False,
                 alternatives=[dict(rank=RANKS[i], probability=float(average[i])) for i in order[:3]]))
@@ -186,6 +200,11 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
         ]))
     if not events:
         result['warnings'].append('No ranks detected in the selected regions. Check the region preview before trusting an empty list.')
+    result['ocr_available'] = bool(ocr_reader and ocr_reader.available)
+    if ocr_reader and not ocr_reader.available:
+        result['warnings'].append('Optional OCR cross-check is unavailable. Install Tesseract to enable it; unresolved ranks still need review.')
+    if ocr_reader and ocr_reader.error:
+        result['warnings'].append(ocr_reader.error)
     save_result(result, output_dir)
     return result
 
