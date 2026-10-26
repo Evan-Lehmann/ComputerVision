@@ -222,3 +222,10 @@ dialog { max-width: 95vw; max-height: 95vh; background: #16191e; color: white; b
 dialog img { display: block; max-width: 90vw; max-height: 75vh; margin-top: 10px; }
 .count-number { min-width: 80px; text-align: right; }
 @media (max-width: 600px) { body { padding: 24px 12px; } .panel { padding: 16px; } .evidence { gap: 6px; } }
+
+.count-panel { border-color: #47535e; gap: 20px; }
+.count-panel .count-number { font-size: clamp(52px, 9vw, 80px); font-variant-numeric: tabular-nums; }
+.count-copy { min-width: 0; }
+.count-badge { display: inline-block; margin-top: 12px; padding: 4px 9px; border-radius: 5px; background: #3a3019; color: #ffe2a1; font-size: 12px; font-weight: 600; }
+.count-badge[data-status="reviewed"] { background: #173b32; color: #8bf1d2; }
+.count-badge[data-status="waiting"] { background: #252b33; color: #c8ccd2; }

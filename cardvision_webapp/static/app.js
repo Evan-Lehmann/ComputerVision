@@ -17,8 +17,12 @@ function renderCount() {
   const included = events.filter(e => !e.excluded);
   const unknown = included.filter(e => e.rank === 'UNKNOWN').length;
   const subtotal = included.reduce((total,e) => total + (['A','10','J','Q','K'].includes(e.rank) ? -1 : ['2','3','4','5','6'].includes(e.rank) ? 1 : 0),0);
-  $('countChange').textContent = resultId ? (unknown ? '—' : subtotal > 0 ? `+${subtotal}` : `${subtotal}`) : '—';
-  $('countStatus').textContent = !resultId ? 'No round analyzed' : dirty ? 'Unsaved review edits' : state.count_verified ? 'Reviewed by you' : unknown ? `Incomplete: ${unknown} unknown · known-card subtotal ${subtotal > 0 ? '+' : ''}${subtotal}` : 'Provisional — review required';
+  const reviewed = !dirty && state.count_verified;
+  $('countChange').textContent = resultId ? (subtotal > 0 ? `+${subtotal}` : `${subtotal}`) : '—';
+  $('countHeading').textContent = resultId && unknown ? 'Known-card subtotal' : 'Round count change';
+  $('countBadge').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Analyzing' : 'Waiting') : unknown ? 'Incomplete' : dirty ? 'Unsaved edits' : reviewed ? 'Reviewed by you' : 'Provisional';
+  $('countBadge').dataset.status = reviewed ? 'reviewed' : resultId ? 'provisional' : 'waiting';
+  $('countStatus').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Calculating the count from your saved screenshots…' : 'The count is calculated after you stop recording and analyze the round.') : unknown ? `${unknown} unknown card${unknown === 1 ? '' : 's'} — the full round count is still unknown.${dirty ? ' Edits are not saved.' : ''}` : dirty ? 'Count reflects your edits. Save the review to keep them.' : reviewed ? `${included.length} included cards. You confirmed this card list.` : `${included.length} included cards. Check the card list before trusting this count.`;
 }
 function renderCards() {
   $('cards').replaceChildren();
