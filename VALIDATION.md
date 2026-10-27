@@ -6,6 +6,29 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
+## Deal-animation tracking repair
+
+The latest recording reproduced six candidate tracks for four physical cards. A dim initial 2 and a dim initial 10 each moved more than three rank-box widths before settling. Both the absolute-colour appearance gate and the movement gate rejected their continuations. A correct zero subtotal hid the incorrect card list because the two extra tracks were unknown; assigning them ranks would also cancel their count contributions.
+
+The repair normalizes each crop against its per-channel background, removes boundary-connected borders, and compares the complete interior glyph while preserving aspect ratio and multiple digits. It applies only to short, non-overlapping birth fragments followed within two frames by a substantially brighter view. It permits movement up to four rank-box units only with at least 0.96 glyph similarity. Co-visible cards, different regions, competing near-equal partners and table-clear scene boundaries remain separate. No classifier rank is used as an identity key; original observations and merged track IDs remain available in the result. The detector, CNN, OCR and classifier inputs are unchanged.
+
+All **52 tests pass**, including synthetic red/black fade-in and movement at three opacity levels, two-digit preservation, every pair of different synthetic ranks, same-rank co-visibility, ambiguous destinations, time/distance/region boundaries, and retirement after table clearing. Original recorded identity-transition regressions still pass. Synthetic glyphs do not establish accuracy across arbitrary fonts or animations.
+
+Six development-recording replays processed 431 frames. Previously computed detector boxes were reused for older recordings; the latest recording was also checked with the actual detector through Flask and Chromium.
+
+| Recording | Candidate rows before → after | Result after repair |
+|---|---:|---|
+| Latest 48-frame recording | 6 → 4 | 2, A, 3, 10; provisional 0 |
+| Earlier 84-frame recording | 5 → 5 | K, 7, 3, 8, 2; provisional +1 |
+| Earlier 54-frame partial recording | 3 → 3 | 3, 2, 7; provisional +2 |
+| Original round 1, 80 frames | 7 → 6 | 8, 10, J, 4, A, 8; provisional −2 |
+| Original round 2, 75 frames | 6 → 5 | Two unresolved ranks; count incomplete |
+| Original round 3, 90 frames | 8 → 7 | One extra fragment remains; count incomplete |
+
+The latest browser replay checked the four-card list, all 111 preserved observations, merged provenance, provisional status, original-frame evidence, saved review and crop download. No JavaScript errors or horizontal overflow at 390px were observed.
+
+These recordings have informed development and are not an independent acceptance set. In the remaining original-round-3 fragment, extracted glyph aspect ratios disagree; the repair declines to force a match. Brief occlusions, cropped glyphs, longer animations and same-rank replacements without observable separation remain limitations. Raw frames and derived crops from the latest upload are not committed; the new tests use synthetic images.
+
 ## Optional local OCR fallback
 
 ### Latest scope and export checks

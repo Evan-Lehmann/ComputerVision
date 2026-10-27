@@ -7,6 +7,15 @@ as identity keys. Matching rejects ambiguous candidates instead of forcing a
 card-to-card transition, and two consecutive empty sampled frames retire old
 tracks. A single empty sampled frame can recover.
 
+The current web pipeline uses this matcher, with four consecutive empty
+frames as its retirement heuristic, followed by conservative fragment repair.
+For a short dim birth followed by a bright settled card, repair additionally
+compares background-normalized interior glyphs and allows a limited larger
+move. It retains all observations and merged track IDs. No co-visible tracks
+are joined, competing partners are rejected, and scene IDs prevent repair from
+undoing a table-clear retirement. See VALIDATION.md for the six-recording
+comparison and the remaining unresolved fragment.
+
 The YOLO detector, tile dedupe, recognition preprocessing, model weights and
 rank acceptance thresholds are unchanged. Different UI representations remain
 separate tracks; logical-card reconciliation is still required before counting.
@@ -65,9 +74,9 @@ These examples informed the matcher and are regression evidence, not an
 independent test set. Recognition errors such as 6 predicted as 5 remain. Short
 tracks can still represent genuine cards, so count calculations must not drop
 them silently. Two empty detection samples are a tracking reset heuristic,
-not shoe-change detection. The Flask app still uses its legacy recognizer;
-this experiment is not yet an end-to-end round counter. Mac execution has not
-been tested in this cloud environment.
+not shoe-change detection. The historical numbers above describe the initial
+experiment; the Flask app now uses this tracking pipeline for review-assisted
+round analysis. Mac execution has not been tested in this cloud environment.
 
 The Oct-26 follow-up adds a strong central-glyph agreement gate to tolerate
 background/border changes. The added fresh-recording regression reduces nine

@@ -113,3 +113,5 @@ The recorded audit evaluated 128 crops: 57 were eligible red glyphs and only 9 m
 See [VALIDATION.md](VALIDATION.md) for measured results, failures, dataset separation and limits; [TRACKING.md](TRACKING.md) for the tracking experiment. The current app uses `models/rank_classifier_v4.pt`. The reproducible training experiments are `train_rank_classifier_v3.py` and `train_rank_classifier_v4.py`.
 
 The YOLO localization/dedupe implementation remains unchanged. Historical training scripts and their data stay available. The web app no longer calls the inaccurate legacy round recognizer.
+
+The tracker also repairs short deal-animation fragments: it compares glyphs after normalizing the dimmed card background and permits limited settling movement. It requires strong shape agreement, rejects competing matches, and keeps co-visible cards, separate regions and table-clear intervals separate. Predicted rank alone never triggers a merge. This reduces duplicate rows across several development recordings; remaining fragments still require review.

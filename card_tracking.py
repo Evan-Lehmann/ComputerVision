@@ -87,6 +87,58 @@ def _geometry(a, b):
     return float(np.hypot(dx, dy) / max((aw + bw) / 2, (ah + bh) / 2))
 
 
+def _animation_glyph(crop):
+    """Association-only glyph, normalized against the card's tinted background.
+
+    Remove boundary-connected borders, retaining all interior components (both
+    digits of 10). Recognition still receives the untouched detector crop.
+    """
+    if crop is None or not crop.size:
+        return None
+    h, w = crop.shape[:2]
+    tx, ty = int(w * .12), int(h * .12)
+    inner = crop[ty:h-ty, tx:w-tx].astype(np.float32)
+    if min(inner.shape[:2]) < 3:
+        return None
+    background = np.maximum(np.percentile(inner, 90, axis=(0, 1)), 1)
+    normalized = np.clip(inner / background, 0, 1).astype(np.float32)
+    ink = 1 - cv2.cvtColor(normalized, cv2.COLOR_BGR2GRAY)
+    mask = (ink > max(.04, .18 * float(ink.max()))).astype(np.uint8)
+    _, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
+    clean = np.zeros_like(mask)
+    for label, (x, y, width, height, area) in enumerate(stats[1:], 1):
+        if (area >= 3 and x > 0 and y > 0
+                and x+width < mask.shape[1] and y+height < mask.shape[0]):
+            clean[labels == label] = 1
+    yy, xx = np.where(clean)
+    if len(xx) < 6:
+        return None
+    tight = (ink * clean)[yy.min():yy.max()+1, xx.min():xx.max()+1]
+    h, w = tight.shape
+    scale = 28 / max(h, w)
+    nw, nh = max(1, round(w*scale)), max(1, round(h*scale))
+    canvas = np.zeros((32, 32), dtype=np.float32)
+    canvas[(32-nh)//2:(32-nh)//2+nh, (32-nw)//2:(32-nw)//2+nw] = cv2.resize(tight, (nw, nh))
+    pixels = normalized[clean.astype(bool)]
+    red = np.mean((pixels[:, 2] > pixels[:, 1]+.10)
+                  & (pixels[:, 2] > pixels[:, 0]+.10)) > .5
+    return canvas, w/h, bool(red), float(np.mean(background))
+
+
+def animation_similarity(early, late):
+    """Evidence for a dim birth settling, never an arbitrary same-rank merge."""
+    a, b = _animation_glyph(early), _animation_glyph(late)
+    if a is None or b is None:
+        return 0.0
+    aa, aspect_a, red_a, white_a = a
+    bb, aspect_b, red_b, white_b = b
+    # Only a fading-in card, not an unrestricted alternative appearance metric.
+    if (white_a >= 200 or white_b-white_a < 35 or red_a != red_b
+            or max(aspect_a/aspect_b, aspect_b/aspect_a) > 1.25):
+        return 0.0
+    return float(cv2.matchTemplate(np.pad(bb, 2), aa, cv2.TM_CCORR_NORMED).max())
+
+
 class CardIdentityMatcher:
     def __init__(self, max_gap_samples=3, max_distance=3.0,
                  min_similarity=0.78, ambiguity_margin=0.04,
@@ -98,12 +150,15 @@ class CardIdentityMatcher:
         self.clear_after_empty = clear_after_empty
         self.empty_samples = 0
         self.retired_ids = set()
+        self.scene_id = 0
 
     def match(self, detections, tracks, sample_index):
         if not detections:
             self.empty_samples += 1
             if self.empty_samples >= self.clear_after_empty:
                 self.retired_ids.update(t.track_id for t in tracks)
+                if self.empty_samples == self.clear_after_empty:
+                    self.scene_id += 1
             return {}
         self.empty_samples = 0
         active = [t for t in tracks
@@ -161,6 +216,8 @@ def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
                 right = tracks[j]
                 if left.region != right.region:
                     continue
+                if getattr(left, 'scene_id', None) != getattr(right, 'scene_id', None):
+                    continue
                 a, b = left.observations, right.observations
                 af, bf = {o['frame'] for o in a}, {o['frame'] for o in b}
                 if af & bf:
@@ -181,6 +238,16 @@ def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
                         similarity = appearance_similarity(crop_appearance(oa['crop']),
                                                            crop_appearance(ob['crop']))
                         best = max(best, similarity)
+                # Short, consecutive animation births can move farther than a
+                # stable card and change colour under the table's dim overlay.
+                # Require a tight full-glyph match, not the classifier's rank.
+                early, late = (a, b) if max(af) < min(bf) else (b, a)
+                if not overlap and gap <= 2 and len(early) <= 3:
+                    distance = _geometry(early[-1]['box'], late[0]['box'])
+                    if distance is not None and distance <= 4.0:
+                        score = animation_similarity(early[-1]['crop'], late[0]['crop'])
+                        if score >= .96:
+                            best = max(best, score)
                 if best >= min_similarity:
                     candidates.append((best, i, j))
         if not candidates:

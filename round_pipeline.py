@@ -142,7 +142,8 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             for i,detection in enumerate(current):
                 track = matches.get(i)
                 if track is None:
-                    track = SimpleNamespace(track_id=next_id, observations=[], region=name)
+                    track = SimpleNamespace(track_id=next_id, observations=[], region=name,
+                                            scene_id=matchers[name].scene_id)
                     next_id += 1
                     tracks[name].append(track)
                 probabilities_i = np.asarray(probabilities[i], dtype=float)
