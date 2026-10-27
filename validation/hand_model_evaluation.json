@@ -1,0 +1,82 @@
+{
+  "scope": "Main player/dealer views in supplied 177-frame recording; central-hand identity unresolved",
+  "baseline_revision": "2c3e00278cde6d3ad4897fb255478970ce02e53a",
+  "baseline": {
+    "physical_cards": 12,
+    "candidate_tracks": 13,
+    "observations": 335,
+    "mixed_tracks": 1,
+    "fragmented_cards": 2,
+    "extra_fragments": 2,
+    "unresolved": 5,
+    "round_changes": [
+      null,
+      null
+    ],
+    "known_subtotal": 2,
+    "count_change": null,
+    "count_verified": false
+  },
+  "candidate": {
+    "physical_cards": 12,
+    "candidate_tracks": 12,
+    "observations": 335,
+    "mixed_tracks": 0,
+    "fragmented_cards": 0,
+    "extra_fragments": 0,
+    "unresolved": 0,
+    "round_changes": [
+      -1,
+      2
+    ],
+    "known_subtotal": 1,
+    "count_change": 1,
+    "count_verified": false
+  },
+  "annotation_method": "Manually inspected deal intervals and left-to-right physical-card positions; no classifier labels used for identity assignment",
+  "limitations": [
+    "Development recording used to diagnose and design tracking, not an independent acceptance set.",
+    "Reference signatures use only previously published V4 training crops; no new recording examples were added.",
+    "All 335 detected main-view observations retained; correctness outside these selected views is not established."
+  ],
+  "observation_evaluation": {
+    "baseline": {
+      "annotation_scope": "All detected main-view observations, manually assigned to physical cards; not full-table detector recall",
+      "expected_physical_cards": 12,
+      "candidate_events": 13,
+      "matched_observations": 335,
+      "missing_annotated_observations": 0,
+      "unannotated_output_observations": 0,
+      "mixed_identity_tracks": 1,
+      "extra_identity_fragments": 2,
+      "missing_physical_cards": 0,
+      "unmatched_events": 0,
+      "wrong_accepted_rank_events": 0,
+      "wrong_round_events": 0,
+      "unknown_events": 5,
+      "exact_annotated_card_list": false,
+      "expected_count_change": 1,
+      "count_change": null,
+      "count_matches": false
+    },
+    "candidate": {
+      "annotation_scope": "All detected main-view observations, manually assigned to physical cards; not full-table detector recall",
+      "expected_physical_cards": 12,
+      "candidate_events": 12,
+      "matched_observations": 335,
+      "missing_annotated_observations": 0,
+      "unannotated_output_observations": 0,
+      "mixed_identity_tracks": 0,
+      "extra_identity_fragments": 0,
+      "missing_physical_cards": 0,
+      "unmatched_events": 0,
+      "wrong_accepted_rank_events": 0,
+      "wrong_round_events": 0,
+      "unknown_events": 0,
+      "exact_annotated_card_list": true,
+      "expected_count_change": 1,
+      "count_change": 1,
+      "count_matches": true
+    }
+  }
+}

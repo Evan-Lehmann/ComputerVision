@@ -114,7 +114,8 @@ def summarize(result):
     return result
 
 
-def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None, ocr_reader=None):
+def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None, ocr_reader=None,
+                   reference_reader=None):
     """Process every frame; callers may inject an engine for replay/testing."""
     frame_paths = sorted(Path(p) for p in frame_paths)
     if not frame_paths:
@@ -126,7 +127,10 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     if ocr_reader is None:
         from rank_ocr import TesseractRankReader
         ocr_reader = TesseractRankReader()
-    matchers = {r['name']: CardIdentityMatcher(clear_after_empty=4) for r in regions}
+    if reference_reader is None:
+        from rank_reference import ReferenceRankReader
+        reference_reader = ReferenceRankReader()
+    matchers = {r['name']: CardIdentityMatcher(clear_after_empty=4, ordered_hand=True) for r in regions}
     tracks = {r['name']: [] for r in regions}
     next_id, read_frames = 1, 0
     expected_shape = None
@@ -195,7 +199,13 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             margin = float(average[order[0]] - average[order[1]])
             rank = RANKS[order[0]] if len(observations) >= 2 and confidence >= .8 and margin >= .2 else 'UNKNOWN'
             cnn_rank,cnn_confidence = RANKS[order[0]],confidence
-            recognition_source,ocr_result = 'cnn',None
+            recognition_source,ocr_result,reference_result = 'cnn',None,None
+            if rank == 'UNKNOWN' and reference_reader:
+                reference_result = reference_reader.consensus(observations, cnn_rank)
+                if reference_result:
+                    rank = reference_result['rank']
+                    confidence = reference_result['confidence']
+                    recognition_source = 'reference_consensus'
             if rank == 'UNKNOWN' and ocr_reader:
                 ocr_result = ocr_reader.consensus(observations)
                 if ocr_result:
@@ -212,9 +222,15 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             events.append(dict(id=str(track.track_id), region=track.region, rank=rank,
                 round_number=track.round_number,
                 merged_from=getattr(track, 'merged_from', [track.track_id]),
-                suggested_rank=rank if ocr_result else cnn_rank, confidence=confidence, observations=len(observations),
+                suggested_rank=rank if ocr_result or reference_result else cnn_rank,
+                confidence=confidence, observations=len(observations),
+                observation_frames=[o['frame'] for o in observations],
+                observation_boxes=[o['box'] for o in observations],
                 recognition_source=recognition_source, cnn_suggested_rank=cnn_rank,
                 cnn_confidence=cnn_confidence, ocr_votes=ocr_result['votes'] if ocr_result else [],
+                reference_votes=reference_result['votes'] if reference_result else [],
+                reference_bank_version=reference_result['bank_version'] if reference_result else None,
+                confidence_kind='image_similarity' if reference_result else 'model_score',
                 first_frame=observations[0]['frame'], last_frame=observations[-1]['frame'],
                 evidence=evidence, excluded=False, reviewed=False,
                 alternatives=[dict(rank=RANKS[i], probability=float(average[i])) for i in order[:3]]))
@@ -225,6 +241,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                       if other['id'] != event['id'] and other['region'] == event['region']
                       and other['round_number'] == event['round_number']
                       and other['suggested_rank'] == event['suggested_rank']
+                      and not set(event['observation_frames']).intersection(other['observation_frames'])
                       and max(event['first_frame'] - other['last_frame'],
                               other['first_frame'] - event['last_frame'], 0) <= 3]
         event['possible_duplicates'] = candidates
@@ -243,6 +260,9 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     if not events:
         result['warnings'].append('No ranks detected in the selected regions. Check the region preview before trusting an empty list.')
     result['ocr_available'] = bool(ocr_reader and ocr_reader.available)
+    result['reference_available'] = bool(reference_reader and reference_reader.available)
+    if reference_reader and reference_reader.error:
+        result['warnings'].append(reference_reader.error)
     if ocr_reader and not ocr_reader.available:
         result['warnings'].append('Optional OCR cross-check is unavailable. Install Tesseract to enable it; unresolved ranks still need review.')
     if ocr_reader and ocr_reader.error:

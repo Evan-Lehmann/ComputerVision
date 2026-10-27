@@ -8,6 +8,7 @@ track rather than mixing observations from different cards.
 import cv2
 import numpy as np
 from scipy.optimize import linear_sum_assignment
+from glyph_features import glyph_signature as _animation_glyph
 
 
 def crop_appearance(crop):
@@ -87,44 +88,6 @@ def _geometry(a, b):
     return float(np.hypot(dx, dy) / max((aw + bw) / 2, (ah + bh) / 2))
 
 
-def _animation_glyph(crop):
-    """Association-only glyph, normalized against the card's tinted background.
-
-    Remove boundary-connected borders, retaining all interior components (both
-    digits of 10). Recognition still receives the untouched detector crop.
-    """
-    if crop is None or not crop.size:
-        return None
-    h, w = crop.shape[:2]
-    tx, ty = int(w * .12), int(h * .12)
-    inner = crop[ty:h-ty, tx:w-tx].astype(np.float32)
-    if min(inner.shape[:2]) < 3:
-        return None
-    background = np.maximum(np.percentile(inner, 90, axis=(0, 1)), 1)
-    normalized = np.clip(inner / background, 0, 1).astype(np.float32)
-    ink = 1 - cv2.cvtColor(normalized, cv2.COLOR_BGR2GRAY)
-    mask = (ink > max(.04, .18 * float(ink.max()))).astype(np.uint8)
-    _, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
-    clean = np.zeros_like(mask)
-    for label, (x, y, width, height, area) in enumerate(stats[1:], 1):
-        if (area >= 3 and x > 0 and y > 0
-                and x+width < mask.shape[1] and y+height < mask.shape[0]):
-            clean[labels == label] = 1
-    yy, xx = np.where(clean)
-    if len(xx) < 6:
-        return None
-    tight = (ink * clean)[yy.min():yy.max()+1, xx.min():xx.max()+1]
-    h, w = tight.shape
-    scale = 28 / max(h, w)
-    nw, nh = max(1, round(w*scale)), max(1, round(h*scale))
-    canvas = np.zeros((32, 32), dtype=np.float32)
-    canvas[(32-nh)//2:(32-nh)//2+nh, (32-nw)//2:(32-nw)//2+nw] = cv2.resize(tight, (nw, nh))
-    pixels = normalized[clean.astype(bool)]
-    red = np.mean((pixels[:, 2] > pixels[:, 1]+.10)
-                  & (pixels[:, 2] > pixels[:, 0]+.10)) > .5
-    return canvas, w/h, bool(red), float(np.mean(background))
-
-
 def animation_similarity(early, late):
     """Evidence for a dim birth settling, never an arbitrary same-rank merge."""
     a, b = _animation_glyph(early), _animation_glyph(late)
@@ -139,10 +102,61 @@ def animation_similarity(early, late):
     return float(cv2.matchTemplate(np.pad(bb, 2), aa, cv2.TM_CCORR_NORMED).max())
 
 
+def glyph_similarity(a, b):
+    """Compare normalized interior glyphs without predicting their ranks.
+
+    Boundary pixels and absolute red thresholds are unreliable during fades.
+    Preserve aspect and colour, and retain the older descriptor only when an
+    interior glyph cannot be extracted. Weak matches cannot bypass a strong
+    contradiction in the original view.
+    """
+    original = appearance_similarity(crop_appearance(a), crop_appearance(b))
+    # Tiny miniature-hand crops lose discriminating strokes. Retain the
+    # conservative original view instead of amplifying them to a false match.
+    if a is None or b is None or min(a.shape[0], b.shape[0]) < 20:
+        return original
+    aa, bb = _animation_glyph(a), _animation_glyph(b)
+    if aa is None or bb is None:
+        return original
+    if aa[2] != bb[2] or max(aa[1]/bb[1], bb[1]/aa[1]) > 1.4:
+        return 0.0
+    score = float(cv2.matchTemplate(np.pad(bb[0], 2), aa[0], cv2.TM_CCORR_NORMED).max())
+    return score if original >= .65 or score >= .94 else min(score, original)
+
+
+def _center(box):
+    return np.array([(box[0]+box[2])/2, (box[1]+box[3])/2])
+
+
+def _ordered_assignment(costs, active):
+    """Sequence alignment: match, birth, or missing card; never swap order."""
+    n, m = costs.shape
+    score = np.full((n+1, m+1), np.inf)
+    score[0, :] = 0
+    steps = {}
+    for i in range(1, n+1):
+        score[i, 0] = i*.65
+        steps[i, 0] = (i-1, 0, False)
+        for j in range(1, m+1):
+            options = [(score[i-1, j]+.65, i-1, j, False),
+                       (score[i, j-1], i, j-1, False),
+                       (score[i-1, j-1]+costs[i-1, j-1], i-1, j-1, True)]
+            best = min(options, key=lambda value: value[0])
+            score[i, j] = best[0]
+            steps[i, j] = best[1:]
+    matches, i, j = {}, n, m
+    while i:
+        pi, pj, matched = steps[i, j]
+        if matched:
+            matches[i-1] = active[j-1]
+        i, j = pi, pj
+    return matches
+
+
 class CardIdentityMatcher:
     def __init__(self, max_gap_samples=3, max_distance=3.0,
                  min_similarity=0.78, ambiguity_margin=0.04,
-                 clear_after_empty=2):
+                 clear_after_empty=2, ordered_hand=False):
         self.max_gap_samples = max_gap_samples
         self.max_distance = max_distance
         self.min_similarity = min_similarity
@@ -151,6 +165,7 @@ class CardIdentityMatcher:
         self.empty_samples = 0
         self.retired_ids = set()
         self.scene_id = 0
+        self.ordered_hand = ordered_hand
 
     def match(self, detections, tracks, sample_index):
         if not detections:
@@ -167,22 +182,74 @@ class CardIdentityMatcher:
                   and t.observations]
         if not active:
             return {}
+        boxes = [d['box'] for d in detections]+[t.last_box for t in active]
+        heights = [box[3]-box[1] for box in boxes]
+        ys = [_center(box)[1] for box in boxes]
+        ordered_row = (self.ordered_hand and min(heights) >= 12
+                       and max(ys)-min(ys) <= max(heights)*.7)
+        detection_order = list(range(len(detections)))
+        if ordered_row:
+            detection_order.sort(key=lambda i: _center(detections[i]['box'])[0])
+            detections = [detections[i] for i in detection_order]
+            active.sort(key=lambda t: _center(t.last_box)[0])
+        similarities = np.zeros((len(detections), len(active)))
+        for i, detection in enumerate(detections):
+            for j, track in enumerate(active):
+                similarities[i, j] = min(
+                    glyph_similarity(detection.get('crop'), observation.get('crop'))
+                    if ordered_row else appearance_similarity(
+                        crop_appearance(detection.get('crop')), crop_appearance(observation.get('crop')))
+                    for observation in track.observations[-2:])
+        motion = np.zeros(2)
+        # Use distinctive, reciprocal glyph matches as hand-motion anchors.
+        # This separates a shifting old card from a new card at its old box.
+        if ordered_row and len(detections) >= len(active):
+            anchors = []
+            for j, track in enumerate(active):
+                if track.last_sample_index != sample_index-1 or len(track.observations) < 2:
+                    continue
+                order = np.argsort(similarities[:, j])[::-1]
+                i = int(order[0])
+                if (similarities[i, j] >= .94
+                        and (len(order) == 1 or similarities[i, j]-similarities[order[1], j] >= .05)
+                        and int(np.argmax(similarities[i])) == j):
+                    distance = _geometry(detections[i]['box'], track.last_box)
+                    if distance is not None and distance <= self.max_distance:
+                        anchors.append(_center(detections[i]['box'])-_center(track.last_box))
+            # When identical cards offer no distinctive anchor, the configured
+            # UI appends one new card on the right. An unbroken ordered prefix
+            # with coherent movement can still establish hand translation.
+            if not anchors and len(detections) == len(active)+1:
+                prefix = [(_center(detections[j]['box'])-_center(t.last_box))
+                          for j, t in enumerate(active)
+                          if t.last_sample_index == sample_index-1 and len(t.observations) >= 2
+                          and similarities[j, j] >= .94
+                          and _geometry(detections[j]['box'], t.last_box) is not None
+                          and _geometry(detections[j]['box'], t.last_box) <= self.max_distance]
+                if len(prefix) == len(active):
+                    anchors = prefix
+            if anchors:
+                median = np.median(anchors, axis=0)
+                height = np.median([t.last_box[3]-t.last_box[1] for t in active])
+                if max(np.linalg.norm(value-median) for value in anchors) <= height*.5:
+                    motion = median
         # A private dummy column for every detection permits unmatched births.
         costs = np.full((len(detections), len(active) + len(detections)), 1e6)
         costs[:, len(active):] = 0.65
         for i, detection in enumerate(detections):
-            appearance = crop_appearance(detection.get("crop"))
             for j, track in enumerate(active):
                 distance = _geometry(detection["box"], track.last_box)
                 if distance is None or distance > self.max_distance:
                     continue
                 # Check the two most recent appearances. Keeping a permanently
                 # blurred birth crop as an anchor fragments cards as they settle.
-                similarity = min(appearance_similarity(
-                    appearance, crop_appearance(observation.get("crop")))
-                    for observation in track.observations[-2:])
+                similarity = similarities[i, j]
                 if similarity < self.min_similarity:
                     continue
+                if ordered_row:
+                    shifted = [track.last_box[k]+motion[k % 2] for k in range(4)]
+                    residual = _geometry(detection['box'], shifted)
+                    distance = distance if residual is None else residual
                 costs[i, j] = 1.0 - similarity + 0.12 * distance
         # Refuse near ties before global assignment. Predicted rank is never an
         # identity key: two cards with the same rank must remain distinct.
@@ -195,9 +262,13 @@ class CardIdentityMatcher:
             choices = np.sort(real[:, j][real[:, j] < 0.65])
             if len(choices) > 1 and choices[1] - choices[0] < self.ambiguity_margin:
                 costs[:, j] = 1e6
-        rows, columns = linear_sum_assignment(costs)
-        return {int(i): active[j] for i, j in zip(rows, columns)
-                if j < len(active) and costs[i, j] < 0.65}
+        if ordered_row:
+            matches = _ordered_assignment(costs[:, :len(active)], active)
+        else:
+            rows, columns = linear_sum_assignment(costs)
+            matches = {int(i): active[j] for i, j in zip(rows, columns)
+                       if j < len(active) and costs[i, j] < .65}
+        return {detection_order[i]: track for i, track in matches.items()}
 
 
 def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
@@ -237,8 +308,7 @@ def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
                         distance = _geometry(oa['box'], ob['box'])
                         if distance is None or distance > limit:
                             continue
-                        similarity = appearance_similarity(crop_appearance(oa['crop']),
-                                                           crop_appearance(ob['crop']))
+                        similarity = glyph_similarity(oa['crop'], ob['crop'])
                         best = max(best, similarity)
                 # Short, consecutive animation births can move farther than a
                 # stable card and change colour under the table's dim overlay.

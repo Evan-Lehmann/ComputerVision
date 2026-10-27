@@ -1,5 +1,30 @@
 # Card identity tracking
 
+The production pipeline now enables `ordered_hand=True`. Within a sufficiently
+resolved single row it uses background-normalized glyph similarity, distinctive
+reciprocal matches to estimate shared movement, and order-preserving sequence
+alignment with explicit births/misses. A coherent prefix can establish motion
+when the supplied append-on-right UI deals an identical-rank card. This encodes
+the hand's layout instead of selecting a nearby glyph independently. Rank
+predictions are not identity keys. Tiny boxes (under 12 pixels high) and
+multiple-row inputs fall back to the original association path. These choices
+target the configured main-hand layout, not arbitrary split hands or views.
+
+Compact glyph components are retained at crop edges; spanning card borders are
+removed. This prevents clipping one digit from 10 solely because it touches an
+edge. Fragment repair uses the same normalized evidence on resolved crops,
+keeps retirement/round boundaries and never joins co-visible tracks. The result
+retains per-observation frame indices and boxes. Co-visible same-rank cards no
+longer trigger a misleading possible-duplicate warning.
+
+The first two-round failure recording changes from 13 candidate events, one
+mixed-identity track and two extra fragments to 12 identity-pure events, with
+all 335 observations retained. It remains development evidence. See
+VALIDATION.md and `validation/hand_model_evaluation.json` for the frozen
+baseline, separate recognition results and remaining failures.
+
+The following sections describe the earlier matcher and its original tests.
+
 The temporal experiment now associates detections using crop appearance,
 geometry and a global one-to-one assignment. It checks the two most recent crops to resist sudden identity changes while
 allowing the initial deal animation to settle. Rank classifier predictions are not used

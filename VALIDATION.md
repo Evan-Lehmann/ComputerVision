@@ -6,6 +6,44 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
+## Hand-level association and reference recognition
+
+The new 177-frame two-round recording exposed a mixed 4/K track and an extra A fragment. The frozen baseline is revision `2c3e002`: 13 candidate events, five unknowns and a known-card subtotal of +2; the correct main-view result is 12 physical cards and +1. The uploaded split archives contain two byte-identical directory copies of the 177 frames; only one chronological copy was evaluated.
+
+Production association now models an ordered hand row. Distinctive glyph matches estimate shared motion; sequence alignment permits births/misses while preserving left-to-right identities. When the configured UI appends an identical card on the right, a coherent existing prefix can establish motion. This prevents the existing 4 following a new K near its old position. Normalized glyph evidence also rejoins the jittered A, while preserving compact components at crop edges so a 10 does not lose one digit. The unchanged original association path handles tiny or multiple-row inputs; general split/rotated-hand layouts are not established as supported.
+
+The uncertain-rank reference bank contains signatures of the same 169 previously published V4 training crops. It introduces no new recording labels. Acceptance requires >=0.97 similarity, >=0.04 margin from a different rank, at least two distinct agreeing first/middle/last frames, and agreement with the CNN's top rank. Confident CNN outputs are preserved. OCR remains a separate optional fallback. Rows show **Reference agreement** with an image-match score; these scores are not probabilities. The detector, CNN weights, CNN preprocessing and CNN thresholds are unchanged.
+
+The bank's leave-source-group-out development diagnostic accepts 93/169 crop observations with zero incorrect accepted ranks. Only nine ranks have any accepted observations in that diagnostic; coverage is zero for 3, 5, 6 and 10. Some groups are frame-level rather than complete recording/physical-card groups, and neighbouring groups can be correlated. Consequently this is neither independent validation nor evidence of general 13-rank accuracy. The runtime CNN/reference agreement also shares training data. Full diagnostic predictions are in `validation/reference_v1_audit.json`.
+
+Against human-inspected physical-card identities across all 335 main-view detector observations, the new two-round result has:
+
+| Measure | Frozen baseline | Updated pipeline |
+|---|---:|---:|
+| Candidate events / expected physical cards | 13 / 12 | 12 / 12 |
+| Mixed-identity tracks | 1 | 0 |
+| Extra identity fragments | 2 | 0 |
+| Unknown events | 5 | 0 |
+| Retained observations | 335 | 335 |
+| Complete count change | Unavailable | +1 |
+
+The baseline's one mixed track covers both the 4 and K; two physical cards (4 and A) have multiple track fragments. These are different failure measures, so the extra-fragment count is not just candidate events minus expected cards. The revised main-view card lists are:
+
+| Round | Player | Dealer | Change / running change |
+|---|---|---|---|
+| 1 | 2, Q | K, 4, A, 9 | −1 / −1 |
+| 2 | 4, K | 5, 7, 4, 7 | +2 / +1 |
+
+Q, 9 and 5 are resolved by reference agreement. All results remain provisional until a saved human review. The central hand additionally shows 9 in round 1; its physical-card relationship remains unresolved, but a neutral 9 cannot alter this Hi-Lo result. This is a main-view evaluation, not a claim that excluded views are redundant.
+
+`validation/hand_model_evaluation.json` records the baseline comparison and separate physical-identity evaluation. `evaluate_card_result.py` matches explicitly labelled observations to per-frame box provenance and reports mixed identities, extra fragments, unknown/wrong ranks, round assignments and count independently. Its tests reject duplicate contributions that cancel to a correct final total. Annotation coverage is explicit: the 335-observation audit does not measure detector recall outside those observations. Source frames, derived crops, caches and the detailed new observation annotations remain outside Git.
+
+Six replay jobs processed 633 frames, reusing the frozen detector's cached outputs and rerunning association, classification, references and boundaries. The earlier 84-frame round remains five cards/+1, the 54-frame partial capture remains three/+2, and the prior 48-frame round remains four/0. The original first round remains six/−2. Original round 2 now resolves its uncertain 8 but leaves its main 9 unknown because the CNN's top suggestion disagrees with the reference reader. Original round 3 still retains one short duplicate-10 fragment and remains incomplete. No successful replay is treated as a fresh acceptance set.
+
+All **82 tests pass**, covering hand expansion, identical-rank births, shared movement, identity crossing, dropout, crop-edge digits, original reviewed identity transitions, reference provenance/gates and stage-specific evaluation. Chromium replayed the new recording through Flask using cached detector outputs and checked 12 rows, 335 observations, the −1/+2 breakdown, provisional +1, reference scores/provenance, original evidence, review/export gates, neutral-unknown invalidation and mobile layout. No JavaScript errors or horizontal overflow at 390px were observed. Co-visible same-rank cards no longer receive a misleading duplicate warning.
+
+This new recording has now informed algorithm development; it is not an untouched holdout. Fresh recordings, balanced rank coverage, full view semantics and reliable live Mac capture remain necessary before claiming first-deliverable reliability. This update is a measured improvement within the configured layout, not completion of automatic whole-table/shoe tracking.
+
 ## Multi-round recording analysis
 
 The pipeline now proposes round divisions after four consecutive detection-free frames with a visible empty green table in all selected regions. Upright compact light/red components veto clearing when cards remain visible despite rank-detector failure. This is a heuristic for the supplied layout, not general table/scene recognition. Short clear intervals and long unverified gaps followed by cards are flagged for review. One hand disappearing does not create a new round while another selected hand still has detections. Leading/trailing empty frames do not create empty rounds. Round assignments prevent fragment repair from merging cards across rounds.

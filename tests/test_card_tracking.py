@@ -19,12 +19,12 @@ class CardTrackingTests(unittest.TestCase):
         with np.load(FIXTURES / "card_tracking_crops.npz", allow_pickle=False) as crops:
             cls.crops = {key: crops[key] for key in crops.files}
 
-    def replay(self):
+    def replay(self, ordered_hand=False):
         by_frame = defaultdict(list)
         for record in self.fixture["records"]:
             by_frame[record["sample_index"]].append(record)
         tracks, assignments = [], {}
-        matcher = CardIdentityMatcher()
+        matcher = CardIdentityMatcher(ordered_hand=ordered_hand)
         for sample in range(self.fixture["sample_count"]):
             records = by_frame[sample]
             detections = [dict(box=r["box"], crop=self.crops[r["key"]]) for r in records]
@@ -49,6 +49,14 @@ class CardTrackingTests(unittest.TestCase):
                 revised[assignments[r["key"]]].add(r["identity"])
         self.assertGreaterEqual(sum(len(ids) > 1 for ids in baseline.values()), 6)
         self.assertEqual({k: v for k, v in revised.items() if len(v) > 1}, {})
+
+    def test_ordered_hand_mode_falls_back_safely_for_multiple_views(self):
+        _, assignments = self.replay(ordered_hand=True)
+        identities = defaultdict(set)
+        for record in self.fixture['records']:
+            if record['identity'] is not None:
+                identities[assignments[record['key']]].add(record['identity'])
+        self.assertFalse(any(len(values) > 1 for values in identities.values()))
 
     def test_existing_card_moves_to_new_box_instead_of_becoming_new_card(self):
         _, ids = self.replay()

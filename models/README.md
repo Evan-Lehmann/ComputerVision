@@ -1,5 +1,20 @@
 # Model checkpoints
 
+`rank_reference_v1.npz` is the current uncertain-rank reference bank, used
+alongside V4 rather than replacing its weights. It contains normalized glyph
+signatures and source keys/groups for exactly the 169 previously published V4
+training crops, covering all 13 ranks. No examples from the new two-round
+upload were added. Build it with `python build_rank_reference.py`; the audit is
+`validation/reference_v1_audit.json`.
+
+Reference matching requires similarity >=0.97, a different-rank margin >=0.04,
+agreement in at least two distinct first/middle/last frames and agreement with
+the CNN's top rank. It never overrides confident CNN output. The bank shares
+training data with the CNN, so agreement is not independent verification.
+Similarity scores are not calibrated probabilities. References remain font/
+layout dependent, and the CNN's remaining high-confidence errors are not
+resolved by this reader.
+
 - `rank_detector_v2.pt`: supplied YOLO V2 localization checkpoint, unchanged.
 - `rank_classifier_v2.pt`: supplied original CNN checkpoint, unchanged (recorded validation 68.2%).
 - `rank_classifier_v3.pt`: new controlled CNN run with the same architecture and preprocessing, fresh initialization, seed 42. This checkpoint is retained for comparison. It still makes errors and its output requires review.
@@ -19,6 +34,7 @@ SHA-256:
 a8cecebee63b60f333104b5d1290f5d351625f1ee717a65763cb9e51d1626a7e  rank_classifier_v2.pt
 c15100b0bb0c3e1ff41e551ec4671bfaa768b6657e957f1d4f4d99ffd9b7d6bb  rank_classifier_v3.pt
 fab0c394e428ba9e9ad3faff3f36b4ff6bfe224f9594db217f1c39c80b8d24ae  rank_classifier_v4.pt
+118ca48dccbe2c91c86cf74e6ca67c4392a4a20d4de1208648e137f9d013c774  rank_reference_v1.npz
 ```
 
 Reproduction in the project virtual environment:

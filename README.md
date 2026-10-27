@@ -16,7 +16,7 @@ python -m cardvision_webapp.app
 
 Open `http://127.0.0.1:5000` locally on your Mac. The models are included in `models/`. Keep the server bound to your own machine.
 
-1. Expand **Check which cards are counted**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings. Draw new boxes if your browser/table layout differs. Include space for additional cards; exclude small duplicate views.
+1. Expand **Check which cards are counted**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings and select the large player/dealer hands. Draw new boxes if the layout differs. Inspect excluded views separately: the miniature hand can contain additional cards, and its physical-card relationship is not yet resolved.
 2. Start recording before cards appear. The app gives a three-second countdown; switch to the play-money table. It records at two frames per second by default.
 3. For multiple rounds, keep recording through the cleared table between deals. Stop after the last round's face-up cards have appeared. Analysis runs in the background and reports progress.
 4. Inspect each card's first/middle/last crop. Click a crop to open its original screenshot. Correct incorrect/unknown ranks, exclude duplicate or false detections, add missed cards, and adjust order. All original detections remain in the saved audit even when excluded.
@@ -31,6 +31,22 @@ A suggested new round requires at least four consecutive frames with no selected
 After confirming and saving a fully resolved review, **Download reviewed crops** exports a compact ZIP containing card crops, `labels.csv` and grouping metadata. Excluded cards and manually added cards without images are omitted; identical images within one card are deduplicated. Full screenshots are not included. Nothing is trained or uploaded automatically. Keep all views of a card and recording together in future training/validation splits. The recording identifier uses decoded frame content, so reanalyzing the same frames under another folder name preserves its group; overlapping or shortened recordings still need separate leakage checks.
 
 Screenshots and analysis are saved under ignored `round_captures/`. They are not uploaded by the app. Existing recordings are preserved. Different recordings use distinct folders.
+
+### Hand-aware association and rank references
+
+The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and overlapping views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The detector and V4 CNN weights are unchanged.
+
+When the CNN leaves a rank unknown, the app can compare it against `models/rank_reference_v1.npz`, built only from the previously published V4 training crops. It requires a strong match, separation from other ranks, agreement in at least two distinct first/middle/last frames, and the same top rank as the CNN. Confident CNN results are preserved. Rows say **Reference agreement** and show an image-match score, which is not a probability of correctness. This reader handles red and black glyphs and needs no Tesseract installation. Missing references leave the remaining CNN/OCR path available with a warning.
+
+The new two-round development recording now returns the 12 main-view cards, with changes −1 and +2, totaling +1. This recording informed development; it is not proof of accuracy on new captures. The miniature-view ambiguity remains, and older recordings still have an unresolved rank and a duplicate fragment. See [VALIDATION.md](VALIDATION.md).
+
+Rebuild/audit the reference signatures from the existing training split:
+
+```sh
+python build_rank_reference.py
+```
+
+For comparison, `process_recording.py` accepts `--no-references` independently of `--no-ocr`.
 
 ### Optional OCR cross-check for uncertain red ranks
 
@@ -113,6 +129,8 @@ python audit_rank_ocr.py --output validation/ocr_crop_audit.json
 The recorded audit evaluated 128 crops: 57 were eligible red glyphs and only 9 met the OCR confidence gate, all correctly labelled. Coverage is low; these correlated examples do not establish general OCR or complete-round accuracy. Runtime also requires agreement across distinct frames.
 
 See [VALIDATION.md](VALIDATION.md) for measured results, failures, dataset separation and limits; [TRACKING.md](TRACKING.md) for the tracking experiment. The current app uses `models/rank_classifier_v4.pt`. The reproducible training experiments are `train_rank_classifier_v3.py` and `train_rank_classifier_v4.py`.
+
+`evaluate_card_result.py result.json physical_reference.json --require-exact` compares explicit physical-card annotations with exported per-frame boxes. It measures mixed identities, extra fragments, unknown/wrong ranks, round assignments and count separately. Its JSON reference schema is documented in the script. Matching totals alone do not pass. Annotation scope must be stated; detector-observation annotations do not measure missed cards outside those detections.
 
 The YOLO localization/dedupe implementation remains unchanged. Historical training scripts and their data stay available. The web app no longer calls the inaccurate legacy round recognizer.
 

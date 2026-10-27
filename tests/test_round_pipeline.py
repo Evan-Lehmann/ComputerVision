@@ -47,10 +47,12 @@ class RoundPipelineTests(unittest.TestCase):
         self.assertEqual(result['count_range'],dict(min=1,max=1))
         self.assertTrue((self.root/'out/result.json').is_file())
         self.assertEqual(len(result['events'][0]['evidence']),3)
+        self.assertEqual(result['events'][0]['observation_frames'],[0,1,2])
     def test_same_rank_cards_visible_together_are_not_reconciled_as_duplicates(self):
         result = self.process(engine=Engine(boxes=[[20,20,35,40],[60,20,75,40]]))
         self.assertEqual(result['cards'],['6','6'])
         self.assertEqual(result['count_change'],2)
+        self.assertTrue(all(not e['possible_duplicates'] for e in result['events']))
     def test_excluded_ui_region_does_not_add_duplicate_counts(self):
         result = self.process(engine=Engine(boxes=[[20,20,35,40],[60,20,75,40]]),regions=[dict(name='main',rect=[0,0,.5,1])])
         self.assertEqual(result['cards'],['6'])
@@ -99,6 +101,35 @@ class RoundPipelineTests(unittest.TestCase):
         reader=Mock(available=True,error=None)
         result=process_frames(self.frames,self.root/'out',Engine(),REGIONS,ocr_reader=reader)
         self.assertEqual(result['cards'],['6'])
+        reader.consensus.assert_not_called()
+
+    def test_reference_resolves_unknown_with_provenance_and_preserves_confident_cnn(self):
+        from unittest.mock import Mock
+        class Uncertain(Engine):
+            def classify(self,crops):
+                from round_pipeline import RANKS
+                probabilities=np.full(13,.03);probabilities[RANKS.index('6')]=.64
+                return [probabilities.copy() for _ in crops]
+        reader=Mock(available=True,error=None)
+        reader.consensus.return_value=dict(rank='6',confidence=.99,bank_version='1',
+            votes=[dict(frame=0,rank='6',score=.99),dict(frame=2,rank='6',score=.99)])
+        ocr=Mock(available=True,error=None)
+        result=process_frames(self.frames,self.root/'out',Uncertain(),REGIONS,
+                              ocr_reader=ocr,reference_reader=reader)
+        self.assertEqual(result['cards'],['6'])
+        event=result['events'][0]
+        self.assertEqual(event['recognition_source'],'reference_consensus')
+        self.assertEqual(event['confidence_kind'],'image_similarity')
+        self.assertAlmostEqual(event['cnn_confidence'],.64)
+        self.assertEqual(len(event['reference_votes']),2)
+        self.assertFalse(result['count_verified'])
+        ocr.consensus.assert_not_called()
+        reader.reset_mock()
+        reader.consensus.return_value=dict(rank='5',confidence=1,bank_version='1',votes=[])
+        result=process_frames(self.frames,self.root/'out',Engine(),REGIONS,
+                              ocr_reader=False,reference_reader=reader)
+        self.assertEqual(result['cards'],['6'])
+        self.assertEqual(result['events'][0]['recognition_source'],'cnn')
         reader.consensus.assert_not_called()
 
     def test_recording_group_is_stable_across_renaming_but_changes_with_pixels(self):

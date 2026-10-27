@@ -17,12 +17,12 @@ class October26RoundTests(unittest.TestCase):
         with np.load(FIXTURES/'oct26_round_crops.npz', allow_pickle=False) as file:
             cls.crops = {key:file[key] for key in file.files}
 
-    def replay(self):
+    def replay(self, ordered_hand=False):
         frames = defaultdict(list)
         for row in self.reference['records']:
             frames[row['sample_index']].append(row)
         tracks = {'dealer': [], 'player': []}
-        matchers = {region:CardIdentityMatcher(clear_after_empty=4) for region in tracks}
+        matchers = {region:CardIdentityMatcher(clear_after_empty=4,ordered_hand=ordered_hand) for region in tracks}
         next_id = 1
         for frame in range(self.reference['sample_count']):
             for region in tracks:
@@ -57,5 +57,11 @@ class October26RoundTests(unittest.TestCase):
         # The two distinct cards are simultaneously visible after dealing.
         frames=[{o['frame'] for o in track.observations} for track in player]
         self.assertGreater(len(frames[0]&frames[1]),0)
+
+    def test_ordered_hand_model_retains_five_identity_pure_cards(self):
+        tracks = self.replay(ordered_hand=True)
+        self.assertEqual(len(tracks),5)
+        self.assertEqual(sum(len(t.observations) for t in tracks),246)
+        self.assertTrue(all(len({o['identity'] for o in t.observations})==1 for t in tracks))
 
 if __name__=='__main__':unittest.main()
