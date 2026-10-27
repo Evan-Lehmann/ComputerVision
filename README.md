@@ -24,6 +24,10 @@ Open `http://127.0.0.1:5000` locally on your Mac. The models are included in `mo
 
 Hi-Lo: A/10/J/Q/K = −1; 2–6 = +1; 7–9 = 0. UNKNOWN contributes zero to the **known-card subtotal**, but the full count is unavailable until all included ranks are resolved. “Reviewed by you” records user confirmation, not a claim that the models independently achieved perfect accuracy.
 
+The displayed count covers cards observed in this recording, including cards already visible when recording starts. A partial recording is not a complete round, and separate recordings are not added together. With unknown ranks, the app labels the number as a subtotal and shows the possible range for the detected events. Missing or duplicate cards can change that range.
+
+After confirming and saving a fully resolved review, **Download reviewed crops** exports a compact ZIP containing card crops, `labels.csv` and grouping metadata. Excluded cards and manually added cards without images are omitted; identical images within one card are deduplicated. Full screenshots are not included. Nothing is trained or uploaded automatically. Keep all views of a card and recording together in future training/validation splits. The recording identifier uses decoded frame content, so reanalyzing the same frames under another folder name preserves its group; overlapping or shortened recordings still need separate leakage checks.
+
 Screenshots and analysis are saved under ignored `round_captures/`. They are not uploaded by the app. Existing recordings are preserved. Different recordings use distinct folders.
 
 ### Optional OCR cross-check for uncertain red ranks
@@ -97,6 +101,14 @@ Upload the `part_01.zip`, `part_02.zip`, etc. printed by the command. Each is an
 ```sh
 python -m unittest discover -s tests -v
 ```
+
+With native Tesseract installed, reproduce the diagnostic on existing labelled repository crops:
+
+```sh
+python audit_rank_ocr.py --output validation/ocr_crop_audit.json
+```
+
+The recorded audit evaluated 128 crops: 57 were eligible red glyphs and only 9 met the OCR confidence gate, all correctly labelled. Coverage is low; these correlated examples do not establish general OCR or complete-round accuracy. Runtime also requires agreement across distinct frames.
 
 See [VALIDATION.md](VALIDATION.md) for measured results, failures, dataset separation and limits; [TRACKING.md](TRACKING.md) for the tracking experiment. The current app uses `models/rank_classifier_v4.pt`. The reproducible training experiments are `train_rank_classifier_v3.py` and `train_rank_classifier_v4.py`.
 

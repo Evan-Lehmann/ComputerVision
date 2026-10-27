@@ -30,7 +30,8 @@ class RoundAppTests(unittest.TestCase):
             self.block.wait(2)
             output_dir.mkdir(parents=True,exist_ok=True)
             progress(1,1)
-            result=summarize(dict(events=[dict(id='1',rank='UNKNOWN',excluded=False,evidence=[],region='player',observations=1)],review_confirmed=False,warnings=[]))
+            cv2.imwrite(str(output_dir/'card_first.png'),np.full((10,10,3),240,np.uint8))
+            result=summarize(dict(events=[dict(id='1',rank='UNKNOWN',excluded=False,evidence=[dict(image='card_first.png',frame=0,source='frame.png')],region='player',observations=1)],review_confirmed=False,warnings=[]))
             save_result(result,output_dir);return result
         self.processor=processor
         self.app=create_app(capture=self.capture,processor=processor,replays={'sample':self.root},artifact_root=self.root/'artifacts',delay=0)
@@ -79,6 +80,23 @@ class RoundAppTests(unittest.TestCase):
         self.assertEqual(self.client.post('/api/process',json=[]).status_code,400)
         self.assertEqual(self.client.post('/api/start',json={},headers={'Origin':'https://example.com'}).status_code,403)
         self.assertEqual(self.client.post('/api/stop',json={}).status_code,409)
+    def test_reviewed_crop_download_requires_saved_confirmation_and_can_be_revoked(self):
+        import io,zipfile,csv
+        self.client.post('/api/process',json={'source':'sample'});state=self.wait('COMPLETE')
+        self.assertEqual(self.client.get('/api/reviewed-crops').status_code,409)
+        payload=dict(result_id=state['result_id'],events=[dict(id='1',rank='3')],confirmed=True)
+        self.assertEqual(self.client.post('/api/review',json=payload).status_code,200)
+        response=self.client.get('/api/reviewed-crops')
+        self.assertEqual(response.status_code,200)
+        with zipfile.ZipFile(io.BytesIO(response.data)) as archive:
+            rows=list(csv.DictReader(io.StringIO(archive.read('labels.csv').decode())))
+            self.assertEqual(len(rows),1)
+            self.assertEqual(rows[0]['rank'],'3')
+            self.assertIn('crops/card_first.png',archive.namelist())
+        payload['confirmed']=False
+        self.client.post('/api/review',json=payload)
+        self.assertEqual(self.client.get('/api/reviewed-crops').status_code,409)
+
     def test_stale_review_does_not_modify_current_result(self):
         self.client.post('/api/process',json={'source':'sample'});self.wait('COMPLETE')
         self.assertEqual(self.client.post('/api/review',json={'result_id':'old','events':[]}).status_code,409)

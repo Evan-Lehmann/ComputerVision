@@ -229,3 +229,7 @@ dialog img { display: block; max-width: 90vw; max-height: 75vh; margin-top: 10px
 .count-badge { display: inline-block; margin-top: 12px; padding: 4px 9px; border-radius: 5px; background: #3a3019; color: #ffe2a1; font-size: 12px; font-weight: 600; }
 .count-badge[data-status="reviewed"] { background: #173b32; color: #8bf1d2; }
 .count-badge[data-status="waiting"] { background: #252b33; color: #c8ccd2; }
+
+.count-value { text-align: right; flex-shrink: 0; }
+.count-value .small-label { color: #ffe2a1; display: block; margin-top: 6px; }
+.count-scope { margin: -6px 4px 20px; }

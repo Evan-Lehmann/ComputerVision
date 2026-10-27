@@ -8,6 +8,16 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 ## Optional local OCR fallback
 
+### Latest scope and export checks
+
+The suite now passes **43 tests**, including unknown-count intervals, content-stable recording grouping, confirmed-review export gating, exclusion and crop deduplication, missing images, and path/symlink containment. Export labels come only from an explicitly saved and confirmed review; editing or saving an unconfirmed review removes export availability. Manually added cards without images are not labelled crops. Model weights and tracking thresholds are unchanged by this update.
+
+The UI explicitly scopes counts to captured cards. Unknowns produce a known-card subtotal and a range for the detected events only. Neither a narrow range nor a confirmed review proves that a recording contains a complete round or that all physical cards were detected.
+
+A real Chromium replay of the supplied 54-frame partial recording returned three events, 3–2–7, with provisional +2. The browser confirmed and saved the review, downloaded the labelled crop ZIP, and checked its labels and grouping metadata. Changing 3 to unknown hid the export link and displayed subtotal +1 with a detected-event range of 0 to +2. No JavaScript errors or horizontal overflow at 390px were observed. This recording is development data, not a fresh acceptance set.
+
+`audit_rank_ocr.py` evaluated all 128 valid labelled crops in the two existing public crop datasets with native Tesseract 5.5.0. Of 57 red-eligible crops, 9 met the 90% single-view gate: 9 correct, 0 incorrect. The per-crop results are in `validation/ocr_crop_audit.json`. This small, correlated and class-imbalanced sample has low coverage and is a development diagnostic, not independent acceptance accuracy. Runtime adds a separate multi-frame agreement gate.
+
 The CNN stays V4. Additional crop-jitter and glyph-CNN candidates were investigated but rejected because they regressed on earlier checks or failed to confidently resolve the remaining case. None replaces the published CNN.
 
 A pretrained Tesseract reader now offers a narrow cross-check for uncertain red ranks. It isolates red ink, preserves both digits of 10, and requires at least two distinct first/middle/last frames with the same valid rank and at least 90% OCR confidence each. Conflicting high-confidence readings, unsupported text (including a clipped standalone 1), missing binaries and timeouts leave the rank unknown. Confident CNN ranks are not overridden. OCR scores and provenance are stored separately from the original CNN suggestion. The fallback is local and uses no recording-specific training.

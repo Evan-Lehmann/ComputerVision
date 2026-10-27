@@ -19,10 +19,12 @@ function renderCount() {
   const subtotal = included.reduce((total,e) => total + (['A','10','J','Q','K'].includes(e.rank) ? -1 : ['2','3','4','5','6'].includes(e.rank) ? 1 : 0),0);
   const reviewed = !dirty && state.count_verified;
   $('countChange').textContent = resultId ? (subtotal > 0 ? `+${subtotal}` : `${subtotal}`) : '—';
-  $('countHeading').textContent = resultId && unknown ? 'Known-card subtotal' : 'Round count change';
+  $('countHeading').textContent = resultId && unknown ? 'Known-card subtotal' : 'Captured-card count change';
   $('countBadge').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Analyzing' : 'Waiting') : unknown ? 'Incomplete' : dirty ? 'Unsaved edits' : reviewed ? 'Reviewed by you' : 'Provisional';
+  $('countValueNote').textContent = !resultId ? '' : unknown ? 'subtotal only' : 'captured cards';
+  $('downloadCrops').hidden = dirty || !reviewed || !events.some(e => !e.excluded && e.evidence?.length);
   $('countBadge').dataset.status = reviewed ? 'reviewed' : resultId ? 'provisional' : 'waiting';
-  $('countStatus').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Calculating the count from your saved screenshots…' : 'The count is calculated after you stop recording and analyze the round.') : unknown ? `${unknown} unknown card${unknown === 1 ? '' : 's'} — the full round count is still unknown.${dirty ? ' Edits are not saved.' : ''}` : dirty ? 'Count reflects your edits. Save the review to keep them.' : reviewed ? `${included.length} included cards. You confirmed this card list.` : `${included.length} included cards. Check the card list before trusting this count.`;
+  $('countStatus').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Calculating the count from your saved screenshots…' : 'The count is calculated after you stop recording and analyze the round.') : unknown ? `${unknown} unknown card${unknown === 1 ? '' : 's'} — possible change for these detections: ${subtotal-unknown > 0 ? '+' : ''}${subtotal-unknown} to ${subtotal+unknown > 0 ? '+' : ''}${subtotal+unknown}.${dirty ? ' Edits are not saved.' : ''}` : dirty ? 'Count reflects your edits. Save the review to keep them.' : reviewed ? `${included.length} included cards. You confirmed this card list.` : `${included.length} included cards. Check the card list before trusting this count.`;
 }
 function renderCards() {
   $('cards').replaceChildren();

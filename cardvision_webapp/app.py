@@ -15,6 +15,7 @@ if str(ROOT) not in sys.path:
 from cardvision_webapp.round_capture import RoundCapture
 from cardvision_webapp.round_processor import process_round
 from round_pipeline import DEFAULT_REGIONS, apply_review, validate_regions, save_result
+from review_export import reviewed_crop_bundle
 
 
 def create_app(capture=None, processor=None, replays=None, artifact_root=None, delay=3):
@@ -227,6 +228,21 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
                 return jsonify(error='No completed result.'), 404
             return send_file(artifact_root/state['result_id']/'result.json', as_attachment=True,
                              download_name='cardvision-round.json')
+
+    @app.route('/api/reviewed-crops')
+    def export_reviewed_crops():
+        with lock:
+            if state['session_status'] != 'COMPLETE' or not state['result_id']:
+                return jsonify(error='No completed analysis to export.'), 409
+            try:
+                bundle = reviewed_crop_bundle(state, artifact_root/state['result_id'],
+                    state.get('recording_digest') or state['result_id'])
+            except ValueError as exc:
+                return jsonify(error=str(exc)), 409
+            except OSError:
+                return jsonify(error='A crop image is unavailable. Reanalyze the recording before exporting.'), 404
+        return send_file(bundle, mimetype='application/zip', as_attachment=True,
+                         download_name='cardvision-reviewed-crops.zip')
 
     @app.route('/api/reset', methods=['POST'])
     def reset():

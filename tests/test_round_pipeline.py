@@ -43,6 +43,8 @@ class RoundPipelineTests(unittest.TestCase):
         self.assertEqual(result['cards'],['6'])
         self.assertEqual(result['count_change'],1)
         self.assertFalse(result['count_verified'])
+        self.assertEqual(result['count_scope'],'captured_cards')
+        self.assertEqual(result['count_range'],dict(min=1,max=1))
         self.assertTrue((self.root/'out/result.json').is_file())
         self.assertEqual(len(result['events'][0]['evidence']),3)
     def test_same_rank_cards_visible_together_are_not_reconciled_as_duplicates(self):
@@ -57,6 +59,7 @@ class RoundPipelineTests(unittest.TestCase):
         self.assertEqual(result['cards'],['UNKNOWN'])
         self.assertIsNone(result['count_change'])
         self.assertEqual(result['known_count_change'],0)
+        self.assertEqual(result['count_range'],dict(min=-1,max=1))
         event=result['events'][0]
         reviewed=apply_review(result,[dict(id=event['id'],rank='A',excluded=False)],True)
         self.assertEqual(reviewed['count_change'],-1)
@@ -97,6 +100,20 @@ class RoundPipelineTests(unittest.TestCase):
         result=process_frames(self.frames,self.root/'out',Engine(),REGIONS,ocr_reader=reader)
         self.assertEqual(result['cards'],['6'])
         reader.consensus.assert_not_called()
+
+    def test_recording_group_is_stable_across_renaming_but_changes_with_pixels(self):
+        import shutil
+        first=self.process()
+        folder=self.root/'renamed';folder.mkdir()
+        copies=[]
+        for i,path in enumerate(self.frames):
+            copy_path=folder/('renamed_%03d.png'%i)
+            shutil.copyfile(path,copy_path);copies.append(copy_path)
+        second=self.process(frames=copies)
+        self.assertEqual(first['recording_digest'],second['recording_digest'])
+        image=cv2.imread(str(copies[-1]));image[-1,-1]=[0,1,2];cv2.imwrite(str(copies[-1]),image)
+        third=self.process(frames=copies)
+        self.assertNotEqual(first['recording_digest'],third['recording_digest'])
 
     def test_fragment_repair_never_merges_two_observations_in_same_frame(self):
         image=cv2.imread(str(self.frames[0]))

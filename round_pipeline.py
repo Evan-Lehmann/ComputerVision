@@ -2,6 +2,7 @@
 from pathlib import Path
 from types import SimpleNamespace
 import json
+import hashlib
 import cv2
 import numpy as np
 from card_tracking import CardIdentityMatcher, merge_track_fragments
@@ -86,7 +87,9 @@ def summarize(result):
     unresolved = sum(rank == 'UNKNOWN' for rank in cards)
     result.update(cards=cards, known_count_change=subtotal, unresolved=unresolved,
                   count_change=None if unresolved else subtotal,
-                  count_verified=bool(result.get('review_confirmed')) and not unresolved)
+                  count_verified=bool(result.get('review_confirmed')) and not unresolved,
+                  count_scope='captured_cards',
+                  count_range=dict(min=subtotal-unresolved, max=subtotal+unresolved))
     return result
 
 
@@ -106,6 +109,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     tracks = {r['name']: [] for r in regions}
     next_id, read_frames = 1, 0
     expected_shape = None
+    recording_digest = hashlib.sha256(b'cardvision-recording-v1\0')
     for index, path in enumerate(frame_paths):
         image = cv2.imread(str(path))
         if image is None:
@@ -115,6 +119,9 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             expected_shape = (h,w)
         elif expected_shape != (h,w):
             raise ValueError('Frame sizes changed during capture. Record with one monitor size.')
+        # Content-based grouping survives reanalysis, folder moves and renaming.
+        recording_digest.update(np.asarray(image.shape, dtype='<u4').tobytes())
+        recording_digest.update(image.tobytes())
         detections = engine.detect(image, path)
         grouped = {r['name']: [] for r in regions}
         for det in detections:
@@ -192,6 +199,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     # Within-frame ordering is deterministic, not a claim about sub-frame deal order.
     events.sort(key=lambda event: (event['first_frame'], event['region'], int(event['id'])))
     result = summarize(dict(events=events, frames_processed=read_frames, regions=regions,
+        recording_digest=recording_digest.hexdigest(),
         review_confirmed=False, warnings=[
             'Model predictions are provisional. Review every card and check for missing or duplicate cards.',
             'Cards first seen in the same frame have uncertain relative deal order.',
