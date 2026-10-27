@@ -1,0 +1,242 @@
+{
+  "source_url": "https://github.com/TeogopK/Playing-Cards-Object-Detection",
+  "source_revision": "6da007263c51cf5a44a3c06ea840030ff72ce678",
+  "weights_sha256": "0b408029b1241b2489217f89b63f153d81cb0fc6a035361a87bc6e7dac5c62c9",
+  "matches_inspected_synthetic_checkpoint": true,
+  "frames": 177,
+  "annotation_scope": "All detected main-view observations, manually assigned to physical cards; not full-table detector recall",
+  "protocol": {
+    "variants": [
+      "full640",
+      "full1280",
+      "regions640"
+    ],
+    "inference_floor": 0.05,
+    "primary_confidence": 0.25,
+    "diagnostic_confidence": 0.05,
+    "nms_iou": 0.7,
+    "device": "cpu",
+    "regions": [
+      {
+        "name": "dealer",
+        "rect": [
+          0.28,
+          0.76,
+          0.58,
+          0.93
+        ]
+      },
+      {
+        "name": "player",
+        "rect": [
+          0.58,
+          0.76,
+          0.84,
+          0.93
+        ]
+      }
+    ],
+    "matching_tiebreak": "Geometric overlap first, confidence for ties; never annotated rank."
+  },
+  "variants": {
+    "full640": {
+      "0.25": {
+        "confidence_threshold": 0.25,
+        "annotated_observations": 335,
+        "predictions_in_selected_regions": 0,
+        "matched_observations": 0,
+        "missed_annotated_observations": 335,
+        "correct_rank_observations": 0,
+        "wrong_rank_observations": 0,
+        "unmatched_predictions": 0,
+        "rank_accuracy_on_matches": null,
+        "correctly_recognized_observation_fraction": 0.0,
+        "expected_physical_cards": 12,
+        "physical_cards_ever_correctly_recognized": 0
+      },
+      "0.05": {
+        "confidence_threshold": 0.05,
+        "annotated_observations": 335,
+        "predictions_in_selected_regions": 12,
+        "matched_observations": 6,
+        "missed_annotated_observations": 329,
+        "correct_rank_observations": 0,
+        "wrong_rank_observations": 6,
+        "unmatched_predictions": 6,
+        "rank_accuracy_on_matches": 0.0,
+        "correctly_recognized_observation_fraction": 0.0,
+        "expected_physical_cards": 12,
+        "physical_cards_ever_correctly_recognized": 0
+      },
+      "timing_seconds": {
+        "total": 29.446219861974896,
+        "median": 0.15775711300011608,
+        "p95": 0.18652187539955772
+      }
+    },
+    "full1280": {
+      "0.25": {
+        "confidence_threshold": 0.25,
+        "annotated_observations": 335,
+        "predictions_in_selected_regions": 0,
+        "matched_observations": 0,
+        "missed_annotated_observations": 335,
+        "correct_rank_observations": 0,
+        "wrong_rank_observations": 0,
+        "unmatched_predictions": 0,
+        "rank_accuracy_on_matches": null,
+        "correctly_recognized_observation_fraction": 0.0,
+        "expected_physical_cards": 12,
+        "physical_cards_ever_correctly_recognized": 0
+      },
+      "0.05": {
+        "confidence_threshold": 0.05,
+        "annotated_observations": 335,
+        "predictions_in_selected_regions": 21,
+        "matched_observations": 10,
+        "missed_annotated_observations": 325,
+        "correct_rank_observations": 10,
+        "wrong_rank_observations": 0,
+        "unmatched_predictions": 11,
+        "rank_accuracy_on_matches": 1.0,
+        "correctly_recognized_observation_fraction": 0.029850746268656716,
+        "expected_physical_cards": 12,
+        "physical_cards_ever_correctly_recognized": 1
+      },
+      "timing_seconds": {
+        "total": 100.15895042600823,
+        "median": 0.546713608000573,
+        "p95": 0.6527208784005775
+      }
+    },
+    "regions640": {
+      "0.25": {
+        "confidence_threshold": 0.25,
+        "annotated_observations": 335,
+        "predictions_in_selected_regions": 117,
+        "matched_observations": 38,
+        "missed_annotated_observations": 297,
+        "correct_rank_observations": 38,
+        "wrong_rank_observations": 0,
+        "unmatched_predictions": 79,
+        "rank_accuracy_on_matches": 1.0,
+        "correctly_recognized_observation_fraction": 0.11343283582089553,
+        "expected_physical_cards": 12,
+        "physical_cards_ever_correctly_recognized": 1
+      },
+      "0.05": {
+        "confidence_threshold": 0.05,
+        "annotated_observations": 335,
+        "predictions_in_selected_regions": 293,
+        "matched_observations": 131,
+        "missed_annotated_observations": 204,
+        "correct_rank_observations": 49,
+        "wrong_rank_observations": 82,
+        "unmatched_predictions": 162,
+        "rank_accuracy_on_matches": 0.37404580152671757,
+        "correctly_recognized_observation_fraction": 0.14626865671641792,
+        "expected_physical_cards": 12,
+        "physical_cards_ever_correctly_recognized": 2
+      },
+      "timing_seconds": {
+        "total": 38.29017841800851,
+        "median": 0.20849872799954028,
+        "p95": 0.25590161960062685
+      }
+    }
+  },
+  "current_pipeline": {
+    "annotation_scope": "All detected main-view observations, manually assigned to physical cards; not full-table detector recall",
+    "expected_physical_cards": 12,
+    "candidate_events": 12,
+    "matched_observations": 335,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 0,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 0,
+    "missing_physical_cards": 0,
+    "unmatched_events": 0,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 0,
+    "exact_annotated_card_list": true,
+    "expected_count_change": 1,
+    "count_change": 1,
+    "count_matches": true
+  },
+  "limitations": [
+    "Existing development recording; not an independent holdout or general accuracy estimate.",
+    "Annotations cover selected main-view detector observations, not all visible cards or views.",
+    "Reference boxes are rank-only; external boxes can include suit. Matching uses >=50% reference coverage and >=10% prediction coverage.",
+    "Unmatched predictions can include legitimate other corners; they are not automatically false positives.",
+    "Current pipeline uses temporal rank aggregation; external metrics are frame-level without tracking.",
+    "No model training/fine-tuning, production replacement, or third-party weight redistribution."
+  ],
+  "source_controls": {
+    "images": [
+      {
+        "image": "000246247_jpg.rf.fb915aef7c063ce2ac971f8de0d8b2c1.jpg",
+        "labelled_corners": 4,
+        "predictions": 4,
+        "matched_at_iou_05": 4,
+        "correct_classes": 4
+      },
+      {
+        "image": "000355142_jpg.rf.7e5eff691d035112dd4b5021fe38a46c.jpg",
+        "labelled_corners": 4,
+        "predictions": 4,
+        "matched_at_iou_05": 4,
+        "correct_classes": 4
+      },
+      {
+        "image": "001761433_jpg.rf.1a4a563beb6d588841bd8bd3a50c083b.jpg",
+        "labelled_corners": 3,
+        "predictions": 5,
+        "matched_at_iou_05": 3,
+        "correct_classes": 3
+      }
+    ],
+    "selection": "First three files returned by the repository synthetic test-image directory; all three evaluated, no outcome-based selection.",
+    "class_mapping_verified": true,
+    "imgsz": 640,
+    "confidence": 0.25,
+    "limitation": "Source-domain operational check; not an independent CardVision accuracy test."
+  },
+  "runtime": {
+    "torch": "2.14.1+cpu",
+    "ultralytics": "8.4.189",
+    "opencv": "5.0.0"
+  },
+  "additional_smoke_checks": [
+    {
+      "source": "https://raw.githubusercontent.com/TeogopK/Playing-Cards-Object-Detection/6da007263c51cf5a44a3c06ea840030ff72ce678/demo_application/media/model_visualization.png",
+      "crop": [
+        240,
+        335,
+        1845,
+        1650
+      ],
+      "imgsz": 640,
+      "confidence": 0.25,
+      "predictions": [],
+      "limitation": "Published demo screenshot contains existing overlays; operational sanity check only, not an independent accuracy test."
+    },
+    {
+      "source": "data/test_images/1.jpg",
+      "imgsz": 640,
+      "confidence": 0.25,
+      "predictions": 5,
+      "limitation": "Unannotated author-provided photo; predictions are not an accuracy measurement."
+    }
+  ],
+  "decision": "Do not replace current CardVision detector/recognizer with this unchanged checkpoint. Fine-tuning on the digital layout is untested.",
+  "manual_unmatched_audit": {
+    "variant": "regions640",
+    "confidence": 0.25,
+    "total_unmatched_predictions": 79,
+    "repeated_wrong_inverted_5_as_3": 60,
+    "repeated_false_card_from_yellow_14_total_tag_as_A": 19,
+    "method": "Inspected representative source frames and repeated prediction-location clusters; no additional correct physical cards found in these 79 outputs.",
+    "limitation": "Manual diagnostic for this recording; unmatched outputs are not automatically false positives in other recordings."
+  }
+}

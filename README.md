@@ -130,6 +130,8 @@ The recorded audit evaluated 128 crops: 57 were eligible red glyphs and only 9 m
 
 See [VALIDATION.md](VALIDATION.md) for measured results, failures, dataset separation and limits; [TRACKING.md](TRACKING.md) for the tracking experiment. The current app uses `models/rank_classifier_v4.pt`. The reproducible training experiments are `train_rank_classifier_v3.py` and `train_rank_classifier_v4.py`.
 
+The external 52-class pretrained detector was also tested unchanged on the digital-table recording and source-domain controls. It performed poorly on the screenshots and was not adopted. See [EXTERNAL_MODEL_EVALUATION.md](EXTERNAL_MODEL_EVALUATION.md) for the protocol, results and reproducible benchmark.
+
 `evaluate_card_result.py result.json physical_reference.json --require-exact` compares explicit physical-card annotations with exported per-frame boxes. It measures mixed identities, extra fragments, unknown/wrong ranks, round assignments and count separately. Its JSON reference schema is documented in the script. Matching totals alone do not pass. Annotation scope must be stated; detector-observation annotations do not measure missed cards outside those detections.
 
 The YOLO localization/dedupe implementation remains unchanged. Historical training scripts and their data stay available. The web app no longer calls the inaccurate legacy round recognizer.

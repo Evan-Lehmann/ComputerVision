@@ -6,6 +6,10 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
+## External pretrained detector evaluation
+
+The unchanged TeogopK synthetic 52-class YOLO checkpoint was tested on all 177 frames of the two-round development recording using full screenshots at 640/1280 and hand crops at 640. At confidence 0.25 the full-screen modes detect no selected-region cards; cropped hands correctly match 38/335 annotated rank observations, all from one physical card, with 79 unmatched outputs. At 0.05, cropped matches include 49 correct and 82 wrong ranks. Three source-domain test controls correctly match all 11 labelled corners, with two extra predictions, supporting that inference is operational. The model was not adopted and production behavior is unchanged. All 88 tests pass. [EXTERNAL_MODEL_EVALUATION.md](EXTERNAL_MODEL_EVALUATION.md) and `validation/external_yolo_benchmark.json` describe source hashes, geometry, annotation scope, manual unmatched analysis and comparison limitations.
+
 ## Hand-level association and reference recognition
 
 The new 177-frame two-round recording exposed a mixed 4/K track and an extra A fragment. The frozen baseline is revision `2c3e002`: 13 candidate events, five unknowns and a known-card subtotal of +2; the correct main-view result is 12 physical cards and +1. The uploaded split archives contain two byte-identical directory copies of the 177 frames; only one chronological copy was evaluated.
