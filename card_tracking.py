@@ -218,6 +218,8 @@ def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
                     continue
                 if getattr(left, 'scene_id', None) != getattr(right, 'scene_id', None):
                     continue
+                if getattr(left, 'round_number', 1) != getattr(right, 'round_number', 1):
+                    continue
                 a, b = left.observations, right.observations
                 af, bf = {o['frame'] for o in a}, {o['frame'] for o in b}
                 if af & bf:

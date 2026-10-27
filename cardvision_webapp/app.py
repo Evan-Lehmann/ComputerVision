@@ -1,4 +1,4 @@
-"""Local dashboard: record, process, inspect evidence and correct one round."""
+"""Local dashboard: record, inspect and review cards across successive rounds."""
 import argparse
 import copy
 from pathlib import Path
@@ -214,7 +214,8 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
             if state['session_status'] != 'COMPLETE' or data.get('result_id') != state['result_id']:
                 return jsonify(error='This result is no longer current.'), 409
             try:
-                reviewed = apply_review(state, data.get('events'), data.get('confirmed', False))
+                reviewed = apply_review(state, data.get('events'), data.get('confirmed', False),
+                                        data.get('rounds_confirmed', False))
                 save_result(reviewed, artifact_root/state['result_id'])
             except (ValueError, TypeError, AttributeError) as exc:
                 return jsonify(error=str(exc)), 400

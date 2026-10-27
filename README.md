@@ -1,8 +1,8 @@
 # CardVision
 
-A local school-project dashboard for reviewing cards from one recorded play-money blackjack round and calculating its Hi-Lo count change.
+A local school-project dashboard for reviewing cards across recorded play-money blackjack rounds and calculating their Hi-Lo changes and running total.
 
-**Current status: working record → analyze → review → count prototype. Automatic recognition and tracking still make mistakes. An unreviewed count is provisional; unknown cards make it incomplete.** Continuous shoe tracking and betting signals are not implemented.
+**Current status: working record → analyze → review → count prototype, with conservative multi-round segmentation. Automatic recognition, tracking and boundaries still make mistakes. An unreviewed count is provisional; unknown cards make it incomplete.** Counts update after recording stops. Continuous live shoe tracking and betting signals are not implemented.
 
 ## Run on your Mac
 
@@ -18,13 +18,15 @@ Open `http://127.0.0.1:5000` locally on your Mac. The models are included in `mo
 
 1. Expand **Check which cards are counted**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings. Draw new boxes if your browser/table layout differs. Include space for additional cards; exclude small duplicate views.
 2. Start recording before cards appear. The app gives a three-second countdown; switch to the play-money table. It records at two frames per second by default.
-3. Stop after the round's face-up cards have appeared. Analysis runs in the background and reports progress.
+3. For multiple rounds, keep recording through the cleared table between deals. Stop after the last round's face-up cards have appeared. Analysis runs in the background and reports progress.
 4. Inspect each card's first/middle/last crop. Click a crop to open its original screenshot. Correct incorrect/unknown ranks, exclude duplicate or false detections, add missed cards, and adjust order. All original detections remain in the saved audit even when excluded.
-5. Check the confirmation box only after checking the whole round, then save the review. Download the JSON result if wanted.
+5. Check each round's cards and suggested clearing evidence in **Rounds & running total**. Correct a missed or false boundary using the **Round** number beside each card; add missed cards to the appropriate round. Confirm the card list and, when requested, the round divisions, then save the review. Download the JSON result if wanted.
 
 Hi-Lo: A/10/J/Q/K = −1; 2–6 = +1; 7–9 = 0. UNKNOWN contributes zero to the **known-card subtotal**, but the full count is unavailable until all included ranks are resolved. “Reviewed by you” records user confirmation, not a claim that the models independently achieved perfect accuracy.
 
-The displayed count covers cards observed in this recording, including cards already visible when recording starts. A partial recording is not a complete round, and separate recordings are not added together. With unknown ranks, the app labels the number as a subtotal and shows the possible range for the detected events. Missing or duplicate cards can change that range.
+The displayed count covers cards observed in this recording, including cards already visible when recording starts. It starts at zero and carries across rounds within the recording. Separate recordings are not added together, and a partial recording is not a complete round. With unknown ranks, the app labels the number as a subtotal and shows the possible range for the detected events. An unknown in an earlier round keeps later running totals incomplete. Missing or duplicate cards can change that range.
+
+A suggested new round requires at least four consecutive frames with no selected-region detections and visual evidence of an empty green table in every selected region. At the default two frames per second this is approximately two seconds. Bright upright card faces/backs veto the empty-table check even if their ranks are missed. Leading/trailing empty frames do not add empty rounds. Short clear intervals, long detector gaps and window changes can require manual review; they do not silently reset the total. This heuristic targets the supplied green-table layout and may miss boundaries in other layouts or under occlusion. Review is required. A round boundary never resets the recording total; shoe changes are not detected, and a shoe-spanning recording cannot automatically exclude/reset its earlier cards. Begin a new recording for a new shoe.
 
 After confirming and saving a fully resolved review, **Download reviewed crops** exports a compact ZIP containing card crops, `labels.csv` and grouping metadata. Excluded cards and manually added cards without images are omitted; identical images within one card are deduplicated. Full screenshots are not included. Nothing is trained or uploaded automatically. Keep all views of a card and recording together in future training/validation splits. The recording identifier uses decoded frame content, so reanalyzing the same frames under another folder name preserves its group; overlapping or shortened recordings still need separate leakage checks.
 
@@ -65,7 +67,7 @@ Register a folder at startup; choose it in **Analyze saved screenshots**:
 python -m cardvision_webapp.app --replay captures
 ```
 
-`--replay` can be repeated for multiple folders. Prefer one complete round per folder. The app never deletes input screenshots. Multi-round segmentation and automatic round-completeness checks are not implemented.
+`--replay` can be repeated for multiple folders. A folder may contain one or several consecutive rounds; each folder is analyzed independently. The app never deletes input screenshots. Boundary suggestions do not establish round completeness. Registering separate folders does not combine their totals.
 
 For command-line processing:
 

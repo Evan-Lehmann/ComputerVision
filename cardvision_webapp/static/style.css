@@ -233,3 +233,9 @@ dialog img { display: block; max-width: 90vw; max-height: 75vh; margin-top: 10px
 .count-value { text-align: right; flex-shrink: 0; }
 .count-value .small-label { color: #ffe2a1; display: block; margin-top: 6px; }
 .count-scope { margin: -6px 4px 20px; }
+.round-table-wrap { overflow-x: auto; }
+.round-table { border-collapse: collapse; width: 100%; font-size: 13px; }
+.round-table th, .round-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #353b44; vertical-align: top; }
+.round-table th { color: #a1a8b3; }
+#roundTransitions button { padding: 5px 8px; margin: 4px; font-size: 12px; }
+.card-heading input[type="number"] { width: 64px; padding: 6px; border: 1px solid #48525d; border-radius: 6px; background: #252b33; color: white; }

@@ -36,7 +36,8 @@ def reviewed_crop_bundle(result, output_dir, recording_group):
             labelled_cards.add(event['id'])
             rows.append(dict(crop=archive_name, rank=event['rank'],
                 card_group=str(recording_group) + ':' + str(event['id']),
-                recording_group=recording_group, region=event['region'],
+                recording_group=recording_group, round_number=event.get('round_number', 1),
+                region=event['region'],
                 source_frame=evidence.get('source', ''), frame_index=evidence.get('frame', ''),
                 sha256=digest, annotation_source='user_confirmed_review'))
     if not rows:

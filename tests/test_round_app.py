@@ -101,6 +101,50 @@ class RoundAppTests(unittest.TestCase):
         self.client.post('/api/process',json={'source':'sample'});self.wait('COMPLETE')
         self.assertEqual(self.client.post('/api/review',json={'result_id':'old','events':[]}).status_code,409)
 
+    def test_multi_round_review_requires_round_confirmation_and_persists_corrections(self):
+        import copy
+        original = self.processor
+        def processor(directory, output_dir, regions, progress):
+            result = original(directory, output_dir, regions, progress)
+            result['events'][0]['round_number'] = 1
+            second = copy.deepcopy(result['events'][0])
+            second.update(id='2', round_number=2)
+            second['evidence'][0]['image'] = 'card_second.png'
+            cv2.imwrite(str(output_dir/'card_second.png'), np.full((10,10,3), 220, np.uint8))
+            result['events'].append(second)
+            result['boundaries'] = [dict(round_number=2, clear_start=0, clear_end=0,
+                                        previous_last_frame=0, first_frame=0)]
+            result = summarize(result)
+            save_result(result, output_dir)
+            return result
+        app = create_app(capture=self.capture, processor=processor, replays={'sample':self.root},
+                         artifact_root=self.root/'artifacts', delay=0)
+        self.client = app.test_client()
+        self.client.post('/api/process', json={'source':'sample'})
+        state = self.wait('COMPLETE')
+        edits = [dict(id='1', rank='6', round_number=1), dict(id='2', rank='A', round_number=2)]
+        payload = dict(result_id=state['result_id'], events=edits, confirmed=True)
+        response = self.client.post('/api/review', json=payload)
+        self.assertFalse(response.json['count_verified'])
+        self.assertEqual(self.client.get('/api/reviewed-crops').status_code, 409)
+        payload['rounds_confirmed'] = True
+        response = self.client.post('/api/review', json=payload)
+        self.assertTrue(response.json['count_verified'])
+        self.assertEqual([r['running_count_change'] for r in response.json['rounds']], [1, 0])
+        download = self.client.get('/api/result')
+        self.assertTrue(json.loads(download.data)['rounds_confirmed'])
+        self.assertEqual(self.client.get('/api/reviewed-crops').status_code, 200)
+        edits[1]['round_number'] = 0
+        self.assertEqual(self.client.post('/api/review', json=payload).status_code, 400)
+        self.assertEqual(self.client.get('/api/state').json['rounds'][1]['cards'], ['A'])
+        edits[1]['round_number'] = 1
+        payload['rounds_confirmed'] = False
+        response = self.client.post('/api/review', json=payload)
+        self.assertEqual(response.json['round_count'], 1)
+        self.assertEqual(response.json['count_change'], 0)
+        self.assertFalse(response.json['count_verified'])
+        self.assertEqual(self.client.get('/api/reviewed-crops').status_code, 409)
+
 class CaptureTests(unittest.TestCase):
     def test_real_thread_saves_first_frame_before_ready(self):
         class Screen:

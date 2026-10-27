@@ -25,9 +25,11 @@ def main():
     result=process_frames(paths,args.output,engine,regions,progress,ocr_reader=False if args.no_ocr else None)
     if args.review:
         review=json.loads(args.review.read_text())
-        result=apply_review(result,review['events'],review.get('confirmed',False))
+        result=apply_review(result,review['events'],review.get('confirmed',False),
+                            review.get('rounds_confirmed',False))
         save_result(result,args.output)
     print(json.dumps(dict(cards=result['cards'],count_change=result['count_change'],
-        known_count_change=result['known_count_change'],count_verified=result['count_verified']),indent=2))
+        known_count_change=result['known_count_change'],count_verified=result['count_verified'],
+        rounds=result['rounds'],needs_round_review=result['needs_round_review']),indent=2))
 
 if __name__=='__main__':main()

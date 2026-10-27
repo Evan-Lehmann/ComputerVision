@@ -1,4 +1,4 @@
-"""One-round vision pipeline. Model guesses remain provisional until reviewed."""
+"""Recorded-table pipeline. Cards and round divisions remain provisional."""
 from pathlib import Path
 from types import SimpleNamespace
 import json
@@ -6,6 +6,7 @@ import hashlib
 import cv2
 import numpy as np
 from card_tracking import CardIdentityMatcher, merge_track_fragments
+from round_segmentation import RoundSegmenter, visible_empty_table
 
 ROOT = Path(__file__).resolve().parent
 RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -85,9 +86,29 @@ def summarize(result):
     cards = [event['rank'] for event in included]
     subtotal = sum(COUNT_VALUES.get(rank, 0) for rank in cards)
     unresolved = sum(rank == 'UNKNOWN' for rank in cards)
+    numbers = sorted({event.get('round_number', 1) for event in result['events']})
+    needs_round_review = (len(numbers) > 1 or bool(result.get('boundaries'))
+                          or bool(result.get('uncertain_transitions')))
+    verified = (bool(result.get('review_confirmed')) and not unresolved
+                and (not needs_round_review or bool(result.get('rounds_confirmed'))))
+    rounds, running, running_unknown = [], 0, 0
+    for number in numbers:
+        events = [event for event in included if event.get('round_number', 1) == number]
+        ranks = [event['rank'] for event in events]
+        change = sum(COUNT_VALUES.get(rank, 0) for rank in ranks)
+        unknown = ranks.count('UNKNOWN')
+        running += change
+        running_unknown += unknown
+        rounds.append(dict(round_number=number, cards=ranks, unresolved=unknown,
+            known_count_change=change, count_change=None if unknown else change,
+            count_range=dict(min=change-unknown, max=change+unknown),
+            running_known_count_change=running,
+            running_count_change=None if running_unknown else running,
+            running_count_range=dict(min=running-running_unknown, max=running+running_unknown)))
     result.update(cards=cards, known_count_change=subtotal, unresolved=unresolved,
                   count_change=None if unresolved else subtotal,
-                  count_verified=bool(result.get('review_confirmed')) and not unresolved,
+                  count_verified=verified, rounds=rounds, round_count=len(rounds),
+                  needs_round_review=needs_round_review,
                   count_scope='captured_cards',
                   count_range=dict(min=subtotal-unresolved, max=subtotal+unresolved))
     return result
@@ -110,6 +131,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     next_id, read_frames = 1, 0
     expected_shape = None
     recording_digest = hashlib.sha256(b'cardvision-recording-v1\0')
+    segmenter = RoundSegmenter()
     for index, path in enumerate(frame_paths):
         image = cv2.imread(str(path))
         if image is None:
@@ -134,6 +156,12 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                     if crop is not None:
                         grouped[region['name']].append(dict(box=box, crop=crop))
                     break
+        has_cards = any(grouped.values())
+        if segmenter.observe(index, has_cards,
+                empty_table=not has_cards and visible_empty_table(image, regions)):
+            for name, matcher in matchers.items():
+                matcher.retired_ids.update(t.track_id for t in tracks[name])
+                matcher.scene_id += 1
         for region in regions:
             name = region['name']
             current = grouped[name]
@@ -143,7 +171,8 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 track = matches.get(i)
                 if track is None:
                     track = SimpleNamespace(track_id=next_id, observations=[], region=name,
-                                            scene_id=matchers[name].scene_id)
+                                            scene_id=matchers[name].scene_id,
+                                            round_number=segmenter.round_number)
                     next_id += 1
                     tracks[name].append(track)
                 probabilities_i = np.asarray(probabilities[i], dtype=float)
@@ -181,6 +210,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                     raise OSError('Could not write card evidence.')
                 evidence.append(dict(image=filename, frame=observation['frame'], source=observation['source']))
             events.append(dict(id=str(track.track_id), region=track.region, rank=rank,
+                round_number=track.round_number,
                 merged_from=getattr(track, 'merged_from', [track.track_id]),
                 suggested_rank=rank if ocr_result else cnn_rank, confidence=confidence, observations=len(observations),
                 recognition_source=recognition_source, cnn_suggested_rank=cnn_rank,
@@ -193,6 +223,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     for event in events:
         candidates = [other['id'] for other in events
                       if other['id'] != event['id'] and other['region'] == event['region']
+                      and other['round_number'] == event['round_number']
                       and other['suggested_rank'] == event['suggested_rank']
                       and max(event['first_frame'] - other['last_frame'],
                               other['first_frame'] - event['last_frame'], 0) <= 3]
@@ -201,10 +232,12 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     events.sort(key=lambda event: (event['first_frame'], event['region'], int(event['id'])))
     result = summarize(dict(events=events, frames_processed=read_frames, regions=regions,
         recording_digest=recording_digest.hexdigest(),
+        boundaries=segmenter.boundaries, uncertain_transitions=segmenter.uncertain_transitions,
+        rounds_confirmed=False,
         review_confirmed=False, warnings=[
             'Model predictions are provisional. Review every card and check for missing or duplicate cards.',
             'Cards first seen in the same frame have uncertain relative deal order.',
-            'Capture may start or end mid-round; completion is not inferred from this recording.',
+            'Capture may start or end mid-round; completion is not inferred. Check round assignments and boundaries.',
             'Only selected source regions are counted. The small central hand is excluded by default; add distinct cards from other views during review.'
         ]))
     if not events:
@@ -225,10 +258,11 @@ def save_result(result, output_dir):
     temporary.replace(path)
 
 
-def apply_review(result, edits, confirmed):
+def apply_review(result, edits, confirmed, rounds_confirmed=False):
     """Review an explicitly ordered event list; excluded items stay in the audit."""
     import copy
-    if not isinstance(edits, list) or len(edits) > 1000 or not isinstance(confirmed, bool):
+    if (not isinstance(edits, list) or len(edits) > 1000 or not isinstance(confirmed, bool)
+            or not isinstance(rounds_confirmed, bool)):
         raise ValueError('Invalid review request.')
     known = {event['id']: event for event in result['events']}
     seen, events = set(), []
@@ -247,10 +281,15 @@ def apply_review(result, edits, confirmed):
         rank = edit.get('rank')
         if rank not in RANKS + ['UNKNOWN'] or not isinstance(edit.get('excluded', False), bool):
             raise ValueError('Choose a valid rank.')
-        event.update(rank=rank, excluded=edit.get('excluded', False), reviewed=True)
+        number = edit.get('round_number', event.get('round_number', 1))
+        if type(number) is not int or not 1 <= number <= 1000:
+            raise ValueError('Round numbers must be whole numbers between 1 and 1000.')
+        event.update(rank=rank, excluded=edit.get('excluded', False), reviewed=True,
+                     round_number=number)
         events.append(event)
     if not set(known).issubset(seen):
         raise ValueError('Keep all original events; mark unwanted events excluded.')
     reviewed = copy.deepcopy(result)
-    reviewed.update(events=events, review_confirmed=confirmed)
+    reviewed.update(events=events, review_confirmed=confirmed,
+                    rounds_confirmed=rounds_confirmed and confirmed)
     return summarize(reviewed)
