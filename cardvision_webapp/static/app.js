@@ -67,7 +67,7 @@ function renderCards() {
   events.forEach((event,index) => {
     const card = document.createElement('article'); card.className = 'card-row' + (event.excluded ? ' excluded' : '');
     const head = document.createElement('div'); head.className = 'card-heading';
-    const title = document.createElement('span'); title.textContent = `${index+1}. ${event.region} · ${event.observations || 0} views`; head.append(title);
+    const title = document.createElement('span'); title.textContent = `${index+1}. ${event.region} · ${event.observations || 0} observations`; head.append(title);
     const select = document.createElement('select'); select.setAttribute('aria-label',`Rank of card ${index+1}`);
     ranks.forEach(rank => { const option = document.createElement('option'); option.value = rank; option.textContent = rank === 'UNKNOWN' ? 'Unknown' : rank; select.append(option); });
     select.value = event.rank; select.onchange = () => { event.rank = select.value; changed(); }; head.append(select);
@@ -82,8 +82,12 @@ function renderCards() {
     const strip = document.createElement('div'); strip.className = 'evidence';
     (event.evidence || []).forEach((item,i) => { const button = document.createElement('button'); button.className = 'crop'; button.title = `Open original screenshot ${item.source}`; const image = document.createElement('img'); image.src = `/api/evidence/${resultId}/${encodeURIComponent(item.image)}`; image.alt = ['First','Middle','Last'][i] + ' card crop'; button.append(image); button.onclick = () => { $('fullFrame').src = `/api/frame/${resultId}/${item.frame}`; $('frameDialog').showModal(); }; strip.append(button); });
     card.append(strip);
-    const caption = document.createElement('p'); caption.className = 'muted'; caption.textContent = event.observations ? event.recognition_source === 'reference_consensus' ? `Reference agreement: ${event.suggested_rank} (image match ${event.confidence.toFixed(2)}). Click a crop to inspect the screenshot.` : `${event.recognition_source === "ocr_consensus" ? "OCR consensus" : "Model suggestion"}: ${event.suggested_rank} (${Math.round(event.confidence*100)}%). Click a crop to inspect the screenshot.` : 'Added during review.'; card.append(caption);
-    if (event.possible_duplicates?.length) { const warning = document.createElement('p'); warning.className = 'muted'; warning.textContent = 'Check possible duplicate card(s): ' + event.possible_duplicates.join(', ') + '. This is a suggestion, not an automatic exclusion.'; card.append(warning); }
+    const caption = document.createElement('p'); caption.className = 'muted'; caption.textContent = event.observations ? event.recognition_source === 'reference_consensus' ? `Reference agreement: ${event.suggested_rank} (image match ${event.confidence.toFixed(2)}). Click a crop to inspect the screenshot.` : `${event.recognition_source === "ocr_consensus" ? "OCR consensus" : "Model suggestion"}: ${event.suggested_rank} (score ${event.confidence.toFixed(2)}). Click a crop to inspect the screenshot.` : 'Added during review.'; card.append(caption);
+    const duplicateRows = (event.possible_duplicates || [])
+      .map(id => events.findIndex(other => String(other.id) === String(id)))
+      .filter(i => i >= 0 && !events[i].excluded && i !== index)
+      .map(i => i + 1);
+    if (!event.excluded && duplicateRows.length) { const warning = document.createElement('p'); warning.className = 'muted'; warning.textContent = 'Compare with candidate row(s): ' + duplicateRows.join(', ') + '. These may be the same physical card; both remain included until you exclude one.'; card.append(warning); }
     $('cards').append(card);
   });
   renderCount();
