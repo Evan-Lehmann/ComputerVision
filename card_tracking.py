@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 from glyph_features import glyph_signature as _animation_glyph
+from card_faces import secondary_animation_similarity, projected_rank_crop
 
 
 def crop_appearance(crop):
@@ -167,7 +168,7 @@ class CardIdentityMatcher:
         self.scene_id = 0
         self.ordered_hand = ordered_hand
 
-    def match(self, detections, tracks, sample_index):
+    def match(self, detections, tracks, sample_index, image=None):
         if not detections:
             self.empty_samples += 1
             if self.empty_samples >= self.clear_after_empty:
@@ -200,6 +201,19 @@ class CardIdentityMatcher:
                     if ordered_row else appearance_similarity(
                         crop_appearance(detection.get('crop')), crop_appearance(observation.get('crop')))
                     for observation in track.observations[-2:])
+        projections = {}
+        if image is not None and ordered_row:
+            for i,detection in enumerate(detections):
+                for j,track in enumerate(active):
+                    if track.last_sample_index != sample_index-1 or len(track.observations)<2:
+                        continue
+                    projected=projected_rank_crop(image,detection,track.observations[-1])
+                    if projected is None:
+                        continue
+                    score=min(glyph_similarity(projected[0],o['crop']) for o in track.observations[-2:])
+                    if score>=.94 and score>similarities[i,j]+.02:
+                        similarities[i,j]=score
+                        projections[i,j]=projected
         motion = np.zeros(2)
         motion_support = 0
         # Use distinctive, reciprocal glyph matches as hand-motion anchors.
@@ -282,6 +296,11 @@ class CardIdentityMatcher:
             rows, columns = linear_sum_assignment(costs)
             matches = {int(i): active[j] for i, j in zip(rows, columns)
                        if j < len(active) and costs[i, j] < .65}
+        for i,track in matches.items():
+            j=next(j for j,t in enumerate(active) if t is track)
+            if (i,j) in projections:
+                crop,box=projections[i,j]
+                detections[i].update(crop=crop,rank_box=box,crop_source='face_projected')
         return {detection_order[i]: track for i, track in matches.items()}
 
 
@@ -334,6 +353,10 @@ def merge_track_fragments(tracks, max_gap=3, min_similarity=0.90):
                         score = animation_similarity(early[-1]['crop'], late[0]['crop'])
                         if score >= .96:
                             best = max(best, score)
+                if not overlap and gap <= 2 and len(early) <= 3:
+                    secondary_score = secondary_animation_similarity(early[-1], late[0])
+                    if secondary_score >= .94:
+                        best = max(best, secondary_score)
                 if best >= min_similarity:
                     candidates.append((best, i, j))
         if not candidates:

@@ -34,7 +34,11 @@ Screenshots and analysis are saved under ignored `round_captures/`. They are not
 
 ### Hand-aware association and rank references
 
-The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and overlapping views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The detector and V4 CNN weights are unchanged.
+The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and overlapping views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The YOLO V2 detector remains unchanged. The default CNN is now V5; earlier V4 weights are retained for comparison.
+
+Visible rectangular card faces provide additional evidence in the configured upright layout. Partial boxes can be reconciled only with a retained counterpart on the same face; narrow suit-edge suppression also requires agreement of the printed rank corners. Opposite-corner evidence can rejoin short dim animation fragments, while face-relative projection can recover a stable corner when a detector box clips it. Unestablished geometry leaves candidates available for review. The JSON preserves suppressed boxes/counterparts, inferred face boxes, original observation boxes and projected-crop provenance. No card is discarded merely for having one observation or a low rank score.
+
+The three new development rounds return 18 distinct cards with no unknowns and count changes 0, +2 and -2. These recordings also supplied V5 training crops, so this is a development regression result. R4/r5 remain reserved and uninspected. See [VALIDATION.md](VALIDATION.md) for remaining failures and the frozen comparison protocol.
 
 When the CNN leaves a rank unknown, the app can compare it against `models/rank_reference_v1.npz`, built only from the previously published V4 training crops. It requires a strong match, separation from other ranks, agreement in at least two distinct frames sampled from up to seven spread-out observations, and the same top rank as the CNN. Conflicting accepted reference votes leave the rank unresolved. Confident CNN results are preserved. Rows say **Reference agreement** and show an image-match score, which is not a probability of correctness. This reader handles red and black glyphs and needs no Tesseract installation. Missing references leave the remaining CNN/OCR path available with a warning.
 
@@ -46,11 +50,11 @@ Rebuild/audit the reference signatures from the existing training split:
 python build_rank_reference.py
 ```
 
-For comparison, `process_recording.py` accepts `--no-references` independently of `--no-ocr`.
+For comparison, `process_recording.py` accepts `--no-references` independently of `--no-ocr`. Use `--classifier models/rank_classifier_v4.pt --no-face-evidence` to reproduce the previous pipeline behavior while retaining the same source regions. `--no-face-evidence` disables face suppression, secondary-corner repair and projected crops together.
 
 ### Optional OCR cross-check for uncertain red ranks
 
-The CNN remains V4. A local pretrained Tesseract reader can resolve an unknown **red** rank when at least two distinct first/middle/last frames agree at 90% or greater OCR confidence. It does not override a confident CNN result. The row says **OCR consensus**, and the JSON keeps both the CNN suggestion and OCR votes. Results remain provisional until reviewed.
+A local pretrained Tesseract reader can resolve an unknown **red** rank when at least two distinct first/middle/last frames agree at 90% or greater OCR confidence. It does not override a confident CNN result. The row says **OCR consensus**, and the JSON keeps both the CNN suggestion and OCR votes. Results remain provisional until reviewed.
 
 On a Mac with Homebrew:
 
@@ -128,7 +132,7 @@ python audit_rank_ocr.py --output validation/ocr_crop_audit.json
 
 The recorded audit evaluated 128 crops: 57 were eligible red glyphs and only 9 met the OCR confidence gate, all correctly labelled. Coverage is low; these correlated examples do not establish general OCR or complete-round accuracy. Runtime also requires agreement across distinct frames.
 
-See [VALIDATION.md](VALIDATION.md) for measured results, failures, dataset separation and limits; [TRACKING.md](TRACKING.md) for the tracking experiment. The current app uses `models/rank_classifier_v4.pt`. The reproducible training experiments are `train_rank_classifier_v3.py` and `train_rank_classifier_v4.py`.
+See [VALIDATION.md](VALIDATION.md) for measured results, failures, dataset separation and limits; [TRACKING.md](TRACKING.md) for the tracking experiment. The current app uses `models/rank_classifier_v5.pt`. Earlier checkpoints remain available. The V5 training entry point is `train_rank_classifier_v5.py`; it requires explicitly audited local crops and named development groups. Private new screenshots/crops are not distributed in Git.
 
 The external 52-class pretrained detector was also tested unchanged on the digital-table recording and source-domain controls. It performed poorly on the screenshots and was not adopted. See [EXTERNAL_MODEL_EVALUATION.md](EXTERNAL_MODEL_EVALUATION.md) for the protocol, results and reproducible benchmark.
 

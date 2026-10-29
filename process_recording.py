@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--review',type=Path,help='JSON containing events and confirmed fields')
     parser.add_argument('--no-ocr',action='store_true',help='Disable optional Tesseract cross-check')
     parser.add_argument('--no-references',action='store_true',help='Disable uncertain-rank reference cross-check')
+    parser.add_argument('--no-face-evidence',action='store_true',help='Disable geometric face reconciliation for baseline comparisons')
     args=parser.parse_args()
     if not args.frames.is_dir():
         parser.error('Frame directory does not exist.')
@@ -24,7 +25,7 @@ def main():
     def progress(done,total):
         if done%25==0 or done==total:print('%d/%d frames' % (done,total),flush=True)
     result=process_frames(paths,args.output,engine,regions,progress,ocr_reader=False if args.no_ocr else None,
-                          reference_reader=False if args.no_references else None)
+                          reference_reader=False if args.no_references else None,face_evidence=not args.no_face_evidence)
     if args.review:
         review=json.loads(args.review.read_text())
         result=apply_review(result,review['events'],review.get('confirmed',False),

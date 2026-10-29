@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 from card_tracking import CardIdentityMatcher, merge_track_fragments
 from round_segmentation import RoundSegmenter, visible_empty_table
+from card_faces import reconcile_faces, estimate_face_height
 
 ROOT = Path(__file__).resolve().parent
 RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -56,7 +57,7 @@ class VisionEngine:
         from rank_model import RankCNN, preprocess_crop
         from test_rank_detector_unseen import detect_full_frame
         detector_path = Path(detector_path or ROOT/'models/rank_detector_v2.pt')
-        classifier_path = Path(classifier_path or ROOT/'models/rank_classifier_v4.pt')
+        classifier_path = Path(classifier_path or ROOT/'models/rank_classifier_v5.pt')
         for path in (detector_path, classifier_path):
             if not path.is_file():
                 raise FileNotFoundError('Missing model: ' + str(path))
@@ -115,7 +116,7 @@ def summarize(result):
 
 
 def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None, ocr_reader=None,
-                   reference_reader=None):
+                   reference_reader=None, face_evidence=True):
     """Process every frame; callers may inject an engine for replay/testing."""
     frame_paths = sorted(Path(p) for p in frame_paths)
     if not frame_paths:
@@ -133,6 +134,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     matchers = {r['name']: CardIdentityMatcher(clear_after_empty=4, ordered_hand=True) for r in regions}
     tracks = {r['name']: [] for r in regions}
     next_id, read_frames = 1, 0
+    suppressed_detections = []
     expected_shape = None
     recording_digest = hashlib.sha256(b'cardvision-recording-v1\0')
     segmenter = RoundSegmenter()
@@ -160,6 +162,11 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                     if crop is not None:
                         grouped[region['name']].append(dict(box=box, crop=crop))
                     break
+        if face_evidence:
+            face_height = estimate_face_height(image, [d for ds in grouped.values() for d in ds])
+            for name, current in grouped.items():
+                grouped[name], suppressed = reconcile_faces(image, current, face_height)
+                suppressed_detections.extend(dict(row, frame=index, region=name) for row in suppressed)
         has_cards = any(grouped.values())
         if segmenter.observe(index, has_cards,
                 empty_table=not has_cards and visible_empty_table(image, regions)):
@@ -169,8 +176,8 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
         for region in regions:
             name = region['name']
             current = grouped[name]
+            matches = matchers[name].match(current, tracks[name], index, image=image if face_evidence else None)
             probabilities = engine.classify([d['crop'] for d in current])
-            matches = matchers[name].match(current, tracks[name], index)
             for i,detection in enumerate(current):
                 track = matches.get(i)
                 if track is None:
@@ -185,7 +192,9 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 track.last_box = detection['box']
                 track.last_sample_index = index
                 track.observations.append(dict(crop=detection['crop'], box=detection['box'],
-                    probabilities=probabilities_i, frame=index, source=path.name))
+                    probabilities=probabilities_i, frame=index, source=path.name,
+                    face_box=detection.get('face_box'), secondary_crop=detection.get('secondary_crop'),
+                    rank_box=detection.get('rank_box'), crop_source=detection.get('crop_source','detector')))
         read_frames += 1
         if progress:
             progress(read_frames, len(frame_paths))
@@ -226,6 +235,9 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 confidence=confidence, observations=len(observations),
                 observation_frames=[o['frame'] for o in observations],
                 observation_boxes=[o['box'] for o in observations],
+                observation_rank_boxes=[o.get('rank_box') or o['box'] for o in observations],
+                observation_faces=[o.get('face_box') for o in observations],
+                observation_crop_sources=[o.get('crop_source','detector') for o in observations],
                 recognition_source=recognition_source, cnn_suggested_rank=cnn_rank,
                 cnn_confidence=cnn_confidence, ocr_votes=ocr_result['votes'] if ocr_result else [],
                 reference_votes=reference_result['votes'] if reference_result else [],
@@ -251,7 +263,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
         recording_digest=recording_digest.hexdigest(),
         boundaries=segmenter.boundaries, uncertain_transitions=segmenter.uncertain_transitions,
         rounds_confirmed=False,
-        review_confirmed=False, warnings=[
+        review_confirmed=False, face_evidence_enabled=bool(face_evidence), suppressed_detections=suppressed_detections, warnings=[
             'Model predictions are provisional. Review every card and check for missing or duplicate cards.',
             'Cards first seen in the same frame have uncertain relative deal order.',
             'Capture may start or end mid-round; completion is not inferred. Check round assignments and boundaries.',

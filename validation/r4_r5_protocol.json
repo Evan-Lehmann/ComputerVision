@@ -1,0 +1,27 @@
+{
+  "baseline_revision": "82ce435",
+  "reserved_recordings": [
+    "r4",
+    "r5"
+  ],
+  "status": "Neither recording inspected or used for development/training.",
+  "candidate_classifier_sha256": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
+  "baseline_arguments": [
+    "--classifier",
+    "models/rank_classifier_v4.pt",
+    "--no-face-evidence"
+  ],
+  "candidate_arguments": [
+    "--classifier",
+    "models/rank_classifier_v5.pt"
+  ],
+  "rules": [
+    "Freeze code and model before opening held-out frames.",
+    "Audit every source frame and save expected physical cards/rounds before running model predictions.",
+    "Keep source regions identical for both pipelines; report any layout or recording-completeness issue.",
+    "Run both pipelines without training or adjusting thresholds.",
+    "Compare exact physical-card lists, extra/missed/mixed identities, accepted wrong ranks, unknowns and round/count results separately.",
+    "Present both results including failures. If either recording informs subsequent tuning, it becomes development data; obtain a new independent test set.",
+    "Two test rounds are a limited check, not a general near-perfect accuracy estimate."
+  ]
+}
