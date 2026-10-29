@@ -24,7 +24,12 @@ def mini_hand(image, rect):
         border=np.concatenate([outer[:2].reshape(-1,3),outer[-2:].reshape(-1,3),outer[:,:2].reshape(-1,3),outer[:,-2:].reshape(-1,3)]).astype(float)
         if np.mean((border[:,1]>=border[:,0]-2)&(border[:,1]>border[:,2]+5))<.35:continue
         body=gray[y:y+ch,x:x+cw]
-        if min(float(np.mean(body[:2]>=200)),float(np.mean(body[-2:]>=200)))<.70:continue
+        # A component can include one antialiased outer row. Require a flat
+        # pair of paper rows at each edge, rather than counting that fringe
+        # as half of the bottom border (which dropped otherwise intact hands).
+        edge_fill=np.mean(body>=200,axis=1)
+        if min(max((edge_fill[:3][:-1]+edge_fill[:3][1:])/2),
+               max((edge_fill[-3:][:-1]+edge_fill[-3:][1:])/2))<.70:continue
         # A digital hand has a flat white empty middle band, unlike live-video
         # paper/text/shadows. Unknown layouts are not declared covered.
         middle=gray[y+int(ch*.42):y+int(ch*.59),x:x+cw]
@@ -75,6 +80,63 @@ def mini_last_face(hand):
     return [hand['starts'][-1],hand['box'][1],hand['box'][2],hand['box'][3]]
 
 
+def prefix_patches(image,hand):
+    """Visible rank strips, including colour, for every ordinal card.
+
+    The same narrow area is visible before and after overlap. These patches
+    establish source continuity; they are never classified or exported as
+    isolated training crops.
+    """
+    y,bottom=hand['box'][1],hand['box'][3];height=bottom-y
+    return [image[y+1:y+round(height*.38),x+2:x+round(height*.27)].copy()
+            for x in hand['starts']]
+
+
+def preserves_prefix(before,after):
+    """Local motion plus matching visible strips; equal ranks alone cannot link."""
+    if not 0<after['frame']-before['frame']<=3 or after['count']<before['count']:return False
+    a,b=before.get('prefix_patches',[]),after.get('prefix_patches',[])
+    if len(a)!=before['count'] or len(b)!=after['count']:return False
+    ax,ay,ar,ab=before['hand_box'];bx,by,br,bb=after['hand_box']
+    ah,bh=ab-ay,bb-by
+    if min(ah,bh)<=0 or max(ah/bh,bh/ah)>1.2 or abs(ay-by)>max(ah,bh)*.2:return False
+    if abs((ax+ar-bx-br)/2)>max(ah,bh)*.5:return False
+    for old,new in zip(a,b):
+        descriptors=[]
+        for crop in [old,new]:
+            if crop.size==0:return False
+            gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY).astype(np.float32)
+            white=max(float(np.percentile(gray,90)),1)
+            ink=np.clip((white-gray)/white,0,1)
+            if np.count_nonzero(ink>.25)<3:return False
+            blue,green,red=cv2.split(crop.astype(float));dark=ink>.25
+            colour=float(np.mean(((red>green+30)&(red>blue+30))[dark]))
+            descriptors.append((cv2.resize(ink,(24,32)),colour))
+        (aa,red_a),(ba,red_b)=descriptors
+        if abs(red_a-red_b)>.45:return False
+        if float(cv2.matchTemplate(np.pad(ba,3),aa,cv2.TM_CCORR_NORMED).max())<.84:return False
+    return True
+
+
+def continuation_frames(snapshots,primary,common):
+    """Carry an established prefix forward through observed source motion.
+
+    A long gap, replaced prefix, or shrinking hand breaks this chain. A new
+    hand cannot inherit old identities just because its ordinal count grew.
+    """
+    if common<2:return set()
+    anchor=set.intersection(*(set(e['observation_frames']) for e in primary[:common]))
+    if len({s['frame'] for s in snapshots if s['count']>=common} & anchor)<2:return set()
+    trusted=[];frames=set()
+    for snapshot in snapshots:
+        if snapshot['count']<common:continue
+        if snapshot['frame'] in anchor:
+            trusted.append(snapshot);frames.add(snapshot['frame'])
+        elif any(preserves_prefix(previous,snapshot) for previous in trusted[-3:]):
+            trusted.append(snapshot);frames.add(snapshot['frame'])
+    return frames
+
+
 class SharedMonitor:
     def __init__(self,view,rank_reader,suit_reader):
         self.view=view;self.rank_reader=rank_reader;self.suit_reader=suit_reader;self.snapshots={};self.primary_frames={};self.unreadable={}
@@ -87,6 +149,7 @@ class SharedMonitor:
         crop,box=mini_rank_crop(image,hand)
         self.snapshots.setdefault(round_number,[]).append(dict(frame=frame,source=source,
             count=hand['count'],crop=crop,box=box,face_box=mini_last_face(hand),
+            hand_box=hand['box'],prefix_patches=prefix_patches(image,hand),
             hand_crop=image[hand['box'][1]:hand['box'][3],hand['box'][0]:hand['box'][2]].copy(),
             suit_crops=suit_crops(image,mini_last_face(hand),True)))
     def resolve(self,events,output_dir):
@@ -150,6 +213,7 @@ class SharedMonitor:
             # A bounded coherent lag accommodates UI animation/detector delays;
             # it does not permit an arbitrary later matching card to relink.
             if common<2 or max(abs(v) for v in lags)>8 or max(abs(v-np.median(lags)) for v in lags)>2:common=0
+            continued_frames=continuation_frames(snapshots,primary,common)
             for i,slot in enumerate(slots):
                 if i<common:
                     event=primary[i];event['source_views']=sorted(set(event.get('source_views',[event['region']])+[self.view['name']]))
@@ -159,11 +223,12 @@ class SharedMonitor:
                     linked_ids={e['id'] for e in primary[:common]}
                     unmatched=[e for e in events if e.get('round_number',1)==number and e['region']!=self.view['name'] and e['id'] not in linked_ids]
                     co_visible=common>=2 and all(len(set(slot['present_frames'])&set(e['observation_frames']))>=2 for e in primary[:common])
+                    continued=common>=2 and len({o['frame'] for o in slot['observations']} & continued_frames)>=2
                     # Equal rank/suit can denote different cards in a shoe. Only
                     # unused primary tracks can compete for this shared slot.
                     competing=[e for e in unmatched if (e['rank']=='UNKNOWN' or slot['rank']=='UNKNOWN' or e['rank']==slot['rank'])
                         and (e.get('suit','UNKNOWN')=='UNKNOWN' or slot['suit']=='UNKNOWN' or e.get('suit')==slot['suit'])]
-                    distinct=bool(common>=2 and co_visible and not competing and not reset)
+                    distinct=bool(common>=2 and (co_visible or continued) and not competing and not reset)
                     slot.update(status='additional' if distinct else 'needs_review',event_id=slot['id'])
                     if not distinct:coverage['issues'].append(dict(round_number=number,slot_id=slot['id'],reason='Shared card identity is unresolved; keep it as distinct or exclude it after checking other views.'))
                     obs=slot['observations'];candidate=dict(id=slot['id'],region=self.view['name'],round_number=number,
@@ -175,6 +240,7 @@ class SharedMonitor:
                         observation_crop_sources=['shared_view']*len(obs),evidence=slot['evidence'],
                         recognition_source='mini_consensus' if distinct else 'shared_identity_unresolved',
                         identity_status='distinct' if distinct else 'needs_review',source_views=[self.view['name']],
+                        identity_basis=('simultaneous_prefix' if co_visible else 'continuous_shared_hand') if distinct else None,
                         excluded=False,reviewed=False,alternatives=[],possible_duplicates=[e['id'] for e in competing] if not distinct else [])
                     events.append(candidate);coverage['additional_events'].append(candidate['id'])
                 coverage['slots'].append({k:v for k,v in slot.items() if k not in ['observations','present_frames']})

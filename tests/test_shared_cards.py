@@ -78,6 +78,83 @@ class SharedIdentityTests(unittest.TestCase):
         c=self.resolve(events,shots)
         self.assertEqual(len(c['links']),2)
 
+    def late_shared_append(self):
+        # The main hand ends at frame22. Its shared representation remains
+        # visible through frame40 before a third card arrives at frame41.
+        shots=snapshots()[:4]
+        shots += [dict(shots[-1],frame=f) for f in range(4,41)]
+        shots += [dict(o,frame=f) for o,f in zip(snapshots()[4:],[41,42])]
+        for shot in shots:
+            count=shot['count'];shot['hand_box']=[720-count*4,633,760+count*4,665]
+            patches=[]
+            for label in ['9','4','9'][:count]:
+                patch=np.full((18,12,3),255,np.uint8)
+                cv2.putText(patch,label,(1,14),0,.5,(0,0,0),1)
+                patches.append(patch)
+            shot['prefix_patches']=patches
+        return shots
+
+    def test_observed_shared_continuation_keeps_new_card_after_main_disappears(self):
+        events=self.base();c=self.resolve(events,self.late_shared_append())
+        self.assertEqual(len(c['links']),2)
+        self.assertEqual(c['status'],'configured_views_reconciled')
+        self.assertEqual(events[-1]['rank'],'9')
+        self.assertEqual(events[-1]['identity_basis'],'continuous_shared_hand')
+
+    def test_late_same_rank_suit_as_prefix_still_has_separate_identity(self):
+        shots=self.late_shared_append()
+        for s in shots:
+            if s['count']==3:s['test_suit']='clubs'
+        events=self.base();self.resolve(events,shots)
+        self.assertEqual(events[-1]['rank'],'9')
+        self.assertEqual(events[-1]['identity_status'],'distinct')
+        self.assertNotEqual(events[-1]['id'],events[0]['id'])
+
+    def test_long_gap_cannot_inherit_an_old_shared_identity(self):
+        shots=[s for s in self.late_shared_append() if s['frame']<5 or s['frame']>40]
+        events=self.base();c=self.resolve(events,shots)
+        self.assertEqual(events[-1]['identity_status'],'needs_review')
+        self.assertEqual(c['slots'][-1]['rank'],'9')
+        self.assertEqual(events[-1]['rank'],'UNKNOWN')
+
+    def test_replaced_prefix_or_large_move_cannot_inherit_shared_identity(self):
+        for corruption in ['glyph','colour','position','blank','missing']:
+            shots=self.late_shared_append()
+            for s in shots:
+                if s['count']!=3:continue
+                if corruption=='glyph':s['prefix_patches'][0]=s['prefix_patches'][1]
+                if corruption=='colour':s['prefix_patches'][0][:,:,2]=255
+                if corruption=='position':s['hand_box']=[800,633,850,665]
+                if corruption=='blank':s['prefix_patches'][0][:]=255
+                if corruption=='missing':s.pop('prefix_patches')
+            events=self.base();self.resolve(events,shots)
+            self.assertEqual(events[-1]['identity_status'],'needs_review',corruption)
+
+    def test_one_bad_frame_does_not_break_an_otherwise_visible_continuation(self):
+        shots=self.late_shared_append()
+        shots[25]['prefix_patches']=[np.full_like(p,255) for p in shots[25]['prefix_patches']]
+        events=self.base();self.resolve(events,shots)
+        self.assertEqual(events[-1]['identity_status'],'distinct')
+
+    def test_continuation_still_rejects_competing_dealer_identity(self):
+        dealer=primary('9','hearts',3);dealer['region']='dealer'
+        events=self.base()+[dealer];self.resolve(events,self.late_shared_append())
+        self.assertEqual(events[-1]['rank'],'UNKNOWN')
+        self.assertIn('3',events[-1]['possible_duplicates'])
+
+    def test_a_single_late_frame_cannot_confirm_additional_identity(self):
+        events=self.base();self.resolve(events,self.late_shared_append()[:-1])
+        self.assertEqual(events[-1]['rank'],'UNKNOWN')
+        self.assertEqual(events[-1]['identity_status'],'needs_review')
+
+    def test_continuation_requires_repeated_joint_visibility_of_the_original_prefix(self):
+        events=self.base()
+        events[0]['observation_frames']=[0,1,2]
+        events[1]['observation_frames']=[2,3,4]
+        c=self.resolve(events,self.late_shared_append())
+        self.assertEqual(len(c['links']),2)
+        self.assertEqual(events[-1]['identity_status'],'needs_review')
+
     def test_no_extra_shared_card_does_not_create_rows(self):
         events=self.base();c=self.resolve(events,snapshots()[:4])
         self.assertEqual(len(events),2);self.assertEqual(len(c['links']),2)
@@ -207,7 +284,7 @@ class AuxiliaryModelTests(unittest.TestCase):
 
 class MiniGeometryTests(unittest.TestCase):
     def test_flat_overlapping_mini_cards_have_separate_slots(self):
-        for count in [1,2,3]:
+        for count in range(1,8):
             image=np.full((900,1440,3),(45,65,35),np.uint8)
             left=720-(count-1)*5
             for i in range(count):
@@ -215,6 +292,15 @@ class MiniGeometryTests(unittest.TestCase):
             hand=mini_hand(image,DEFAULT_SHARED_VIEW['rect'])
             self.assertIsNotNone(hand)
             self.assertEqual(hand['count'],count)
+    def test_antialiased_outer_row_does_not_drop_an_intact_four_card_hand(self):
+        image=np.full((900,1440,3),(45,65,35),np.uint8)
+        for i in range(4):
+            x=707+i*9;image[633:666,x:x+40]=255;image[633:666,x]=215
+        image[665,707:774]=150
+        image[665,750:760]=220  # Component includes a partly white fringe.
+        hand=mini_hand(image,DEFAULT_SHARED_VIEW['rect'])
+        self.assertIsNotNone(hand)
+        self.assertEqual(hand['count'],4)
     def test_oversized_or_clipped_shared_hand_is_reported_as_unsupported(self):
         image=np.full((900,1440,3),(45,65,35),np.uint8)
         for i in range(8):

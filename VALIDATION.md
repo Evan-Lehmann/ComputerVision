@@ -1,5 +1,20 @@
 # First-deliverable validation
 
+## Shared-hand continuation after the main display disappears
+
+The supplied `split_round` recording exposes a source-continuity failure in baseline `2dae973`. The large player J spades/Q spades hand disappears after frame 42, while the central representation persists and adds a separate J spades and 6 spades. Dealer cards are 4 clubs, Q diamonds, 7 diamonds. The seven unique visible cards have Hi-Lo change −2. The action producing the additional shared cards is not verified as a split: these frames do not show separately displayed split hands.
+
+The baseline already links the original two cards and recognizes both additional ranks, but its simultaneous-primary visibility rule forces those new identities to Unknown. It returns seven candidates, two unknowns, and a detection-only range −4..0. A separate geometry failure rejects an intact four-card hand because an antialiased outer row fails the two-row paper-border test.
+
+The update preserves an established shared prefix through local source observations. Continuation needs at least two joint source frames showing the original prefix and its linked primary cards. Every overlapping ordinal rank strip must retain compatible shape and colour, with bounded position/height changes and no more than two missing sampled frames between accepted observations. Blank or missing strip evidence cannot establish continuity. At least two observations of a new fully exposed slot must descend from the established prefix before this alternative can accept its identity. A repeated rank/suit already in the linked prefix can still denote a distinct added card. Unlinked primary competitors, long gaps, prefix replacement, and shrinking hands still block automatic acceptance. This is a layout-specific continuity check, not a universal identity guarantee or recognition of split actions. The existing simultaneous-view path remains available.
+
+The geometry check now looks for a qualifying adjacent pair of paper rows within each three-row edge band, retaining the existing brightness, shape, context and seam checks. It tolerates a single antialiased fringe row rather than lowering the paper threshold. The 6 is first retained at source frame 96 instead of 112.
+
+The updated replay returns exactly seven rank/suit/view identities, zero unknowns, and change −2 with no coverage issues. Both added cards use `identity_basis: continuous_shared_hand`; the original J and Q link once and are not counted again. The result remains provisional until review. No detector, classifier, suit-reader or reference weights were changed or retrained. All twelve earlier replay summaries—candidate count, unknown count, and count change—remain unchanged. Primary identity/rank/round/observation-box provenance is unchanged in all thirteen jobs, covering 1,197 frames. Five older recordings still require review for their previously documented failures.
+
+All 158 tests pass, including new cases for a hidden main display, repeated identical cards, prefix replacement/colour changes, large movements, long gaps, missing/blank patches, single-frame noise, brief new cards, and dealer conflicts. Real Flask/Chromium analysis reproduces the seven-card result and checks evidence screenshots, review and crop export, continuation captions, and a 390px mobile layout without JavaScript errors or horizontal overflow. Aggregate results are in `validation/shared_continuation_evaluation.json`; uploaded frames, crops and detailed annotations remain private. This recording informed implementation and is now development data. Fresh untouched recordings are needed for acceptance; arbitrary split-hand rearrangements and general multi-hand tracking remain unsupported.
+
+
 ## Outcome
 
 The app now implements recording, saved-frame replay, the frozen V2 detector and tile dedupe, rank classification, temporal association, selected-region counting, review with source screenshots, explicit duplicate exclusion, ordered corrections, Hi-Lo calculation and JSON export.

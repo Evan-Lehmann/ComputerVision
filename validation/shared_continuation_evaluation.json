@@ -1,0 +1,186 @@
+{
+  "stage": "Development regression; not independent acceptance or general split-hand support",
+  "baseline_commit": "2dae973",
+  "training_or_weights_changed": false,
+  "shared_continuation": {
+    "minimum_original_anchors": 2,
+    "maximum_sample_gap": 3,
+    "maximum_prefix_height_ratio": 1.2,
+    "maximum_vertical_motion_in_heights": 0.2,
+    "maximum_horizontal_center_motion_in_heights": 0.5,
+    "minimum_strip_similarity": 0.84,
+    "minimum_continued_new_card_frames": 2,
+    "unlinked_primary_competitors_still_block": true,
+    "shrinking_hand_still_blocks": true,
+    "minimum_joint_anchor_frames": 2
+  },
+  "replays": {
+    "fresh_two": {
+      "frames": 177,
+      "candidates": 13,
+      "unknowns": 1,
+      "count_change": null,
+      "coverage_status": "needs_review",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "new_r1": {
+      "frames": 92,
+      "candidates": 7,
+      "unknowns": 0,
+      "count_change": null,
+      "coverage_status": "needs_review",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "new_r2": {
+      "frames": 58,
+      "candidates": 7,
+      "unknowns": 0,
+      "count_change": 2,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "new_r3": {
+      "frames": 56,
+      "candidates": 4,
+      "unknowns": 0,
+      "count_change": -2,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "new_r4": {
+      "frames": 67,
+      "candidates": 5,
+      "unknowns": 0,
+      "count_change": 0,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "new_r5": {
+      "frames": 74,
+      "candidates": 5,
+      "unknowns": 0,
+      "count_change": 0,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "oct26_full": {
+      "frames": 84,
+      "candidates": 6,
+      "unknowns": 1,
+      "count_change": null,
+      "coverage_status": "needs_review",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "oct26_half": {
+      "frames": 54,
+      "candidates": 3,
+      "unknowns": 0,
+      "count_change": 2,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "oct27_single": {
+      "frames": 48,
+      "candidates": 4,
+      "unknowns": 0,
+      "count_change": 0,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "oct29_single": {
+      "frames": 87,
+      "candidates": 7,
+      "unknowns": 1,
+      "count_change": null,
+      "coverage_status": "needs_review",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "old_three": {
+      "frames": 90,
+      "candidates": 10,
+      "unknowns": 4,
+      "count_change": null,
+      "coverage_status": "needs_review",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    },
+    "old_two": {
+      "frames": 180,
+      "candidates": 11,
+      "unknowns": 0,
+      "count_change": -1,
+      "coverage_status": "configured_views_reconciled",
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "prior_candidate_count_unknowns_and_count_unchanged": true
+    }
+  },
+  "split_recording": {
+    "frames": 130,
+    "expected_unique_cards": 7,
+    "expected_count_change": -2,
+    "baseline": {
+      "candidates": 7,
+      "unknowns": 2,
+      "count_change": null,
+      "known_count_change": -2,
+      "detection_range": {
+        "min": -4,
+        "max": 0
+      }
+    },
+    "candidate": {
+      "candidates": 7,
+      "unknowns": 0,
+      "count_change": -2,
+      "detection_range": {
+        "min": -2,
+        "max": -2
+      },
+      "coverage_status": "configured_views_reconciled",
+      "linked_original_cards": 2,
+      "distinct_continued_cards": [
+        {
+          "rank": "J",
+          "suit": "spades",
+          "identity_basis": "continuous_shared_hand"
+        },
+        {
+          "rank": "6",
+          "suit": "spades",
+          "identity_basis": "continuous_shared_hand"
+        }
+      ]
+    },
+    "exact_rank_suit_view_list_matches_manual_reference": true,
+    "primary_identity_rank_observation_provenance_unchanged": true,
+    "six_first_observation_frame_before": 112,
+    "six_first_observation_frame_after": 96,
+    "reference_sha256": "27560600668f8fe3787598ee1ad11350f75067a11c751a0d4e64a5a6fc41404a",
+    "reference_note": "Visible card count/ranks inspected before baseline output; dealer7 suit corrected from hearts to diamonds after magnified source inspection. Source and detailed annotations remain private.",
+    "split_action_verified": false
+  },
+  "frame_total": 1197,
+  "model_sha256": {
+    "rank_classifier_v5.pt": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
+    "suit_classifier_v1.pt": "24c13ee1619656c38ad894b23efc5e37d9c7aee032792b2a920f7cdf8cb370f3",
+    "rank_classifier_v2.pt": "a8cecebee63b60f333104b5d1290f5d351625f1ee717a65763cb9e51d1626a7e",
+    "rank_detector_v2.pt": "27c926decf47a3b21af99f5eabddd430be3cb6939920a4bd9bdd34f15d995f92",
+    "rank_classifier_v3.pt": "c15100b0bb0c3e1ff41e551ec4671bfaa768b6657e957f1d4f4d99ffd9b7d6bb",
+    "rank_classifier_v4.pt": "fab0c394e428ba9e9ad3faff3f36b4ff6bfe224f9594db217f1c39c80b8d24ae",
+    "rank_classifier_mini_v1.pt": "efb36342b8252741db7355d85032164d1fe84b1e14a3f9a40bc302a368185fed"
+  },
+  "checks": {
+    "unit_regression_tests": 158,
+    "real_flask_chromium": "Passed: actual cached-detector Flask replay,7card UI,-2count,source evidence,continuation captions,review/export,390px layout,no JavaScript errors"
+  }
+}
