@@ -16,7 +16,7 @@ python -m cardvision_webapp.app
 
 Open `http://127.0.0.1:5000` locally on your Mac. The models are included in `models/`. Keep the server bound to your own machine.
 
-1. Expand **Check which cards are counted**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings and select the large player/dealer hands. Draw new boxes if the layout differs. Inspect excluded views separately: the miniature hand can contain additional cards, and its physical-card relationship is not yet resolved.
+1. Expand **Check which cards are counted**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings: two primary hand boxes plus a separately monitored central shared hand. Check all three in the preview. The shared view is linked to the player hand; it is not counted as an independent duplicate hand.
 2. Start recording before cards appear. The app gives a three-second countdown; switch to the play-money table. It records at two frames per second by default.
 3. For multiple rounds, keep recording through the cleared table between deals. Stop after the last round's face-up cards have appeared. Analysis runs in the background and reports progress.
 4. Inspect each card's first/middle/last crop. Click a crop to open its original screenshot. Correct incorrect/unknown ranks, exclude duplicate or false detections, add missed cards, and adjust order. All original detections remain in the saved audit even when excluded.
@@ -34,15 +34,23 @@ Screenshots and analysis are saved under ignored `round_captures/`. They are not
 
 ### Hand-aware association and rank references
 
-The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and overlapping views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The YOLO V2 detector remains unchanged. The default CNN is now V5; earlier V4 weights are retained for comparison.
+The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and arbitrary additional views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The YOLO V2 detector remains unchanged. The default CNN is now V5; earlier V4 weights are retained for comparison.
 
 Visible rectangular card faces provide additional evidence in the configured upright layout. Partial boxes can be reconciled only with a retained counterpart on the same face; narrow suit-edge suppression also requires agreement of the printed rank corners. Opposite-corner evidence can rejoin short dim animation fragments, while face-relative projection can recover a stable corner when a detector box clips it. Unestablished geometry leaves candidates available for review. The JSON preserves suppressed boxes/counterparts, inferred face boxes, original observation boxes and projected-crop provenance. No card is discarded merely for having one observation or a low rank score.
 
-The three new development rounds return 18 distinct cards with no unknowns and count changes 0, +2 and -2. These recordings also supplied V5 training crops, so this is a development regression result. The frozen candidate passes both previously uninspected main-view rounds, r4/r5 (nine exact main-view cards in total, no unknowns). This small sample does not establish general accuracy. R5 also exposes a distinct 9 hearts in the excluded central view: its neutral count hides incomplete cross-view card coverage. See [VALIDATION.md](VALIDATION.md) for remaining failures and the frozen comparison protocol.
+The three new development rounds return 18 distinct cards with no unknowns and count changes 0, +2 and -2. These recordings also supplied V5 training crops, so this is a development regression result. The prior frozen main-view candidate passed r4/r5. Those recordings have now become development data for the cross-view readers. The current pipeline includes r5's additional central 9 hearts once, while linking its 9 clubs/4 spades prefix to the main hand. Fresh independent recordings are needed to evaluate this update. See [VALIDATION.md](VALIDATION.md) for remaining failures and the frozen comparison protocol.
+
+### Shared-hand reconciliation and coverage review
+
+The central monitor follows the compressed white card hand as cards are appended. A separate tiny-rank reader and a suit reader preserve the primary V5 model. An automatic shared prefix needs at least two ordered rank/suit matches, repeated co-visibility and a bounded coherent birth-time lag. Each primary identity is used once; equal rank/suit is never a global card ID. Additional shared slots are included only when supported and no unlinked primary card—including dealer cards—can be the same observation. Identical rank/suit cards in separate visible slots can remain distinct.
+
+The **Card coverage across views** panel shows shared slots, links, added cards and source screenshots. Ambiguous identities remain Unknown candidates: keep them as distinct with a corrected rank, or exclude duplicate/false candidates after inspecting the recording. Missing/unreliable shared views trigger **Check coverage**, even when every primary rank is resolved. `count_change` remains unavailable until the flagged coverage and card list are reviewed; `captured_count_change` reports resolved included candidates only. A narrow detection range does not bound missing/unreconciled cards. Changing a linked rank, suit, exclusion or round invalidates its previous coverage approval.
+
+The monitor currently targets this upright, compressed digital layout with a green/olive background. Other seats, obscured cards, different layouts and shoe resets are not automatically covered. Disable the monitor only for intentional primary-view-only analysis; the coverage panel then says it was not checked. Calibration changes apply on the next analysis.
 
 When the CNN leaves a rank unknown, the app can compare it against `models/rank_reference_v1.npz`, built only from the previously published V4 training crops. It requires a strong match, separation from other ranks, agreement in at least two distinct frames sampled from up to seven spread-out observations, and the same top rank as the CNN. Conflicting accepted reference votes leave the rank unresolved. Confident CNN results are preserved. Rows say **Reference agreement** and show an image-match score, which is not a probability of correctness. This reader handles red and black glyphs and needs no Tesseract installation. Missing references leave the remaining CNN/OCR path available with a warning.
 
-The new two-round development recording now returns the 12 main-view cards, with changes −1 and +2, totaling +1. This recording informed development; it is not proof of accuracy on new captures. The miniature-view ambiguity remains, and older recordings still have an unresolved rank and a duplicate fragment. See [VALIDATION.md](VALIDATION.md).
+With `--no-shared-view`, the earlier two-round development recording returns its 12 main-view cards, changes −1 and +2, totaling +1. With the shared monitor enabled, an additional miniature-view candidate remains ambiguous with a dealer card, so coverage requires review. This recording informed development and is not independent validation. Older recordings also retain a few rank/identity failures. See [VALIDATION.md](VALIDATION.md).
 
 Rebuild/audit the reference signatures from the existing training split:
 
@@ -50,7 +58,7 @@ Rebuild/audit the reference signatures from the existing training split:
 python build_rank_reference.py
 ```
 
-For comparison, `process_recording.py` accepts `--no-references` independently of `--no-ocr`. Use `--classifier models/rank_classifier_v4.pt --no-face-evidence` to reproduce the previous pipeline behavior while retaining the same source regions. `--no-face-evidence` disables face suppression, secondary-corner repair and projected crops together.
+For comparison, `process_recording.py` accepts `--no-references` independently of `--no-ocr`. Use `--classifier models/rank_classifier_v4.pt --no-face-evidence --no-shared-view` to reproduce the previous pipeline behavior while retaining the same source regions. `--no-face-evidence` disables face suppression, secondary-corner repair and projected crops together.
 
 ### Optional OCR cross-check for uncertain red ranks
 
@@ -104,7 +112,7 @@ This writes a provisional `result.json` and card-evidence PNGs. A custom region 
 ]
 ```
 
-Coordinates are fractions of screenshot width/height. Regions must not overlap. The central miniature hand is excluded by these defaults. Its relationship to the larger hand is not yet established for every recorded state; if it contains distinct physical cards, those must be added during review or included using an additional disjoint region. Do not automatically deduplicate cards just because their ranks match.
+Coordinates are fractions of screenshot width/height. Primary regions must not overlap. The shared view is a separate monitor, not a third independently counted primary region. Its default rectangle is `[0.45, 0.68, 0.57, 0.75]`, linked to `player`. Check/redraw it in the app preview, or supply a JSON object with `rect` and `linked_region` to CLI `--shared-view /path/to/shared.json`. Use `--no-shared-view` for an intentional primary-only comparison; that leaves cross-view coverage unchecked.
 
 Outputs under a reused CLI output directory are overwritten; input frames are not. The web app uses unique output directories.
 

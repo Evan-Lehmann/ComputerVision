@@ -44,6 +44,22 @@ class RoundAppTests(unittest.TestCase):
             if state['session_status']==status:return state
             time.sleep(.01)
         self.fail('State did not reach '+status+': '+str(state))
+    def test_shared_configuration_survives_reset_and_replay_preparation(self):
+        from round_pipeline import DEFAULT_REGIONS
+        response=self.client.post('/api/regions',json=dict(regions=DEFAULT_REGIONS,shared_view=False))
+        self.assertEqual(response.status_code,200)
+        self.client.post('/api/reset',json={})
+        self.assertIs(self.client.get('/api/state').json['shared_view'],False)
+        self.client.post('/api/process',json={'source':'sample'})
+        state=self.wait('COMPLETE')
+        self.assertIs(state['shared_view'],False)
+
+    def test_shared_calibration_cannot_overlap_primary_boxes(self):
+        from round_pipeline import DEFAULT_REGIONS
+        response=self.client.post('/api/regions',json=dict(regions=DEFAULT_REGIONS,
+            shared_view=dict(name='central',linked_region='player',rect=DEFAULT_REGIONS[1]['rect'])))
+        self.assertEqual(response.status_code,400)
+
     def test_record_stop_process_review_and_export(self):
         self.assertEqual(self.client.get('/').status_code,200)
         self.assertEqual(self.client.post('/api/start',json={}).status_code,202)

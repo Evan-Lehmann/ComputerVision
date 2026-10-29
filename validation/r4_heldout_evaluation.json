@@ -73,5 +73,6 @@
     "No code, model weights, thresholds or training data were changed using r4.",
     "Candidate remains provisional in the app until the user saves a review."
   ],
-  "r5_status_at_r4_evaluation": "Reserved, uninspected, not received as accessible split parts."
+  "r5_status_at_r4_evaluation": "Reserved, uninspected, not received as accessible split parts.",
+  "dataset_status_after_crossview_development": "Now development/training data for auxiliary readers; the historical held-out result applies only to frozen main-view candidate 04d8a6f."
 }

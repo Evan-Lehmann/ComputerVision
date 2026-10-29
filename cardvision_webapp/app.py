@@ -6,6 +6,7 @@ import sys
 import threading
 import time
 import uuid
+import inspect
 import cv2
 from flask import Flask, jsonify, render_template, request, send_file
 
@@ -14,7 +15,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from cardvision_webapp.round_capture import RoundCapture
 from cardvision_webapp.round_processor import process_round
-from round_pipeline import DEFAULT_REGIONS, apply_review, validate_regions, save_result
+from round_pipeline import DEFAULT_REGIONS, apply_review, validate_regions, save_result, validate_shared_view
+from shared_cards import DEFAULT_SHARED_VIEW
 from review_export import reviewed_crop_bundle
 
 
@@ -28,7 +30,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     lock = threading.RLock()
     state = dict(session_status='IDLE', countdown=None, cards=[], events=[], count_change=None,
         known_count_change=0, count_verified=False, frames_recorded=0, processed=0, total=0,
-        round_dir=None, error=None, result_id=None, warnings=[], regions=copy.deepcopy(DEFAULT_REGIONS))
+        round_dir=None, error=None, result_id=None, warnings=[], regions=copy.deepcopy(DEFAULT_REGIONS),shared_view=copy.deepcopy(DEFAULT_SHARED_VIEW))
     app.extensions['cardvision'] = dict(state=state, lock=lock, capture=capture)
     busy = {'STARTING', 'RECORDING', 'STOPPING', 'PROCESSING'}
 
@@ -48,10 +50,11 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     def prepare(status):
         # Called under lock; no old predictions survive a new job.
         regions = state['regions']
+        shared_view=state.get('shared_view',copy.deepcopy(DEFAULT_SHARED_VIEW))
         state.clear()
         state.update(session_status=status, countdown=None, cards=[], events=[], count_change=None,
             known_count_change=0, count_verified=False, frames_recorded=0, processed=0, total=0,
-            round_dir=None, error=None, result_id=None, warnings=[], regions=regions)
+            round_dir=None, error=None, result_id=None, warnings=[], regions=regions,shared_view=shared_view)
 
     def worker_start():
         try:
@@ -75,7 +78,10 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
             def progress(done, total):
                 with lock:
                     state.update(processed=done, total=total)
-            result = processor(directory, output_dir=output, regions=regions, progress=progress)
+            kwargs=dict(output_dir=output,regions=regions,progress=progress)
+            if 'shared_view' in inspect.signature(processor).parameters:
+                kwargs['shared_view']=copy.deepcopy(state.get('shared_view',DEFAULT_SHARED_VIEW))
+            result = processor(directory, **kwargs)
             with lock:
                 state.update(result)
                 state.update(session_status='COMPLETE', result_id=result_id, error=None)
@@ -157,14 +163,19 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     @app.route('/api/regions', methods=['POST'])
     def regions():
         try:
-            chosen = validate_regions((request.get_json(silent=True) or {}).get('regions'))
+            data=request.get_json(silent=True) or {}
+            chosen = validate_regions(data.get('regions'))
+            requested=data.get('shared_view',state.get('shared_view',DEFAULT_SHARED_VIEW))
+            if 'shared_view' not in data and isinstance(requested,dict) and requested.get('linked_region') not in {r['name'] for r in chosen}:requested=False
+            view=validate_shared_view(requested,chosen)
         except (ValueError, TypeError, AttributeError) as exc:
             return jsonify(error=str(exc)), 400
         with lock:
             if state['session_status'] in busy:
                 return jsonify(error='Finish the active job before changing regions.'), 409
             state['regions'] = chosen
-        return jsonify(ok=True, regions=chosen)
+            state['shared_view'] = view
+        return jsonify(ok=True, regions=chosen,shared_view=view)
 
     @app.route('/api/preview')
     def preview():
@@ -192,6 +203,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     def evidence(result_id, filename):
         with lock:
             allowed = {item['image'] for event in state['events'] for item in event.get('evidence', [])}
+            allowed.update(item['image'] for slot in state.get('coverage',{}).get('slots',[]) for item in slot.get('evidence',[]))
             if result_id != state['result_id'] or filename not in allowed:
                 return jsonify(error='Evidence not found.'), 404
             return send_file(artifact_root/result_id/filename)
@@ -215,7 +227,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
                 return jsonify(error='This result is no longer current.'), 409
             try:
                 reviewed = apply_review(state, data.get('events'), data.get('confirmed', False),
-                                        data.get('rounds_confirmed', False))
+                                        data.get('rounds_confirmed', False),data.get('coverage_confirmed',False))
                 save_result(reviewed, artifact_root/state['result_id'])
             except (ValueError, TypeError, AttributeError) as exc:
                 return jsonify(error=str(exc)), 400

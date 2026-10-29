@@ -1,0 +1,11 @@
+{
+  "status": "Pending fresh recordings; all currently inspected footage is development data",
+  "requirements": [
+    "Freeze this candidate's code and auxiliary/primary model hashes before opening new footage.",
+    "Audit all original frames and save distinct exposed rank/suit identities across primary and shared views before predictions.",
+    "Include a naturally occurring additional shared card, preferably non-neutral, and repeated ranks where available.",
+    "Measure full configured-view card lists, duplicates, misses, wrong accepted ranks/suits, unknown identities and coverage status separately from the final count.",
+    "Do not train or tune on acceptance rounds before reporting their first result.",
+    "Report unsupported layout/visibility cases as coverage limitations rather than complete counts."
+  ]
+}

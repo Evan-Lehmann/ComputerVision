@@ -20,6 +20,7 @@ def reviewed_crop_bundle(result, output_dir, recording_group):
     for event in included:
         seen = set()
         for evidence in event.get('evidence', []):
+            if evidence.get('rank_crop',True) is False:continue
             name = evidence['image']
             if not isinstance(name, str) or Path(name).name != name:
                 raise ValueError('Invalid evidence filename.')
@@ -34,7 +35,7 @@ def reviewed_crop_bundle(result, output_dir, recording_group):
             archive_name = 'crops/' + name
             files[archive_name] = data
             labelled_cards.add(event['id'])
-            rows.append(dict(crop=archive_name, rank=event['rank'],
+            rows.append(dict(crop=archive_name, rank=event['rank'], suit=event.get('suit','UNKNOWN'),
                 card_group=str(recording_group) + ':' + str(event['id']),
                 recording_group=recording_group, round_number=event.get('round_number', 1),
                 region=event['region'],

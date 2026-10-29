@@ -72,3 +72,29 @@ Outputs never replace published weights automatically.
 V5 SHA256: `97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026`.
 
 The V2 detector, V4 checkpoint and V1 reference bank are unchanged.
+
+## Cross-view auxiliary readers
+
+The primary V5 checkpoint, detector and reference bank are unchanged.
+
+- `rank_classifier_mini_v1.pt`: separate RankCNN for compressed central ranks, initialized from V5. Development optimization uses the existing 230 main-rank crops, simulated downsampling, and 43 unique miniature crops (25 observed slot groups, 12 rank labels, repeated at weight eight). Real miniature A examples are absent. Seed 74, 40 epochs, fixed historical 17-crop selection, selected epoch 13. The 43/43 training diagnostic is not independent accuracy.
+- `suit_classifier_v1.pt`: small 4-class SuitCNN over 32×32 normalized ink shapes. It uses 229 unique development training crops, with compressed suits sampled at weight five (553 optimization entries), and 27 selection crops from four other physical-card groups. Seed 73, 80 epochs, selected epoch 27, selection diagnostic 26/27. Those correlated development crops are not an acceptance set. Bright-frame, ink-colour, temporal agreement and conflicting-corner gates remain; a moderate diamond network score additionally needs reflection-symmetry evidence.
+
+All earlier captures, including r4/r5, are now development data for these readers. New acceptance recordings must remain untouched by training and tuning. No private screenshots, glyph crops or per-observation labels are distributed in Git. Aggregate training details and hashes are in `validation/crossview_training_audit.json`.
+
+The controlled training entry point is:
+
+```sh
+python train_crossview_models.py --audited /path/to/audited_crossview_crops \
+  --rank-development /path/to/audited_r1_r2_r3_rank_crops \
+  --output /path/to/new_candidate
+```
+
+The cross-view `labels.csv` requires crop, label, card_group, kind (`rank`/`suit`) and sha256 columns; labels come from original-frame visual audits. It checks crop paths/checksums, class names and contradictory card labels. Selection groups can be specified with `--suit-selection-groups`; `--suit-only` leaves mini-rank training out. The separate rank-development CSV uses the V5 audited-input schema. Output directories must be new. Published weights are never replaced by the trainer.
+
+Auxiliary SHA256:
+
+```text
+efb36342b8252741db7355d85032164d1fe84b1e14a3f9a40bc302a368185fed  rank_classifier_mini_v1.pt
+24c13ee1619656c38ad894b23efc5e37d9c7aee032792b2a920f7cdf8cb370f3  suit_classifier_v1.pt
+```

@@ -1,0 +1,49 @@
+{
+  "suit_seed": 73,
+  "mini_seed": 74,
+  "suit_training_crops": 229,
+  "suit_optimization_crops": 553,
+  "suit_selection_crops": 27,
+  "suit_selection_groups": [
+    "r1:6",
+    "r1:7",
+    "r2:5",
+    "r2:7"
+  ],
+  "suit_selection_correct": 26,
+  "suit_selected_epoch": 27,
+  "mini_real_crops": 43,
+  "mini_unrepresented_rank_labels": [
+    "A"
+  ],
+  "mini_rank_counts": {
+    "Q": 3,
+    "3": 6,
+    "5": 2,
+    "9": 8,
+    "4": 3,
+    "8": 1,
+    "J": 7,
+    "10": 1,
+    "6": 2,
+    "2": 2,
+    "K": 3,
+    "7": 5
+  },
+  "mini_physical_slot_groups": 25,
+  "mini_selected_epoch": 13,
+  "mini_selection_correct": 17,
+  "mini_training_diagnostic_correct": 43,
+  "limitations": [
+    "r1-r5 are now development data. No independent acceptance set is used here.",
+    "Real miniature crops do not cover every rank; missing labels rely on historical and simulated downsampling examples.",
+    "Repeated views/printed corners are correlated; diagnostics are not general accuracy."
+  ],
+  "sha256": {
+    "suit_classifier_v1.pt": "24c13ee1619656c38ad894b23efc5e37d9c7aee032792b2a920f7cdf8cb370f3",
+    "rank_classifier_mini_v1.pt": "efb36342b8252741db7355d85032164d1fe84b1e14a3f9a40bc302a368185fed"
+  },
+  "new_round_mini_suit_training_weight": 5,
+  "older_mini_suit_training_weight": 5,
+  "mini_rank_checkpoint_initialization": "Primary V5; its weights remain unchanged."
+}

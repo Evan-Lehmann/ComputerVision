@@ -16,23 +16,28 @@ def main():
     parser.add_argument('--no-ocr',action='store_true',help='Disable optional Tesseract cross-check')
     parser.add_argument('--no-references',action='store_true',help='Disable uncertain-rank reference cross-check')
     parser.add_argument('--no-face-evidence',action='store_true',help='Disable geometric face reconciliation for baseline comparisons')
+    shared=parser.add_mutually_exclusive_group()
+    shared.add_argument('--no-shared-view',action='store_true',help='Analyze selected primary views only; cross-view coverage is unchecked')
+    shared.add_argument('--shared-view',type=Path,help='JSON shared-hand rectangle and linked_region configuration')
     args=parser.parse_args()
     if not args.frames.is_dir():
         parser.error('Frame directory does not exist.')
     regions=json.loads(args.regions.read_text()) if args.regions else DEFAULT_REGIONS
+    view=False if args.no_shared_view else json.loads(args.shared_view.read_text()) if args.shared_view else None
     engine=VisionEngine(args.detector,args.classifier)
     paths=sorted(p for p in args.frames.iterdir() if p.suffix.lower() in ['.png','.jpg','.jpeg'])
     def progress(done,total):
         if done%25==0 or done==total:print('%d/%d frames' % (done,total),flush=True)
     result=process_frames(paths,args.output,engine,regions,progress,ocr_reader=False if args.no_ocr else None,
-                          reference_reader=False if args.no_references else None,face_evidence=not args.no_face_evidence)
+                          reference_reader=False if args.no_references else None,face_evidence=not args.no_face_evidence,shared_view=view)
     if args.review:
         review=json.loads(args.review.read_text())
         result=apply_review(result,review['events'],review.get('confirmed',False),
-                            review.get('rounds_confirmed',False))
+                            review.get('rounds_confirmed',False),review.get('coverage_confirmed',False))
         save_result(result,args.output)
     print(json.dumps(dict(cards=result['cards'],count_change=result['count_change'],
-        known_count_change=result['known_count_change'],count_verified=result['count_verified'],
+        known_count_change=result['known_count_change'],captured_count_change=result['captured_count_change'],
+        unresolved=result['unresolved'],coverage_status=result['coverage']['status'],coverage_issues=result['coverage']['issues'],count_verified=result['count_verified'],
         rounds=result['rounds'],needs_round_review=result['needs_round_review']),indent=2))
 
 if __name__=='__main__':main()

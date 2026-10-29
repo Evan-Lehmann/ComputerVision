@@ -11,8 +11,8 @@ def calculate_count_change(cards):
     return sum(COUNT_VALUES.get(rank, 0) for rank in cards)
 
 
-def process_round(round_dir, output_dir=None, regions=None, progress=None, engine=None):
+def process_round(round_dir, output_dir=None, regions=None, progress=None, engine=None, shared_view=None):
     round_dir = Path(round_dir)
     frames = sorted(p for p in round_dir.iterdir() if p.suffix.lower() in ['.png', '.jpg', '.jpeg'])
     return process_frames(frames, output_dir or round_dir/'analysis', engine=engine,
-                          regions=regions, progress=progress)
+                          regions=regions, progress=progress,shared_view=shared_view)

@@ -1,0 +1,246 @@
+{
+  "stage": "Cross-view development; no independent acceptance recordings remain",
+  "previous_main_view_candidate": "04d8a6f",
+  "development_sources": "Previously supplied recordings, including r4/r5",
+  "replays": {
+    "fresh_two": {
+      "frames": 177,
+      "primary_cards": 12,
+      "combined_candidates": 13,
+      "primary_unknowns": 0,
+      "unknown_candidates": 1,
+      "count_change": null,
+      "captured_count_change": null,
+      "known_count_change": 1,
+      "coverage_status": "needs_review",
+      "links": 4,
+      "additional_cards": [],
+      "pending_shared_identities": 1,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": [
+        "Shared card identity is unresolved; keep it as distinct or exclude it after checking other views."
+      ]
+    },
+    "new_r1": {
+      "frames": 92,
+      "primary_cards": 7,
+      "combined_candidates": 7,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": null,
+      "captured_count_change": 0,
+      "known_count_change": 0,
+      "coverage_status": "needs_review",
+      "links": 0,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": [
+        "Shared view not observed reliably; check the recording and calibration."
+      ]
+    },
+    "new_r2": {
+      "frames": 58,
+      "primary_cards": 7,
+      "combined_candidates": 7,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": 2,
+      "captured_count_change": 2,
+      "known_count_change": 2,
+      "coverage_status": "configured_views_reconciled",
+      "links": 2,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    },
+    "new_r3": {
+      "frames": 56,
+      "primary_cards": 4,
+      "combined_candidates": 4,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": -2,
+      "captured_count_change": -2,
+      "known_count_change": -2,
+      "coverage_status": "configured_views_reconciled",
+      "links": 2,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    },
+    "new_r4": {
+      "frames": 67,
+      "primary_cards": 5,
+      "combined_candidates": 5,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": 0,
+      "captured_count_change": 0,
+      "known_count_change": 0,
+      "coverage_status": "configured_views_reconciled",
+      "links": 3,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    },
+    "new_r5": {
+      "frames": 74,
+      "primary_cards": 4,
+      "combined_candidates": 5,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": 0,
+      "captured_count_change": 0,
+      "known_count_change": 0,
+      "coverage_status": "configured_views_reconciled",
+      "links": 2,
+      "additional_cards": [
+        {
+          "rank": "9",
+          "suit": "hearts",
+          "identity_status": "additional"
+        }
+      ],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    },
+    "oct26_full": {
+      "frames": 84,
+      "primary_cards": 5,
+      "combined_candidates": 6,
+      "primary_unknowns": 0,
+      "unknown_candidates": 1,
+      "count_change": null,
+      "captured_count_change": null,
+      "known_count_change": 1,
+      "coverage_status": "needs_review",
+      "links": 2,
+      "additional_cards": [],
+      "pending_shared_identities": 1,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": [
+        "Shared card identity is unresolved; keep it as distinct or exclude it after checking other views."
+      ]
+    },
+    "oct26_half": {
+      "frames": 54,
+      "primary_cards": 3,
+      "combined_candidates": 3,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": 2,
+      "captured_count_change": 2,
+      "known_count_change": 2,
+      "coverage_status": "configured_views_reconciled",
+      "links": 2,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    },
+    "oct27_single": {
+      "frames": 48,
+      "primary_cards": 4,
+      "combined_candidates": 4,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": 0,
+      "captured_count_change": 0,
+      "known_count_change": 0,
+      "coverage_status": "configured_views_reconciled",
+      "links": 2,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    },
+    "oct29_single": {
+      "frames": 87,
+      "primary_cards": 7,
+      "combined_candidates": 7,
+      "primary_unknowns": 1,
+      "unknown_candidates": 1,
+      "count_change": null,
+      "captured_count_change": null,
+      "known_count_change": -1,
+      "coverage_status": "needs_review",
+      "links": 0,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": [
+        "Shared view not observed reliably; check the recording and calibration."
+      ]
+    },
+    "old_three": {
+      "frames": 90,
+      "primary_cards": 7,
+      "combined_candidates": 10,
+      "primary_unknowns": 1,
+      "unknown_candidates": 4,
+      "count_change": null,
+      "captured_count_change": null,
+      "known_count_change": 2,
+      "coverage_status": "needs_review",
+      "links": 0,
+      "additional_cards": [],
+      "pending_shared_identities": 3,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": [
+        "Shared card identity is unresolved; keep it as distinct or exclude it after checking other views.",
+        "Shared card identity is unresolved; keep it as distinct or exclude it after checking other views.",
+        "Shared card identity is unresolved; keep it as distinct or exclude it after checking other views."
+      ]
+    },
+    "old_two": {
+      "frames": 180,
+      "primary_cards": 11,
+      "combined_candidates": 11,
+      "primary_unknowns": 0,
+      "unknown_candidates": 0,
+      "count_change": -1,
+      "captured_count_change": -1,
+      "known_count_change": -1,
+      "coverage_status": "configured_views_reconciled",
+      "links": 4,
+      "additional_cards": [],
+      "pending_shared_identities": 0,
+      "primary_identity_rank_observation_provenance_unchanged": true,
+      "coverage_issues": []
+    }
+  },
+  "limitations": [
+    "r4/r5 retain their historical main-view held-out results for the prior candidate, but were used to develop and train these auxiliary readers.",
+    "Only the configured primary and central shared views are reconciled; whole-table/shoe completeness is not established.",
+    "Unresolved tuple conflicts, weak suit/rank evidence, missing shared views and primary fragmentation require review.",
+    "All current replays are development regressions; fresh recordings are required for independent acceptance."
+  ],
+  "r5_development_acceptance": {
+    "expected_distinct_cards": 5,
+    "exact_rank_suit_and_view_card_list": true,
+    "shared_prefix_cards_linked_once": 2,
+    "additional_heart_nine_included_once": true,
+    "count_change": 0
+  },
+  "r4_development_acceptance": {
+    "expected_distinct_cards": 5,
+    "exact_main_card_list": true,
+    "all_shared_slots_linked_once": 3,
+    "no_duplicate_rows": true,
+    "count_change": 0
+  },
+  "total_replayed_frames": 1067,
+  "models": {
+    "rank_detector_v2.pt": "27c926decf47a3b21af99f5eabddd430be3cb6939920a4bd9bdd34f15d995f92",
+    "rank_classifier_v5.pt": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
+    "rank_classifier_mini_v1.pt": "efb36342b8252741db7355d85032164d1fe84b1e14a3f9a40bc302a368185fed",
+    "suit_classifier_v1.pt": "24c13ee1619656c38ad894b23efc5e37d9c7aee032792b2a920f7cdf8cb370f3"
+  },
+  "automatically_reconciled_jobs": 7,
+  "jobs_requiring_review": 5
+}

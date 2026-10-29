@@ -45,6 +45,17 @@ class ReviewExportTests(unittest.TestCase):
             self.assertEqual(metadata['count_scope'],'captured_cards')
         self.assertEqual(self.result,original)
 
+    def test_context_images_are_not_exported_as_single_card_training_labels(self):
+        result=copy.deepcopy(self.result)
+        for evidence in result['events'][0]['evidence']:evidence['rank_crop']=False
+        result['events'][1]['suit']='clubs'
+        bundle=reviewed_crop_bundle(result,self.root,'group')
+        with zipfile.ZipFile(bundle) as archive:
+            rows=list(csv.DictReader(io.StringIO(archive.read('labels.csv').decode())))
+            self.assertEqual(len(rows),1)
+            self.assertEqual(rows[0]['card_group'],'group:2')
+            self.assertEqual(rows[0]['suit'],'clubs')
+
     def test_unconfirmed_unresolved_and_unreviewed_labels_are_rejected(self):
         cases=[dict(self.result,review_confirmed=False),dict(self.result,count_verified=False)]
         invalid=copy.deepcopy(self.result);invalid['events'][0]['rank']='UNKNOWN';cases.append(invalid)

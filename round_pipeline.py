@@ -8,6 +8,9 @@ import numpy as np
 from card_tracking import CardIdentityMatcher, merge_track_fragments
 from round_segmentation import RoundSegmenter, visible_empty_table
 from card_faces import reconcile_faces, estimate_face_height
+from shared_cards import SharedMonitor, DEFAULT_SHARED_VIEW, suit_crops
+from card_suits import SuitReader, SUITS
+from mini_rank import MiniRankReader
 
 ROOT = Path(__file__).resolve().parent
 RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -40,6 +43,15 @@ def validate_regions(regions):
                 raise ValueError('Card region names must be unique.')
         cleaned.append(dict(name=name, rect=list(rect)))
     return cleaned
+
+
+def validate_shared_view(view, regions):
+    if view is False:return False
+    if not isinstance(view,dict):raise ValueError('Shared view must be disabled or configured with a rectangle.')
+    linked=view.get('linked_region')
+    if linked not in {r['name'] for r in regions}:raise ValueError('Choose an existing main hand for the shared view.')
+    checked=validate_regions([dict(name='central',rect=view.get('rect',[]))]+regions)[0]
+    return dict(checked,linked_region=linked)
 
 
 def crop_box(image, box):
@@ -90,24 +102,30 @@ def summarize(result):
     numbers = sorted({event.get('round_number', 1) for event in result['events']})
     needs_round_review = (len(numbers) > 1 or bool(result.get('boundaries'))
                           or bool(result.get('uncertain_transitions')))
-    verified = (bool(result.get('review_confirmed')) and not unresolved
+    coverage_pending = bool(result.get('needs_coverage_review')) and not (result.get('review_confirmed') and result.get('coverage_confirmed'))
+    if result.get('needs_coverage_review') and result.get('coverage'):
+        result['coverage']['status']='needs_review' if coverage_pending else 'reviewed_by_user'
+    verified = (bool(result.get('review_confirmed')) and not unresolved and not coverage_pending
                 and (not needs_round_review or bool(result.get('rounds_confirmed'))))
-    rounds, running, running_unknown = [], 0, 0
+    rounds, running, running_unknown, running_coverage = [], 0, 0, False
     for number in numbers:
         events = [event for event in included if event.get('round_number', 1) == number]
         ranks = [event['rank'] for event in events]
         change = sum(COUNT_VALUES.get(rank, 0) for rank in ranks)
         unknown = ranks.count('UNKNOWN')
+        round_coverage = coverage_pending and any(issue.get('round_number',number)==number for issue in result.get('coverage',{}).get('issues',[]))
+        running_coverage = running_coverage or round_coverage
         running += change
         running_unknown += unknown
         rounds.append(dict(round_number=number, cards=ranks, unresolved=unknown,
-            known_count_change=change, count_change=None if unknown else change,
+            known_count_change=change, count_change=None if unknown or round_coverage else change,coverage_pending=bool(round_coverage),
             count_range=dict(min=change-unknown, max=change+unknown),
             running_known_count_change=running,
-            running_count_change=None if running_unknown else running,
+            running_count_change=None if running_unknown or running_coverage else running,running_coverage_pending=bool(running_coverage),
             running_count_range=dict(min=running-running_unknown, max=running+running_unknown)))
     result.update(cards=cards, known_count_change=subtotal, unresolved=unresolved,
-                  count_change=None if unresolved else subtotal,
+                  count_change=None if unresolved or coverage_pending else subtotal,
+                  captured_count_change=None if unresolved else subtotal, coverage_pending=coverage_pending,
                   count_verified=verified, rounds=rounds, round_count=len(rounds),
                   needs_round_review=needs_round_review,
                   count_scope='captured_cards',
@@ -116,12 +134,18 @@ def summarize(result):
 
 
 def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None, ocr_reader=None,
-                   reference_reader=None, face_evidence=True):
+                   reference_reader=None, face_evidence=True, shared_view=None, suit_reader=None, mini_reader=None):
     """Process every frame; callers may inject an engine for replay/testing."""
     frame_paths = sorted(Path(p) for p in frame_paths)
     if not frame_paths:
         raise ValueError('No frames were found. Record a round or select a frame folder.')
     regions = validate_regions(regions if regions is not None else DEFAULT_REGIONS)
+    if shared_view is None:
+        shared_view = DEFAULT_SHARED_VIEW if {'player','dealer'}.issubset({r['name'] for r in regions}) else False
+    shared_view = validate_shared_view(shared_view, regions)
+    suit_reader = SuitReader() if suit_reader is None else suit_reader
+    mini_reader = MiniRankReader() if shared_view and mini_reader is None else mini_reader
+    monitor = SharedMonitor(shared_view, mini_reader, suit_reader) if shared_view else None
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     engine = engine or VisionEngine()
@@ -173,6 +197,8 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             for name, matcher in matchers.items():
                 matcher.retired_ids.update(t.track_id for t in tracks[name])
                 matcher.scene_id += 1
+        if monitor:
+            monitor.observe(image,index,path.name,segmenter.round_number,primary_visible=has_cards)
         for region in regions:
             name = region['name']
             current = grouped[name]
@@ -194,6 +220,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 track.observations.append(dict(crop=detection['crop'], box=detection['box'],
                     probabilities=probabilities_i, frame=index, source=path.name,
                     face_box=detection.get('face_box'), secondary_crop=detection.get('secondary_crop'),
+                    suit_crops=suit_crops(image,detection['face_box']) if detection.get('face_box') else [],
                     rank_box=detection.get('rank_box'), crop_source=detection.get('crop_source','detector')))
         read_frames += 1
         if progress:
@@ -228,7 +255,11 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 if not cv2.imwrite(str(output_dir/filename), observation['crop']):
                     raise OSError('Could not write card evidence.')
                 evidence.append(dict(image=filename, frame=observation['frame'], source=observation['source']))
-            events.append(dict(id=str(track.track_id), region=track.region, rank=rank,
+            suit_result = suit_reader.consensus(observations) if suit_reader else None
+            events.append(dict(id=str(track.track_id),
+                suit=suit_result['suit'] if suit_result else 'UNKNOWN',
+                suit_confidence=suit_result['score'] if suit_result else 0,
+                suit_votes=suit_result['votes'] if suit_result else [], source_views=[track.region], region=track.region, rank=rank,
                 round_number=track.round_number,
                 merged_from=getattr(track, 'merged_from', [track.track_id]),
                 suggested_rank=rank if ocr_result or reference_result else cnn_rank,
@@ -259,7 +290,10 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
         event['possible_duplicates'] = candidates
     # Within-frame ordering is deterministic, not a claim about sub-frame deal order.
     events.sort(key=lambda event: (event['first_frame'], event['region'], int(event['id'])))
-    result = summarize(dict(events=events, frames_processed=read_frames, regions=regions,
+    coverage = monitor.resolve(events,output_dir) if monitor else dict(status='not_monitored',issues=[],slots=[],links=[])
+    events.sort(key=lambda event:(event['first_frame'],event['region'],str(event['id'])))
+    result = summarize(dict(events=events, coverage=coverage, shared_view=shared_view, coverage_confirmed=False,
+        needs_coverage_review=bool(coverage['issues']), frames_processed=read_frames, regions=regions,
         recording_digest=recording_digest.hexdigest(),
         boundaries=segmenter.boundaries, uncertain_transitions=segmenter.uncertain_transitions,
         rounds_confirmed=False,
@@ -267,7 +301,7 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
             'Model predictions are provisional. Review every card and check for missing or duplicate cards.',
             'Cards first seen in the same frame have uncertain relative deal order.',
             'Capture may start or end mid-round; completion is not inferred. Check round assignments and boundaries.',
-            'Only selected source regions are counted. The small central hand is excluded by default; add distinct cards from other views during review.'
+            'Counts cover the configured primary and shared views only. Check other exposed cards and unresolved cross-view identities during review.'
         ]))
     if not events:
         result['warnings'].append('No ranks detected in the selected regions. Check the region preview before trusting an empty list.')
@@ -279,6 +313,8 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
         result['warnings'].append('Optional OCR cross-check is unavailable. Install Tesseract to enable it; unresolved ranks still need review.')
     if ocr_reader and ocr_reader.error:
         result['warnings'].append(ocr_reader.error)
+    if suit_reader and suit_reader.error:result['warnings'].append(suit_reader.error)
+    if mini_reader and mini_reader.error:result['warnings'].append(mini_reader.error)
     save_result(result, output_dir)
     return result
 
@@ -290,11 +326,11 @@ def save_result(result, output_dir):
     temporary.replace(path)
 
 
-def apply_review(result, edits, confirmed, rounds_confirmed=False):
+def apply_review(result, edits, confirmed, rounds_confirmed=False, coverage_confirmed=False):
     """Review an explicitly ordered event list; excluded items stay in the audit."""
     import copy
     if (not isinstance(edits, list) or len(edits) > 1000 or not isinstance(confirmed, bool)
-            or not isinstance(rounds_confirmed, bool)):
+            or not isinstance(rounds_confirmed, bool) or not isinstance(coverage_confirmed,bool)):
         raise ValueError('Invalid review request.')
     known = {event['id']: event for event in result['events']}
     seen, events = set(), []
@@ -316,12 +352,26 @@ def apply_review(result, edits, confirmed, rounds_confirmed=False):
         number = edit.get('round_number', event.get('round_number', 1))
         if type(number) is not int or not 1 <= number <= 1000:
             raise ValueError('Round numbers must be whole numbers between 1 and 1000.')
-        event.update(rank=rank, excluded=edit.get('excluded', False), reviewed=True,
+        suit=edit.get('suit',event.get('suit','UNKNOWN'))
+        if suit not in SUITS+['UNKNOWN']:raise ValueError('Choose a valid suit.')
+        event.update(rank=rank, suit=suit, excluded=edit.get('excluded', False), reviewed=True,
                      round_number=number)
         events.append(event)
     if not set(known).issubset(seen):
         raise ValueError('Keep all original events; mark unwanted events excluded.')
     reviewed = copy.deepcopy(result)
+    changed_links=[]
+    for link in result.get('coverage',{}).get('links',[]):
+        before=known.get(link['event_id']);after=next((e for e in events if e['id']==link['event_id']),None)
+        if before and after and any(before.get(k)!=after.get(k) for k in ['rank','suit','excluded','round_number']):changed_links.append(link)
+    if changed_links:
+        reviewed['needs_coverage_review']=True
+        reviewed.setdefault('coverage',{}).setdefault('issues',[]).append(dict(reason='Reviewed changes alter an automatically linked card; confirm cross-view coverage.',round_number=changed_links[0]['round_number']))
+    decisions={event['id']:event for event in events}
+    for slot in reviewed.get('coverage',{}).get('slots',[]):
+        event=decisions.get(slot.get('event_id'))
+        if slot.get('status')=='needs_review' and event:
+            slot['review_decision']='excluded' if event.get('excluded') else 'distinct' if event['rank']!='UNKNOWN' else 'unresolved'
     reviewed.update(events=events, review_confirmed=confirmed,
-                    rounds_confirmed=rounds_confirmed and confirmed)
+                    rounds_confirmed=rounds_confirmed and confirmed,coverage_confirmed=coverage_confirmed and confirmed)
     return summarize(reviewed)
