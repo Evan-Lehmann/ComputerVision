@@ -47,6 +47,27 @@ class HandLayoutTests(unittest.TestCase):
         matches = CardIdentityMatcher(ordered_hand=True).match(ds,[second,first],2)
         self.assertEqual({i:t.track_id for i,t in matches.items()},{1:2,2:1})
 
+    def test_sliding_birth_uses_two_established_hand_motion_anchors(self):
+        first, second = track(1,'4',100), track(2,'K',140)
+        birth = track(3,'J',200,frames=(1,))
+        ds = [detection('4',65),detection('K',105),detection('J',135)]
+        matches = CardIdentityMatcher(ordered_hand=True).match(ds,[first,second,birth],2)
+        self.assertEqual({i:t.track_id for i,t in matches.items()},{0:1,1:2,2:3})
+
+    def test_long_birth_motion_without_two_anchors_remains_unmatched(self):
+        first, birth = track(1,'4',100),track(2,'J',200,frames=(1,))
+        ds = [detection('4',65),detection('J',135)]
+        matches = CardIdentityMatcher(ordered_hand=True).match(ds,[first,birth],2)
+        self.assertNotIn(1,matches)
+
+    def test_supported_motion_still_rejects_different_glyph_and_excessive_travel(self):
+        for new_glyph, new_x in [('7',135),('J',100),('J',265)]:
+            first,second = track(1,'4',100),track(2,'K',140)
+            birth=track(3,'J',200,frames=(1,))
+            ds=[detection('4',65),detection('K',105),detection(new_glyph,new_x)]
+            matches=CardIdentityMatcher(ordered_hand=True).match(ds,[first,second,birth],2)
+            self.assertNotIn(3,[t.track_id for t in matches.values()])
+
     def test_layout_rejects_identity_crossing_instead_of_swapping_cards(self):
         first,second = track(1,'4',0),track(2,'K',35)
         matches = CardIdentityMatcher(ordered_hand=True).match(

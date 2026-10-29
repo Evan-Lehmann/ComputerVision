@@ -42,6 +42,21 @@ class ReferenceReaderTests(unittest.TestCase):
         reader.read = Mock(side_effect=[vote(accepted=False),None,vote()])
         self.assertIsNone(reader.consensus(observations,'Q'))
 
+    def test_spread_views_find_clear_evidence_missed_by_first_middle_last(self):
+        reader = ReferenceRankReader()
+        observations = [dict(crop=i,frame=i) for i in range(53)]
+        reader.read = Mock(side_effect=lambda crop: vote('3',accepted=crop>=35))
+        result = reader.consensus(observations,'3')
+        self.assertEqual(result['rank'],'3')
+        self.assertEqual([v['frame'] for v in result['votes']],[35,44,52])
+        self.assertEqual(reader.read.call_count,7)
+
+    def test_additional_views_cannot_vote_away_a_conflicting_accepted_rank(self):
+        reader = ReferenceRankReader()
+        observations = [dict(crop=i,frame=i) for i in range(53)]
+        reader.read = Mock(side_effect=lambda crop: vote('9' if crop==35 else '3'))
+        self.assertIsNone(reader.consensus(observations,'3'))
+
     def test_missing_invalid_and_empty_data_fail_closed(self):
         with tempfile.TemporaryDirectory() as folder:
             path=Path(folder)/'bank.npz'

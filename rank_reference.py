@@ -67,7 +67,11 @@ class ReferenceRankReader:
         if not self.available or len(observations) < 2:
             return None
         frames, votes = set(), []
-        for index in sorted({0, len(observations)//2, len(observations)-1}):
+        # First/middle/last alone can all land on unfavourable detector crops.
+        # Bound work to seven evenly spread views, retaining those three views.
+        # Acceptance thresholds and rejection of conflicting votes are unchanged.
+        indices = {min(len(observations)-1, i*len(observations)//6) for i in range(7)}
+        for index in sorted(indices):
             observation = observations[index]
             if observation['frame'] in frames:
                 continue

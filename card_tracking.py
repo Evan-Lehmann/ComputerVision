@@ -201,6 +201,7 @@ class CardIdentityMatcher:
                         crop_appearance(detection.get('crop')), crop_appearance(observation.get('crop')))
                     for observation in track.observations[-2:])
         motion = np.zeros(2)
+        motion_support = 0
         # Use distinctive, reciprocal glyph matches as hand-motion anchors.
         # This separates a shifting old card from a new card at its old box.
         if ordered_row and len(detections) >= len(active):
@@ -233,14 +234,16 @@ class CardIdentityMatcher:
                 height = np.median([t.last_box[3]-t.last_box[1] for t in active])
                 if max(np.linalg.norm(value-median) for value in anchors) <= height*.5:
                     motion = median
+                    motion_support = len(anchors)
         # A private dummy column for every detection permits unmatched births.
         costs = np.full((len(detections), len(active) + len(detections)), 1e6)
         costs[:, len(active):] = 0.65
         for i, detection in enumerate(detections):
             for j, track in enumerate(active):
                 distance = _geometry(detection["box"], track.last_box)
-                if distance is None or distance > self.max_distance:
+                if distance is None:
                     continue
+                raw_distance = distance
                 # Check the two most recent appearances. Keeping a permanently
                 # blurred birth crop as an anchor fragments cards as they settle.
                 similarity = similarities[i, j]
@@ -250,6 +253,17 @@ class CardIdentityMatcher:
                     shifted = [track.last_box[k]+motion[k % 2] for k in range(4)]
                     residual = _geometry(detection['box'], shifted)
                     distance = distance if residual is None else residual
+                if raw_distance > self.max_distance:
+                    # A sliding birth can move farther than a settled card.
+                    # Only extend the raw gate with two coherent established
+                    # hand anchors, consecutive frames and a strong glyph match.
+                    # Order alignment still prevents crossing/swapping cards.
+                    if not (ordered_row and motion_support >= 2
+                            and track.last_sample_index == sample_index-1
+                            and raw_distance <= self.max_distance+1
+                            and distance <= self.max_distance
+                            and similarity >= .94):
+                        continue
                 costs[i, j] = 1.0 - similarity + 0.12 * distance
         # Refuse near ties before global assignment. Predicted rank is never an
         # identity key: two cards with the same rank must remain distinct.

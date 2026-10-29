@@ -8,7 +8,8 @@ upload were added. Build it with `python build_rank_reference.py`; the audit is
 `validation/reference_v1_audit.json`.
 
 Reference matching requires similarity >=0.97, a different-rank margin >=0.04,
-agreement in at least two distinct first/middle/last frames and agreement with
+agreement in at least two distinct frames sampled from up to seven spread-out
+observations, no conflicting accepted votes, and agreement with
 the CNN's top rank. It never overrides confident CNN output. The bank shares
 training data with the CNN, so agreement is not independent verification.
 Similarity scores are not calibrated probabilities. References remain font/

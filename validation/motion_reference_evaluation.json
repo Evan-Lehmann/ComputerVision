@@ -1,0 +1,113 @@
+{
+  "baseline_revision": "5e805e7",
+  "recording_frames": 87,
+  "baseline": {
+    "annotation_scope": "Visual card/animation audit mapped onto 196 frozen detector observations. Not detector recall outside those observations.",
+    "expected_physical_cards": 6,
+    "candidate_events": 8,
+    "matched_observations": 196,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 0,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 2,
+    "missing_physical_cards": 0,
+    "unmatched_events": 0,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 4,
+    "exact_annotated_card_list": false,
+    "expected_count_change": -1,
+    "count_change": null,
+    "count_matches": false
+  },
+  "candidate": {
+    "annotation_scope": "Visual card/animation audit mapped onto 196 frozen detector observations. Not detector recall outside those observations.",
+    "expected_physical_cards": 6,
+    "candidate_events": 7,
+    "matched_observations": 196,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 0,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 1,
+    "missing_physical_cards": 0,
+    "unmatched_events": 0,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 1,
+    "exact_annotated_card_list": false,
+    "expected_count_change": -1,
+    "count_change": null,
+    "count_matches": false
+  },
+  "baseline_range": {
+    "min": -5,
+    "max": 3
+  },
+  "candidate_range": {
+    "min": -2,
+    "max": 0
+  },
+  "previous_replays": {
+    "fresh_two": {
+      "frames": 177,
+      "events": 12,
+      "unknowns": 0,
+      "count_change": 1,
+      "identity_rank_and_all_observation_provenance_unchanged": true
+    },
+    "old_two": {
+      "frames": 180,
+      "events": 11,
+      "unknowns": 1,
+      "count_change": null,
+      "identity_rank_and_all_observation_provenance_unchanged": true
+    },
+    "old_three": {
+      "frames": 90,
+      "events": 7,
+      "unknowns": 1,
+      "count_change": null,
+      "identity_rank_and_all_observation_provenance_unchanged": true
+    },
+    "oct26_full": {
+      "frames": 84,
+      "events": 5,
+      "unknowns": 0,
+      "count_change": 1,
+      "identity_rank_and_all_observation_provenance_unchanged": true
+    },
+    "oct26_half": {
+      "frames": 54,
+      "events": 3,
+      "unknowns": 0,
+      "count_change": 2,
+      "identity_rank_and_all_observation_provenance_unchanged": true
+    },
+    "oct27_single": {
+      "frames": 48,
+      "events": 4,
+      "unknowns": 0,
+      "count_change": 0,
+      "identity_rank_and_all_observation_provenance_unchanged": true
+    }
+  },
+  "prior_two_round_identity_check": {
+    "annotation_scope": "All detected main-view observations, manually assigned to physical cards; not full-table detector recall",
+    "expected_physical_cards": 12,
+    "candidate_events": 12,
+    "matched_observations": 335,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 0,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 0,
+    "missing_physical_cards": 0,
+    "unmatched_events": 0,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 0,
+    "exact_annotated_card_list": true,
+    "expected_count_change": 1,
+    "count_change": 1,
+    "count_matches": true
+  }
+}
