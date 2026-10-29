@@ -1,0 +1,89 @@
+{
+  "recording": "r5",
+  "frames": 74,
+  "evaluation_type": "Previously uninspected recording, frozen candidate, no tuning",
+  "baseline_revision": "82ce435",
+  "candidate_revision": "04d8a6f",
+  "candidate_classifier_sha256": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
+  "visual_reference_sha256": "c87b628df771710dd4f16186de1d4ac3afd6004e153d899622c8d0ad476c6632",
+  "reference_saved_before_predictions": true,
+  "player": [
+    "9",
+    "4"
+  ],
+  "dealer": [
+    "7",
+    "Q"
+  ],
+  "expected_main_view_count_change": 0,
+  "baseline": {
+    "annotation_scope": "Held-out main-view physical-card truth audited from all 74 original screenshots before predictions. All unique retained crops inspected for identity; one narrow spurious partial candidate excluded from positive observation truth. Central mini-hand extra 9 hearts reported separately, not included in this main-view acceptance.",
+    "expected_physical_cards": 4,
+    "candidate_events": 5,
+    "matched_observations": 185,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 1,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 0,
+    "missing_physical_cards": 0,
+    "unmatched_events": 1,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 1,
+    "exact_annotated_card_list": false,
+    "expected_count_change": 0,
+    "count_change": null,
+    "count_matches": false
+  },
+  "candidate": {
+    "annotation_scope": "Held-out main-view physical-card truth audited from all 74 original screenshots before predictions. All unique retained crops inspected for identity; one narrow spurious partial candidate excluded from positive observation truth. Central mini-hand extra 9 hearts reported separately, not included in this main-view acceptance.",
+    "expected_physical_cards": 4,
+    "candidate_events": 4,
+    "matched_observations": 185,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 0,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 0,
+    "missing_physical_cards": 0,
+    "unmatched_events": 0,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 0,
+    "exact_annotated_card_list": true,
+    "expected_count_change": 0,
+    "count_change": 0,
+    "count_matches": true
+  },
+  "baseline_range": {
+    "min": -1,
+    "max": 1
+  },
+  "candidate_range": {
+    "min": 0,
+    "max": 0
+  },
+  "candidate_suppressed_detections": 1,
+  "candidate_count_verified": false,
+  "scope": "Large digital main player/dealer views in unchanged default regions.",
+  "additional_excluded_cards": [
+    {
+      "rank": "9",
+      "suit": "hearts",
+      "view": "central_mini_hand",
+      "first_visible_frame": 51,
+      "count_value": 0,
+      "reason": "Main player 9 is clubs; the red 9 hearts is an additional distinct card, not a duplicate main-view card."
+    }
+  ],
+  "all_distinct_visible_digital_cards": 5,
+  "candidate_main_view_card_count": 4,
+  "complete_visible_digital_card_coverage": false,
+  "count_after_including_additional_neutral_nine": 0,
+  "limitations": [
+    "Both held-out main-view rounds passed, totalling nine main-view cards. This sample is too small to establish near-perfect general accuracy.",
+    "Default regions exclude an additional visible 9 hearts, even though the count remains correct. Cross-view completeness is not solved.",
+    "Detailed frames, crops and observation annotations remain outside Git.",
+    "No code, weights, thresholds or training data were changed using r4 or r5.",
+    "Candidate remains provisional in the app until the user saves a review."
+  ]
+}

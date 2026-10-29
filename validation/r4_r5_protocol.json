@@ -4,7 +4,6 @@
     "r4",
     "r5"
   ],
-  "status": "Neither recording inspected or used for development/training.",
   "candidate_classifier_sha256": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
   "baseline_arguments": [
     "--classifier",
@@ -23,5 +22,6 @@
     "Compare exact physical-card lists, extra/missed/mixed identities, accepted wrong ranks, unknowns and round/count results separately.",
     "Present both results including failures. If either recording informs subsequent tuning, it becomes development data; obtain a new independent test set.",
     "Two test rounds are a limited check, not a general near-perfect accuracy estimate."
-  ]
+  ],
+  "status_at_candidate_freeze": "Neither recording inspected or used for development/training."
 }

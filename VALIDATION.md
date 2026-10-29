@@ -6,6 +6,24 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
+## Second frozen held-out result: r5, and cross-view coverage gap
+
+The same frozen candidate revision `04d8a6f` was evaluated on r5 without tuning, retraining or production-code changes after either held-out result. All 74 source frames were inspected and the visual reference saved and hashed before predictions. The selected main-view cards are player 9 clubs, 4 spades and dealer 7 spades, Q spades, count change 0.
+
+| Measure | Previous pipeline (`82ce435`) | Frozen candidate (`04d8a6f`) |
+|---|---:|---:|
+| Candidate rows / expected main-view cards | 5 / 4 | 4 / 4 |
+| Unknown rows | 1 | 0 |
+| Exact main-view card list | Fail | Pass |
+| Complete main-view count change | Unavailable | 0 |
+| Detection range | -1 to +1 | 0 to 0 |
+
+The previous pipeline retains a narrow partial-4 candidate alongside the complete 4. Face reconciliation suppresses that extra output while retaining all 185 positive annotated observations. The candidate has no mixed identities, missing annotated main-view observations/cards, extra fragments/events, wrong accepted ranks or round errors. Every distinct retained crop was inspected. Aggregate evidence is in `validation/r5_heldout_evaluation.json`; detailed labels, crops and screenshots remain outside Git.
+
+**Main-view acceptance is not complete exposed-card coverage.** Beginning at frame 51, the central miniature hand shows an additional 9 hearts, while the large player hand remains 9 clubs and 4 spades. The differing suit establishes that the red 9 is a distinct additional card; default regions exclude it. There are therefore five distinct visible digital cards but only four in the main-view output. The additional 9 has Hi-Lo value 0, so the correct displayed count cannot reveal this missing-card scope issue. Both pipelines exclude that view; the main-view pass does not claim generic cross-view reconciliation or whole-shoe completeness.
+
+Across r4/r5, the frozen candidate passes both main-view card-list checks (nine main-view cards, 339 positive observations, 141 screenshots) with zero unknowns; the previous pipeline fails both, with four unknown rows total. This is a positive independent check of this layout, not a near-perfect general-accuracy estimate. The two rounds were never used for training or tuning. Future changes informed by their errors or the coverage gap must classify them as development data and use new independent test footage.
+
 ## First frozen held-out result: r4
 
 Candidate revision `04d8a6f` and its V5 checkpoint were frozen before r4 was opened. All 67 source screenshots were visually audited and the expected main-view card list saved and hashed before either pipeline ran. The expected cards are player Q,3,5 and dealer 8,10, count change 0. Both pipelines use identical source regions and cached outputs of the unchanged V2 detector. No code, weights, thresholds or training data were changed using this recording.
@@ -20,7 +38,7 @@ Candidate revision `04d8a6f` and its V5 checkpoint were frozen before r4 was ope
 
 The previous pipeline leaves the genuine 5 unknown, retains an extra narrow partial candidate and splits the animated dealer 10. V5 resolves 5; face reconciliation suppresses the partial with a retained counterpart and rejoins the dim 10. The candidate retains all 154 positive annotated observations with no mixed identities, missing annotated observations/cards, extra identity fragments/events, wrong accepted ranks or round errors. Every distinct retained crop was inspected to verify its track's identity; the extra partial output is excluded from positive observation truth and preserved in the suppression audit. This is a main-view physical-identity comparison, not generic full-table detector-recall measurement.
 
-`validation/r4_heldout_evaluation.json` records the comparison and the hash of the pre-prediction visual reference. Screenshots, crops and detailed observation labels stay outside Git. **This is one successful previously unseen round, not evidence of near-perfect general accuracy.** R5 remains uninspected and pending. The app's result is still provisional/unreviewed despite passing the independent comparison. The frozen protocol below is unchanged; if this round later informs tuning, it must be reclassified as development data.
+`validation/r4_heldout_evaluation.json` records the comparison and the hash of the pre-prediction visual reference. Screenshots, crops and detailed observation labels stay outside Git. **This is one successful previously unseen round, not evidence of near-perfect general accuracy.** R5 was still uninspected when this first report was saved; its result is recorded above. The app's result is still provisional/unreviewed despite passing the independent comparison. The frozen protocol below is unchanged; if this round later informs tuning, it must be reclassified as development data.
 
 ## Card-face evidence and V5 development candidate
 

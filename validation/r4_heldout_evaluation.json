@@ -67,11 +67,11 @@
   "candidate_review_confirmed": false,
   "candidate_count_verified": false,
   "scope": "One round, large digital main player/dealer views and unchanged default regions.",
-  "r5_status": "Reserved, uninspected, not received as accessible split parts.",
   "limitations": [
     "One successful held-out round does not establish near-perfect general accuracy.",
     "Detailed frames/crops/observation annotations remain outside Git.",
     "No code, model weights, thresholds or training data were changed using r4.",
     "Candidate remains provisional in the app until the user saves a review."
-  ]
+  ],
+  "r5_status_at_r4_evaluation": "Reserved, uninspected, not received as accessible split parts."
 }
