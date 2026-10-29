@@ -6,6 +6,22 @@ The app now implements recording, saved-frame replay, the frozen V2 detector and
 
 **This is a review-assisted prototype. Fully automatic rank recognition and physical-card reconciliation have not reached reliable first-deliverable accuracy.** A saved review is a human-confirmed result, not an automatic-accuracy claim. Actual desktop capture on the user's Mac still needs a live test.
 
+## First frozen held-out result: r4
+
+Candidate revision `04d8a6f` and its V5 checkpoint were frozen before r4 was opened. All 67 source screenshots were visually audited and the expected main-view card list saved and hashed before either pipeline ran. The expected cards are player Q,3,5 and dealer 8,10, count change 0. Both pipelines use identical source regions and cached outputs of the unchanged V2 detector. No code, weights, thresholds or training data were changed using this recording.
+
+| Measure | Previous pipeline (`82ce435`) | Frozen candidate (`04d8a6f`) |
+|---|---:|---:|
+| Candidate rows / expected physical cards | 7 / 5 | 5 / 5 |
+| Unknown rows | 3 | 0 |
+| Exact main-view card list | Fail | Pass |
+| Complete count change | Unavailable | 0 |
+| Detection range | -4 to +2 | 0 to 0 |
+
+The previous pipeline leaves the genuine 5 unknown, retains an extra narrow partial candidate and splits the animated dealer 10. V5 resolves 5; face reconciliation suppresses the partial with a retained counterpart and rejoins the dim 10. The candidate retains all 154 positive annotated observations with no mixed identities, missing annotated observations/cards, extra identity fragments/events, wrong accepted ranks or round errors. Every distinct retained crop was inspected to verify its track's identity; the extra partial output is excluded from positive observation truth and preserved in the suppression audit. This is a main-view physical-identity comparison, not generic full-table detector-recall measurement.
+
+`validation/r4_heldout_evaluation.json` records the comparison and the hash of the pre-prediction visual reference. Screenshots, crops and detailed observation labels stay outside Git. **This is one successful previously unseen round, not evidence of near-perfect general accuracy.** R5 remains uninspected and pending. The app's result is still provisional/unreviewed despite passing the independent comparison. The frozen protocol below is unchanged; if this round later informs tuning, it must be reclassified as development data.
+
 ## Card-face evidence and V5 development candidate
 
 The next candidate was developed using three new recordings (r1-r3), after reserving r4/r5 before inspecting any of their frames. The baseline is revision `82ce435`. All 206 new source frames were inspected, including the J visible for only two frames in r1. Ground truth in the selected main views is r1 player A,5,9,J / dealer 7,9,5 (0); r2 player 8,Q / dealer 6,3,5,A,6 (+2); r3 player 9,K / dealer 8,10 (-2). Same-rank cards in different positions/hands remain distinct.

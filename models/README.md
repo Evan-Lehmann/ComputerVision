@@ -53,7 +53,7 @@ preprocessing, trained from seed 42 for 60 epochs on the 169 existing V4 trainin
 crops plus 61 visually audited crops from 18 physical cards in development
 recordings r1-r3. The historical 17-crop selection set chooses the checkpoint
 (accuracy, then log loss); none of the new rounds enter checkpoint selection.
-The selection set lacks six ranks. R4/r5 were not loaded, inspected or trained on.
+The selection set lacks six ranks. Neither r4 nor r5 was opened during development or training.
 Epoch 57 is selected. Training-set fit and the older correlated crop diagnostics
 are not independent accuracy validation. See `validation/v5_training_audit.json`.
 

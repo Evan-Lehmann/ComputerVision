@@ -1,0 +1,77 @@
+{
+  "recording": "r4",
+  "frames": 67,
+  "evaluation_type": "Previously uninspected recording, frozen candidate, no tuning",
+  "baseline_revision": "82ce435",
+  "candidate_revision": "04d8a6f",
+  "candidate_classifier_sha256": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
+  "visual_reference_sha256": "8d06a09957517ad9a0dc43a7cd09ed6786dbf8565fafcb47186078cf16d45706",
+  "reference_saved_before_predictions": true,
+  "player": [
+    "Q",
+    "3",
+    "5"
+  ],
+  "dealer": [
+    "8",
+    "10"
+  ],
+  "expected_count_change": 0,
+  "baseline": {
+    "annotation_scope": "Held-out main-view physical-card truth audited from all 67 original screenshots before predictions. Observation identities checked using all unique retained crops; one narrow spurious partial candidate excluded from positive observation truth. Does not measure generic detector recall.",
+    "expected_physical_cards": 5,
+    "candidate_events": 7,
+    "matched_observations": 154,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 1,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 1,
+    "missing_physical_cards": 0,
+    "unmatched_events": 1,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 3,
+    "exact_annotated_card_list": false,
+    "expected_count_change": 0,
+    "count_change": null,
+    "count_matches": false
+  },
+  "candidate": {
+    "annotation_scope": "Held-out main-view physical-card truth audited from all 67 original screenshots before predictions. Observation identities checked using all unique retained crops; one narrow spurious partial candidate excluded from positive observation truth. Does not measure generic detector recall.",
+    "expected_physical_cards": 5,
+    "candidate_events": 5,
+    "matched_observations": 154,
+    "missing_annotated_observations": 0,
+    "unannotated_output_observations": 0,
+    "mixed_identity_tracks": 0,
+    "extra_identity_fragments": 0,
+    "missing_physical_cards": 0,
+    "unmatched_events": 0,
+    "wrong_accepted_rank_events": 0,
+    "wrong_round_events": 0,
+    "unknown_events": 0,
+    "exact_annotated_card_list": true,
+    "expected_count_change": 0,
+    "count_change": 0,
+    "count_matches": true
+  },
+  "baseline_range": {
+    "min": -4,
+    "max": 2
+  },
+  "candidate_range": {
+    "min": 0,
+    "max": 0
+  },
+  "candidate_suppressed_detections": 1,
+  "candidate_review_confirmed": false,
+  "candidate_count_verified": false,
+  "scope": "One round, large digital main player/dealer views and unchanged default regions.",
+  "r5_status": "Reserved, uninspected, not received as accessible split parts.",
+  "limitations": [
+    "One successful held-out round does not establish near-perfect general accuracy.",
+    "Detailed frames/crops/observation annotations remain outside Git.",
+    "No code, model weights, thresholds or training data were changed using r4.",
+    "Candidate remains provisional in the app until the user saves a review."
+  ]
+}
