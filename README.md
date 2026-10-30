@@ -32,6 +32,8 @@ After confirming and saving a fully resolved review, **Download reviewed crops**
 
 Screenshots and analysis are saved under ignored `round_captures/`. They are not uploaded by the app. Existing recordings are preserved. Different recordings use distinct folders.
 
+For global shortcuts, run `python record_rounds.py --hotkeys`. **Option+S starts the three-second countdown from any window**, then starts recording; press it again to stop and save. Option+Q saves any active recording and quits. Option+S during the countdown cancels it. The earlier Control+Option+S/Q shortcuts are also accepted. On macOS, allow Accessibility/Input Monitoring for the application running Python if requested. If `pynput` is missing, install it with `python -m pip install pynput`.
+
 To record successive sessions without waiting for analysis, run `python record_rounds.py` from the project root. Press Enter to begin a three-second countdown, switch to the table, then return to the terminal and press Enter to stop and save. Press Enter again to prepare the next recording, or type `q` then Enter to quit. Each recording gets its own folder in `round_captures/`; no models or Flask analysis run. Keep recording through all round boundaries when collecting a continuous session. Optional flags include `--countdown 5`, `--monitor 2`, and `--output round_captures/fresh_tests`. Screen Recording permission is still required for the app launching Python.
 
 
