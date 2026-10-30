@@ -32,6 +32,9 @@ After confirming and saving a fully resolved review, **Download reviewed crops**
 
 Screenshots and analysis are saved under ignored `round_captures/`. They are not uploaded by the app. Existing recordings are preserved. Different recordings use distinct folders.
 
+To record successive sessions without waiting for analysis, run `python record_rounds.py` from the project root. Press Enter to begin a three-second countdown, switch to the table, then return to the terminal and press Enter to stop and save. Press Enter again to prepare the next recording, or type `q` then Enter to quit. Each recording gets its own folder in `round_captures/`; no models or Flask analysis run. Keep recording through all round boundaries when collecting a continuous session. Optional flags include `--countdown 5`, `--monitor 2`, and `--output round_captures/fresh_tests`. Screen Recording permission is still required for the app launching Python.
+
+
 ### Hand-aware association and rank references
 
 The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and arbitrary additional views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The YOLO V2 detector remains unchanged. The default CNN is now V5; earlier V4 weights are retained for comparison.
