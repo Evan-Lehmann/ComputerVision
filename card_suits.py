@@ -23,7 +23,9 @@ class SuitCNN(nn.Module):
 def suit_tensor(crop):
     if crop is None or not crop.size or min(crop.shape[:2])<4:return None
     pixels=crop.astype(np.float32);background=np.maximum(np.percentile(pixels,95,axis=(0,1)),1)
-    normalized=np.clip(pixels/background,0,1)
+    # NumPy versions differ in whether percentile preserves float32. Keep
+    # OpenCV's input depth explicit after division by that background.
+    normalized=np.clip(pixels/background,0,1).astype(np.float32)
     ink=1-cv2.cvtColor(normalized,cv2.COLOR_BGR2GRAY)
     mask=(ink>max(.08,.2*float(ink.max()))).astype(np.uint8)
     _,labels,stats,_=cv2.connectedComponentsWithStats(mask)

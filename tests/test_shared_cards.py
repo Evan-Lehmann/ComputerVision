@@ -3,7 +3,7 @@ import copy
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock,patch
 import cv2
 import numpy as np
 import torch
@@ -323,6 +323,19 @@ class MiniGeometryTests(unittest.TestCase):
 
 
 class SuitEvidenceTests(unittest.TestCase):
+    def test_float64_percentile_result_is_converted_before_opencv(self):
+        # NumPy 1.x promotes this percentile result to float64. Newer NumPy
+        # may preserve float32, so exercise the older behavior explicitly.
+        percentile=np.percentile
+        def promoted(*args,**kwargs):
+            return np.asarray(percentile(*args,**kwargs),dtype=np.float64)
+        with patch('card_suits.np.percentile',side_effect=promoted):
+            result=suit_tensor(self.red_icon())
+        self.assertIsNotNone(result)
+        tensor,red=result
+        self.assertEqual(tensor.dtype,torch.float32)
+        self.assertTrue(red)
+
     def reader(self,probabilities):
         reader=SuitReader.__new__(SuitReader);reader.available=True;reader.error=None
         reader.model=Mock(return_value=torch.log(torch.tensor([probabilities])))
