@@ -4,7 +4,7 @@ A local school-project dashboard for reviewing cards across recorded play-money 
 
 **Current status: working record → analyze → review → count prototype, with conservative multi-round segmentation. Automatic recognition, tracking and boundaries still make mistakes. An unreviewed count is provisional; unknown cards make it incomplete.** Counts update after recording stops. Continuous live shoe tracking and betting signals are not implemented.
 
-The latest frozen evaluation on ten fresh single-round recordings passed the exact card-list/count test in **4/10 rounds**. Six required review, mainly because suit symbols/edges became extra candidates and disrupted shared-view reconciliation. The primary rank reader accepted all 51 genuine large-hand cards correctly in this sample, but that does not make the complete counting pipeline reliable. R11–r13 remain unopened for a subsequent candidate. See [VALIDATION.md](VALIDATION.md).
+Physical-face glyph validation and shared-view matching now remove all six false suit/edge candidates and five duplicate central-view rows in the ten development recordings. Exact card-list/count results improve from **4/10 to 9/10**, with Unknown rows reduced from 13 to 1. However, the frozen candidate passes **0/3 untouched recordings**: crowded-hand fragments and insufficient shared-view identity evidence remain unresolved. These development gains do not establish reliable general accuracy. Model weights and recognition thresholds are unchanged. See [VALIDATION.md](VALIDATION.md).
 
 ## Run on your Mac
 

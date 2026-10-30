@@ -6,6 +6,7 @@ retained rank candidate on the very same visible card face.
 """
 import cv2
 import numpy as np
+from functools import lru_cache
 from glyph_features import glyph_signature
 
 
@@ -93,11 +94,47 @@ def secondary_similarity(a,b):
     return float(cv2.matchTemplate(np.pad(gb[0],2),ga[0],cv2.TM_CCORR_NORMED).max())
 
 
+@lru_cache(maxsize=1)
+def _suit_validator():
+    from card_suits import SuitReader
+    return SuitReader()
+
+
+def validate_face_glyphs(image, detections, height):
+    """Group glyphs by independently observed paper; keep the left rank once.
+
+    Only a complete upright face with a separate left-corner candidate can
+    explain a right-corner suit detection. Unsupported geometry is retained.
+    """
+    gray=_gray(image)
+    mask=((gray>90)&(np.ptp(image.astype(np.int16),axis=2)<50)).astype(np.uint8)
+    _,_,stats,_=cv2.connectedComponentsWithStats(mask)
+    removed=set();audit=[]
+    for x,y,w,h,area in stats[1:]:
+        if not (28<=h<=image.shape[0]*.12 and .55<=w/h<=.85 and area/(w*h)>.70):continue
+        members=[]
+        for i,d in enumerate(detections):
+            a,b,c,e=d['box'];cx,cy=(a+c)/2,(b+e)/2
+            inside=max(0,min(c,x+w)-max(a,x))*max(0,min(e,y+h)-max(b,y))
+            if inside/max((c-a)*(e-b),1)>.9 and y<=cy<=y+h*.4:members.append((i,d,cx))
+        ranks=[row for row in members if row[2]<x+w*.4 and row[1]['box'][2]-row[1]['box'][0]>=h*.18]
+        if len(ranks)!=1:continue
+        ri,rank,_=ranks[0]
+        suit=_suit_validator().read(image[y:int(y+h*.46),int(x+w*.52):x+w])
+        if not suit or not suit['accepted']:continue
+        for i,d,cx in members:
+            if i==ri or i in removed:continue
+            if cx>=x+w*.48 and d['box'][0]>=x+w*.40 and d['box'][0]>=rank['box'][2]-2:
+                removed.add(i);audit.append(dict(box=d['box'],retained_box=rank['box'],face_box=[int(x),int(y),int(x+w),int(y+h)],reason='suit_position_on_same_physical_face'))
+    return [d for i,d in enumerate(detections) if i not in removed],audit
+
+
 def reconcile_faces(image, detections, height=None):
     """Return kept candidates with face evidence plus a suppression audit."""
     if not detections:
         return [],[]
     height=height or estimate_face_height(image,detections)
+    detections,face_audit=validate_face_glyphs(image,detections,height)
     gray=_gray(image)
     faces=[]
     for d in detections:
@@ -112,7 +149,7 @@ def reconcile_faces(image, detections, height=None):
             unassigned.append(d)
         else:
             groups[possible[0]].append(d)
-    kept=list(unassigned);suppressed=[]
+    kept=list(unassigned);suppressed=list(face_audit)
     for i,ds in groups.items():
         if not ds:
             continue

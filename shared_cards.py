@@ -202,17 +202,27 @@ class SharedMonitor:
                     slot['evidence'].append(dict(image=name,frame=o['frame'],source=o['source'],rank_crop=bool(observations)))
                 slots.append(slot)
             primary=sorted([e for e in events if e['region']==self.view['linked_region'] and e.get('round_number',1)==number],key=lambda e:(e['first_frame'],str(e['id'])))
-            common=0;lags=[]
+            matched=[];lags=[];known_anchors=0
             if not reset:
-                for slot,event in zip(slots,primary):
-                    if (slot['rank']=='UNKNOWN' or slot['suit']=='UNKNOWN'
-                            or (slot['rank'],slot['suit'])!=(event['rank'],event.get('suit'))
-                            or len(set(slot['present_frames'])&set(event['observation_frames']))<2):break
-                    lags.append(event['first_frame']-slot['first_frame']);common+=1
-            # Two ordered co-visible identities establish a shared prefix.
-            # A bounded coherent lag accommodates UI animation/detector delays;
-            # it does not permit an arbitrary later matching card to relink.
-            if common<2 or max(abs(v) for v in lags)>8 or max(abs(v-np.median(lags)) for v in lags)>2:common=0
+                for slot in slots:
+                    candidates=[e for e in primary if e not in matched
+                        and e['rank']!='UNKNOWN' and slot['suit']!='UNKNOWN'
+                        and slot['suit']==e.get('suit')
+                        and (slot['rank']=='UNKNOWN' or slot['rank']==e['rank'])
+                        and abs(e['first_frame']-slot['first_frame'])<=8
+                        and len(set(slot['present_frames'])&set(e['observation_frames']))>=2]
+                    if len(candidates)!=1:break
+                    event=candidates[0]
+                    if matched and event['first_frame']<matched[-1]['first_frame']:break
+                    matched.append(event);lags.append(event['first_frame']-slot['first_frame'])
+                    known_anchors+=slot['rank']!='UNKNOWN'
+            # A weak miniature rank may borrow identity from its uniquely timed
+            # main counterpart, but only with suit agreement and another known
+            # rank anchor. Conflicting accepted ranks can never be overridden.
+            common=len(matched)
+            if common<2 or not known_anchors or max(abs(v-np.median(lags)) for v in lags)>2:
+                common=0;matched=[]
+            primary=matched+[e for e in primary if e not in matched]
             continued_frames=continuation_frames(snapshots,primary,common)
             for i,slot in enumerate(slots):
                 if i<common:
@@ -227,7 +237,11 @@ class SharedMonitor:
                     # Equal rank/suit can denote different cards in a shoe. Only
                     # unused primary tracks can compete for this shared slot.
                     competing=[e for e in unmatched if (e['rank']=='UNKNOWN' or slot['rank']=='UNKNOWN' or e['rank']==slot['rank'])
-                        and (e.get('suit','UNKNOWN')=='UNKNOWN' or slot['suit']=='UNKNOWN' or e.get('suit')==slot['suit'])]
+                        and (e.get('suit','UNKNOWN')=='UNKNOWN' or slot['suit']=='UNKNOWN' or e.get('suit')==slot['suit'])
+                        and not (e['region']=='dealer' and e['rank']==slot['rank'] and e.get('suit')==slot['suit']
+                            and e['first_frame']-slot['first_frame']>8
+                            and len([f for f in slot['present_frames'] if f<e['first_frame']])>=2
+                            and len(set(slot['present_frames'])&set(e['observation_frames']))>=2)]
                     distinct=bool(common>=2 and (co_visible or continued) and not competing and not reset)
                     slot.update(status='additional' if distinct else 'needs_review',event_id=slot['id'])
                     if not distinct:coverage['issues'].append(dict(round_number=number,slot_id=slot['id'],reason='Shared card identity is unresolved; keep it as distinct or exclude it after checking other views.'))

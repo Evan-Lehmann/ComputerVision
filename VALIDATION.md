@@ -1,8 +1,43 @@
 # First-deliverable validation
 
+## Physical-face validation and shared-view identity update
+
+The code now groups detection glyphs using independently observed upright card paper. A right-corner detection is suppressed only when it lies on the same complete face as a retained left-rank candidate and the suit reader accepts the face's suit crop. Geometry alone, a lone candidate, or an unrecognized suit cannot authorize deletion. Every suppression retains its source box, face box, counterpart and reason in the result audit. This is a bounded face-validation layer; it is not a complete persistent card-instance representation for crowded or occluded hands.
+
+Shared-prefix linkage now searches for unique counterparts using rank compatibility, accepted suit, bounded birth timing, repeated co-visibility and coherent ordering. Extra primary candidates no longer interrupt all subsequent links; unexplained candidates remain in the review list. A weak miniature rank may link to one uniquely supported main-card identity only when another known-rank anchor supports the prefix. Conflicting accepted ranks, multiple plausible counterparts and unknown suits still block linkage. A later dealer card with the same accepted rank/suit is considered distinct only with a sufficiently separated arrival and repeated evidence of both cards being visible. Known cards first detected together may link; equal first-frame timestamps alone do not invalidate their identities.
+
+No detector, rank classifier, miniature classifier or suit-reader weights changed. No recognition threshold was lowered. On the ten recordings used to develop these changes:
+
+| Measure | Frozen baseline | Updated candidate |
+|---|---:|---:|
+| Exact card-list and automatic-count rounds | 4/10 | 9/10 |
+| Output candidates / physical cards | 65 / 54 | 54 / 54 |
+| False suit/edge candidates | 6 | 0 |
+| Duplicate central-view candidates | 5 | 0 |
+| Unknown rows | 13 | 1 |
+| Genuine unresolved cards | 2 | 1 |
+
+R4 still needs review: the miniature 10's visible strip changes during an append after the main hand disappears, breaking the existing continuity check. Its additional central 3 remains Unknown. The detection range narrows from three unknowns to one; the full automatic count is withheld. No accepted wrong ranks/suits or missing physical cards were found in this final-list audit.
+
+**Independent result: all three reserved recordings, r11–r13, fail.** The candidate was frozen before opening them; all 306 source frames were inspected and references saved before inference. Their first outputs were preserved without tuning to the failures:
+
+| Recording | Physical cards | Candidates | Unknowns | Expected change | Automatic change |
+|---|---:|---:|---:|---:|---|
+| r11 | 9 | 10 | 3 | +3 | Incomplete |
+| r12 | 7 | 9 | 4 | -1 | Incomplete |
+| r13 | 8 | 10 | 4 | 0 | Incomplete |
+
+R11 fragments a dealer 2 when the hand compresses; that extra unknown also blocks two genuine central additions. R12 retains two clipped King/suit-edge candidates and leaves two central additions unresolved. R13 starts with only one exposed sample of the first shared card; without a reliable rank/suit anchor, the prefix duplicates and subsequent additions remain unresolved. Together these outputs contain two false non-rank candidates, three duplicates and six unresolved genuine identities. No accepted wrong ranks/suits or missing physical cards were found. The known subtotals happen to equal all three reference counts; this does **not** make any of them a pass.
+
+A subsequent code-review correction permits distinct known cards with tied first-observation times, restoring a case accepted by the previous matcher. It was not a response to the held-out failures. All thirteen recordings were replayed to check that final-card identities, counts and coverage outcomes remain unchanged. The first-pass frozen hashes and the final code hashes are recorded separately. R11–r13 are now inspected; future changes cannot call them untouched acceptance data.
+
+All 176 tests pass, including verified/unverified suit grouping, ambiguous miniature links, conflicting accepted ranks, extra primary rows, same-frame arrivals, and later same-tuple dealer cards with/without joint visibility. Twelve older replay jobs retain identical primary ranks, suits, round assignments and observation-box histories. Eleven retain the same final summaries; the remaining job safely links two previously duplicated shared-prefix rows, reducing its unknowns from four to two while still requiring review. The separate 130-frame continuation recording still returns seven cards, zero unknowns and change −2. No broad generalizability, continuous-session, shoe-reset or arbitrary split-hand claim follows from these results.
+
+Aggregate measurements and hashes are in [validation/face_identity_evaluation.json](validation/face_identity_evaluation.json). Source screenshots, crops and detailed identity annotations remain outside Git. **The original failures are substantially reduced, but structural identity work remains unfinished and the application still requires review.**
+
 ## Fresh single-round evaluation: v3_new_rounds, frozen first pass
 
-Candidate `b61c441` was frozen before opening the new recordings, with checkpoint hashes saved. R1–r10 were evaluated unchanged; r11–r13 remain unopened (archive bytes downloaded and hashed, contents not extracted or inspected). No training, threshold tuning, runtime fixes, or review corrections were applied. All 655 evaluation frames were checked in digital-card-row contact sheets, supplemented by overviews and enlarged hand views. References containing physical card rank/suit/source histories were saved and hashed before model inference. Outputs were then manually matched to the frozen physical-card references using crops, source evidence, and frame histories.
+Candidate `b61c441` was frozen before opening the new recordings, with checkpoint hashes saved. R1–r10 were evaluated unchanged; r11–r13 were still unopened at that historical baseline evaluation (archive bytes downloaded and hashed, contents not extracted or inspected). No training, threshold tuning, runtime fixes, or review corrections were applied. All 655 evaluation frames were checked in digital-card-row contact sheets, supplemented by overviews and enlarged hand views. References containing physical card rank/suit/source histories were saved and hashed before model inference. Outputs were then manually matched to the frozen physical-card references using crops, source evidence, and frame histories.
 
 **Only 4 of 10 recordings pass the exact final card-list and automatic-count test. Six require review.** All 51 genuine primary-hand cards have a correct accepted rank, but the pipeline also retains six false non-rank candidates and five duplicate shared-view candidates. Two genuine central-only cards remain unresolved. There are 65 output candidates for 54 physical cards and 13 Unknown rows. No accepted rank/suit errors or physical cards lacking any candidate were found in this card-list audit. That does not establish per-observation identity purity or detector recall outside the selected digital views.
 
@@ -23,7 +58,7 @@ Known-card subtotals are numerically correct in eight recordings, including four
 
 The failures have recurring structural causes. In r1/r2/r5/r6/r9, clubs or clipped heart edges become extra candidate cards. In r5, false player candidates interrupt the exact ordered-prefix reconciliation, leaving three already-counted primary cards as duplicate shared candidates. In r4, the miniature 5 cannot be accepted; this prevents prefix linkage, produces two duplicate shared candidates, and leaves an additional central 3 unresolved. A later dealer 3 has the same rank and suit but is physically distinct in the source. In r9, a later false heart-edge candidate also blocks acceptance of a genuine earlier central King. R7 succeeds on a genuine additional central 6 with the same rank/suit as the original player 6.
 
-The next priority is the physical-card representation and glyph validation, not immediately collecting more similar rounds or lowering acceptance thresholds: attach rank/suit/partial evidence to persistent card/face instances, reconcile views with explicit missing/extra observation handling, and use temporal/scene evidence to avoid treating unrelated later detections as possible identities for earlier cards. These are proposed changes, not implemented by this evaluation. R11–r13 stay reserved until a candidate is frozen. If these first ten recordings guide development, they become development data for subsequent candidates; their frozen first-pass result remains recorded here.
+The baseline identified physical-card representation and glyph validation as the next priority: attach rank/suit/partial evidence to persistent card/face instances, reconcile views with explicit missing/extra observation handling, and use temporal/scene evidence to avoid treating unrelated later detections as possible identities for earlier cards. The update above implements part of this work and reports the reserved recordings separately. These first ten recordings now constitute development data; their frozen first-pass result remains recorded here.
 
 These ten recordings are a small, correlated sample from the supplied layout/session. Four exact rounds out of ten is an observed result, not an estimate of general production accuracy. No continuous-session boundary accuracy, shoe reset, interruption recovery, or explicit split-hand rearrangement capability is established. This project remains a review-assisted prototype.
 

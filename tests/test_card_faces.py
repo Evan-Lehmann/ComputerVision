@@ -204,4 +204,34 @@ class CardFaceTests(unittest.TestCase):
             self.assertIsNone(projected_rank_crop(image,d,observation(image,box,f,0)))
 
 
+class PhysicalFaceGlyphTests(unittest.TestCase):
+    def test_verified_suit_is_attached_to_existing_face_not_counted_again(self):
+        from unittest.mock import patch,Mock
+        from card_faces import validate_face_glyphs
+        image=canvas();paper(image)
+        ds=[candidate(image),candidate(image,120,width=18)]
+        with patch('card_faces._suit_validator',return_value=Mock(read=Mock(return_value={'accepted':True}))):
+            kept,audit=validate_face_glyphs(image,ds,60)
+        self.assertEqual(len(kept),1)
+        self.assertEqual(audit[0]['reason'],'suit_position_on_same_physical_face')
+        self.assertEqual(audit[0]['retained_box'],ds[0]['box'])
+    def test_suit_without_rank_counterpart_is_never_silently_deleted(self):
+        from unittest.mock import patch,Mock
+        from card_faces import validate_face_glyphs
+        image=canvas();paper(image)
+        with patch('card_faces._suit_validator',return_value=Mock(read=Mock(return_value={'accepted':True}))):
+            kept,audit=validate_face_glyphs(image,[candidate(image,120,width=18)],60)
+        self.assertEqual(len(kept),1);self.assertFalse(audit)
+
+    def test_geometry_alone_cannot_remove_an_unverified_right_corner(self):
+        from unittest.mock import patch,Mock
+        from card_faces import validate_face_glyphs
+        image=canvas();paper(image)
+        ds=[candidate(image),candidate(image,120,width=18)]
+        for result in [None,{'accepted':False}]:
+            with patch('card_faces._suit_validator',return_value=Mock(read=Mock(return_value=result))):
+                kept,audit=validate_face_glyphs(image,ds,60)
+            self.assertEqual(len(kept),2);self.assertFalse(audit)
+
+
 if __name__=='__main__':unittest.main()

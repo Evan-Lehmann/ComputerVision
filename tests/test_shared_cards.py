@@ -72,10 +72,38 @@ class SharedIdentityTests(unittest.TestCase):
         dealer=primary('K','UNKNOWN',3,0);dealer['region']='dealer'
         events=self.base()+[dealer];c=self.resolve(events)
         self.assertEqual(c['slots'][-1]['status'],'additional')
+
+    def test_later_dealer_same_tuple_is_distinct_with_repeated_joint_visibility(self):
+        shots=snapshots()+[dict(snapshots()[-1],frame=f) for f in range(6,20)]
+        dealer=primary('9','hearts',3,14);dealer['region']='dealer'
+        events=self.base()+[dealer];c=self.resolve(events,shots)
+        self.assertEqual(c['slots'][-1]['status'],'additional')
+        self.assertEqual(events[-1]['rank'],'9')
+        self.assertEqual(len(events),4)
+
+    def test_later_dealer_same_tuple_still_competes_without_joint_visibility(self):
+        dealer=primary('9','hearts',3,14);dealer['region']='dealer'
+        events=self.base()+[dealer];c=self.resolve(events)
+        self.assertEqual(c['slots'][-1]['status'],'needs_review')
+
+    def test_weak_shared_rank_requires_unique_candidate_and_known_anchor(self):
+        for ambiguous in [True,False]:
+            shots=snapshots()[:4]
+            for shot in shots:
+                if shot['count']==2 or not ambiguous:shot['test_rank']='UNKNOWN'
+            events=self.base()
+            if ambiguous:events.append(primary('K','spades',99,2))
+            c=self.resolve(events,shots)
+            self.assertEqual(c['links'],[])
     def test_coherent_bounded_view_delay_can_link_a_prefix(self):
         shots=snapshots()[:4]+[dict(snapshots()[3],frame=f) for f in [4,5,6,7,8]]
         events=[primary('9','clubs',1,4),primary('4','spades',2,6)]
         c=self.resolve(events,shots)
+        self.assertEqual(len(c['links']),2)
+
+    def test_distinct_known_cards_first_detected_together_can_link(self):
+        events=[primary('9','clubs',1,2),primary('4','spades',2,2)]
+        c=self.resolve(events,snapshots()[:4])
         self.assertEqual(len(c['links']),2)
 
     def late_shared_append(self):
@@ -154,6 +182,26 @@ class SharedIdentityTests(unittest.TestCase):
         c=self.resolve(events,self.late_shared_append())
         self.assertEqual(len(c['links']),2)
         self.assertEqual(events[-1]['identity_status'],'needs_review')
+
+    def test_extra_primary_unknown_does_not_break_two_unique_shared_links(self):
+        events=self.base()+[primary('UNKNOWN','UNKNOWN',99,1)]
+        c=self.resolve(events,snapshots()[:4])
+        self.assertEqual(len(c['links']),2)
+        self.assertEqual(len(events),3)  # Unexplained primary row remains visible.
+
+    def test_weak_mini_rank_can_link_with_unique_birth_suit_and_known_anchor(self):
+        shots=snapshots()[:4]
+        for shot in shots:
+            if shot['count']==2:shot['test_rank']='UNKNOWN'
+        events=self.base();c=self.resolve(events,shots)
+        self.assertEqual(len(c['links']),2);self.assertEqual(len(events),2)
+
+    def test_conflicting_accepted_mini_rank_cannot_borrow_main_identity(self):
+        shots=snapshots()[:4]
+        for shot in shots:
+            if shot['count']==2:shot['test_rank']='K'
+        events=self.base();c=self.resolve(events,shots)
+        self.assertEqual(c['links'],[])
 
     def test_no_extra_shared_card_does_not_create_rows(self):
         events=self.base();c=self.resolve(events,snapshots()[:4])
