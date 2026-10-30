@@ -1,5 +1,35 @@
 # First-deliverable validation
 
+## Fresh single-round evaluation: v3_new_rounds, frozen first pass
+
+Candidate `b61c441` was frozen before opening the new recordings, with checkpoint hashes saved. R1–r10 were evaluated unchanged; r11–r13 remain unopened (archive bytes downloaded and hashed, contents not extracted or inspected). No training, threshold tuning, runtime fixes, or review corrections were applied. All 655 evaluation frames were checked in digital-card-row contact sheets, supplemented by overviews and enlarged hand views. References containing physical card rank/suit/source histories were saved and hashed before model inference. Outputs were then manually matched to the frozen physical-card references using crops, source evidence, and frame histories.
+
+**Only 4 of 10 recordings pass the exact final card-list and automatic-count test. Six require review.** All 51 genuine primary-hand cards have a correct accepted rank, but the pipeline also retains six false non-rank candidates and five duplicate shared-view candidates. Two genuine central-only cards remain unresolved. There are 65 output candidates for 54 physical cards and 13 Unknown rows. No accepted rank/suit errors or physical cards lacking any candidate were found in this card-list audit. That does not establish per-observation identity purity or detector recall outside the selected digital views.
+
+| Recording | Physical cards | Output candidates | Unknowns | Expected change | Automatic change | Exact list |
+|---|---:|---:|---:|---:|---:|---|
+| r1 | 5 | 6 | 1 | +0 | Incomplete | Fail |
+| r2 | 5 | 6 | 1 | -1 | Incomplete | Fail |
+| r3 | 5 | 5 | 0 | -1 | -1 | Pass |
+| r4 | 7 | 9 | 3 | +4 | Incomplete | Fail |
+| r5 | 6 | 11 | 5 | +2 | Incomplete | Fail |
+| r6 | 4 | 5 | 1 | +0 | Incomplete | Fail |
+| r7 | 6 | 6 | 0 | +3 | +3 | Pass |
+| r8 | 5 | 5 | 0 | -1 | -1 | Pass |
+| r9 | 6 | 7 | 2 | +0 | Incomplete | Fail |
+| r10 | 5 | 5 | 0 | -2 | -2 | Pass |
+
+Known-card subtotals are numerically correct in eight recordings, including four that fail the complete-list test. Those coincidences cannot count as successes. All four complete automatic counts are correct and remain provisional/unreviewed. The incomplete cases withhold a full count rather than reporting a falsely complete value.
+
+The failures have recurring structural causes. In r1/r2/r5/r6/r9, clubs or clipped heart edges become extra candidate cards. In r5, false player candidates interrupt the exact ordered-prefix reconciliation, leaving three already-counted primary cards as duplicate shared candidates. In r4, the miniature 5 cannot be accepted; this prevents prefix linkage, produces two duplicate shared candidates, and leaves an additional central 3 unresolved. A later dealer 3 has the same rank and suit but is physically distinct in the source. In r9, a later false heart-edge candidate also blocks acceptance of a genuine earlier central King. R7 succeeds on a genuine additional central 6 with the same rank/suit as the original player 6.
+
+The next priority is the physical-card representation and glyph validation, not immediately collecting more similar rounds or lowering acceptance thresholds: attach rank/suit/partial evidence to persistent card/face instances, reconcile views with explicit missing/extra observation handling, and use temporal/scene evidence to avoid treating unrelated later detections as possible identities for earlier cards. These are proposed changes, not implemented by this evaluation. R11–r13 stay reserved until a candidate is frozen. If these first ten recordings guide development, they become development data for subsequent candidates; their frozen first-pass result remains recorded here.
+
+These ten recordings are a small, correlated sample from the supplied layout/session. Four exact rounds out of ten is an observed result, not an estimate of general production accuracy. No continuous-session boundary accuracy, shoe reset, interruption recovery, or explicit split-hand rearrangement capability is established. This project remains a review-assisted prototype.
+
+Aggregate results, reference/result hashes, environment versions and frozen model hashes are in [validation/v3_fresh_first_pass.json](validation/v3_fresh_first_pass.json). Source captures, crop images, detailed references and output-to-identity labels stay outside Git.
+
+
 ## Shared-hand continuation after the main display disappears
 
 The supplied `split_round` recording exposes a source-continuity failure in baseline `2dae973`. The large player J spades/Q spades hand disappears after frame 42, while the central representation persists and adds a separate J spades and 6 spades. Dealer cards are 4 clubs, Q diamonds, 7 diamonds. The seven unique visible cards have Hi-Lo change −2. The action producing the additional shared cards is not verified as a split: these frames do not show separately displayed split hands.

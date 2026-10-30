@@ -4,6 +4,8 @@ A local school-project dashboard for reviewing cards across recorded play-money 
 
 **Current status: working record → analyze → review → count prototype, with conservative multi-round segmentation. Automatic recognition, tracking and boundaries still make mistakes. An unreviewed count is provisional; unknown cards make it incomplete.** Counts update after recording stops. Continuous live shoe tracking and betting signals are not implemented.
 
+The latest frozen evaluation on ten fresh single-round recordings passed the exact card-list/count test in **4/10 rounds**. Six required review, mainly because suit symbols/edges became extra candidates and disrupted shared-view reconciliation. The primary rank reader accepted all 51 genuine large-hand cards correctly in this sample, but that does not make the complete counting pipeline reliable. R11–r13 remain unopened for a subsequent candidate. See [VALIDATION.md](VALIDATION.md).
+
 ## Run on your Mac
 
 From the project root, use your existing virtual environment:

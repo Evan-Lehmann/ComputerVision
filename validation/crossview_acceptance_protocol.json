@@ -1,5 +1,5 @@
 {
-  "status": "Pending fresh recordings; all currently inspected footage is development data",
+  "status": "First fresh frozen evaluation completed: v3_fresh_first_pass.json;4/10 exact rounds;v3_new_rounds r11-r13 remain unopened",
   "requirements": [
     "Freeze this candidate's code and auxiliary/primary model hashes before opening new footage.",
     "Audit all original frames and save distinct exposed rank/suit identities across primary and shared views before predictions.",
