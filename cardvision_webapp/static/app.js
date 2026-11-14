@@ -4,7 +4,40 @@ let state = {}, events = [], resultId = null, dirty = false;
 let sharedView = null, viewLoaded = false;
 let regions = [], previewImage = null, dragging = null;
 const busyStates = ['STARTING', 'RECORDING', 'STOPPING', 'PROCESSING'];
-function error(message) { $('error').textContent = message || ''; $('error').hidden = !message; }
+const reviewTabs = [...document.querySelectorAll('[data-review-tab]')];
+function selectReviewTab(name, focus = false) {
+  reviewTabs.forEach(tab => {
+    const selected = tab.dataset.reviewTab === name;
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    $(tab.getAttribute('aria-controls')).hidden = !selected;
+    if (selected && focus) tab.focus();
+  });
+  document.querySelector('.review-content').scrollTop = 0;
+}
+reviewTabs.forEach(tab => {
+  tab.onclick = () => selectReviewTab(tab.dataset.reviewTab);
+  tab.onkeydown = event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    const available = reviewTabs.filter(t => !t.disabled), index = available.indexOf(tab);
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? available.length - 1 :
+      (index + (event.key === 'ArrowRight' ? 1 : -1) + available.length) % available.length;
+    event.preventDefault(); selectReviewTab(available[next].dataset.reviewTab, true);
+  };
+});
+[['openSettings','closeSettings','settingsDialog'], ['openHelp','closeHelp','helpDialog']].forEach(([open,close,dialog]) => {
+  $(open).onclick = () => $(dialog).showModal();
+  $(close).onclick = () => $(dialog).close();
+});
+function error(message) {
+  $('error').textContent = message || ''; $('error').hidden = !message;
+  document.querySelectorAll('.dialog-error').forEach(el => el.remove());
+  const dialog = document.querySelector('dialog[open]');
+  if (message && dialog) {
+    const notice = document.createElement('p'); notice.className = 'notice error dialog-error';
+    notice.setAttribute('role','alert'); notice.textContent = message; dialog.prepend(notice);
+  }
+}
 async function api(path, body) {
   const options = body === undefined ? {} : {method: 'POST', headers: {'Content-Type':'application/json'}, body:JSON.stringify(body)};
   const response = await fetch(path, options);
@@ -91,10 +124,23 @@ function renderCount() {
   $('downloadCrops').hidden = dirty || !reviewed || !events.some(e => !e.excluded && e.evidence?.length);
   $('countBadge').dataset.status = reviewed ? 'reviewed' : resultId ? 'provisional' : 'waiting';
   $('countStatus').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Calculating the count from your saved screenshots…' : 'The count is calculated after you stop recording and analyze.') : unknown ? `${unknown} unknown card${unknown === 1 ? '' : 's'} — possible change for these detections: ${signed(subtotal-unknown)} to ${signed(subtotal+unknown)}.${dirty ? ' Edits are not saved.' : ''}` : coveragePending ? 'Ranks may be resolved, but shared-view coverage is not. Check the coverage panel before trusting a complete count.' : dirty ? 'Count reflects your edits. Save the review to keep them.' : reviewed ? `${included.length} included cards. You confirmed this card list and its round divisions.` : state.review_confirmed && state.needs_round_review ? 'Check and confirm the round divisions, then save the review again.' : `${included.length} included cards across ${roundCount} round${roundCount === 1 ? '' : 's'}. Check the card list and round divisions before trusting this count.`;
+  $('cardSummary').textContent = !resultId ? 'No recording yet' : `${events.length} candidates · ${unknown} unknown`;
+  $('roundsTab').disabled = $('coverageTab').disabled = !resultId;
+  const checkRounds = !!resultId && !$('roundConfirmation').hidden && !(state.rounds_confirmed && !dirty);
+  $('roundsTab').textContent = checkRounds ? 'Rounds · check' : 'Rounds';
+  $('coverageTab').textContent = resultId && coveragePending ? 'Coverage · check' : 'Coverage';
+  $('roundsTab').dataset.attention = String(checkRounds);
+  $('coverageTab').dataset.attention = String(!!resultId && coveragePending);
 }
 function renderCards() {
   $('cards').replaceChildren();
-  if (!events.length) { const p = document.createElement('p'); p.className = 'empty-state'; p.textContent = 'No cards found. Check the selected regions and the full round.'; $('cards').append(p); }
+  if (!events.length) {
+    const empty = document.createElement('div'); empty.className = 'empty-state';
+    const heading = document.createElement('h3'), description = document.createElement('p');
+    heading.textContent = resultId ? 'No cards found' : 'Your cards will appear here';
+    description.textContent = resultId ? 'Check your card regions and the full recording.' : 'Record a round or analyze saved screenshots, then inspect the cards here.';
+    empty.append(heading, description); $('cards').append(empty);
+  }
   events.forEach((event,index) => {
     const card = document.createElement('article'); card.className = 'card-row' + (event.excluded ? ' excluded' : '');
     const head = document.createElement('div'); head.className = 'card-heading';
@@ -135,12 +181,14 @@ function render(next) {
   ['saveRegions','saveReview','addCard','confirmReview','confirmRounds','confirmCoverage'].forEach(id => $(id).disabled = busy || (['saveReview','addCard','confirmReview','confirmRounds','confirmCoverage'].includes(id) && !state.result_id));
   const names = {IDLE:'Ready', STARTING:`Recording starts in ${state.countdown ?? 3}…`, RECORDING:'Recording', STOPPING:'Saving recording…', PROCESSING:'Analyzing saved frames…', COMPLETE:'Analysis complete', ERROR:'Action needed'};
   $('status').textContent = names[state.session_status] || state.session_status;
+  $('status').dataset.state = state.session_status;
   $('progress').textContent = state.session_status === 'RECORDING' ? `${state.frames_recorded} frames saved` : state.session_status === 'PROCESSING' ? `${state.processed} / ${state.total || '…'} frames processed` : '';
   if (state.error) error(state.error);
   if (!regions.length && state.regions) regions = structuredClone(state.regions);
   if (!viewLoaded && 'shared_view' in state) {sharedView=structuredClone(state.shared_view);viewLoaded=true;$('monitorShared').checked=!!sharedView;}
   if (state.result_id !== resultId) {
     resultId = state.result_id; events = structuredClone(state.events || []); dirty = false; $('confirmReview').checked = !!state.review_confirmed;
+    selectReviewTab('cards');
     $('confirmRounds').checked = !!state.rounds_confirmed; $('confirmCoverage').checked=!!state.coverage_confirmed;
     $('warnings').textContent = (state.warnings || []).join(' '); $('warnings').hidden = !state.warnings?.length; $('download').hidden = !resultId;
     renderCards();
@@ -154,7 +202,7 @@ $('stopButton').onclick = () => action('/api/stop');
 $('resetButton').onclick = () => action('/api/reset');
 $('replayButton').onclick = () => action('/api/process',{source:$('sourceSelect').value});
 $('sourceSelect').onchange = () => render(state);
-$('addCard').onclick = () => { events.push({id:`new-${crypto.randomUUID()}`,rank:'UNKNOWN',region:'manual',round_number:Math.max(1,...events.map(e => e.round_number || 1)),observations:0,evidence:[],excluded:false}); changed(); renderCards(); };
+$('addCard').onclick = () => { events.push({id:`new-${crypto.randomUUID()}`,rank:'UNKNOWN',region:'manual',round_number:Math.max(1,...events.map(e => e.round_number || 1)),observations:0,evidence:[],excluded:false}); changed(); renderCards(); selectReviewTab('cards'); $('cards').lastElementChild?.querySelector('select')?.focus(); };
 $('saveReview').onclick = async () => {
   try { const data = await api('/api/review',{result_id:resultId,events:events.map(e => ({id:e.id,rank:e.rank,suit:e.suit || 'UNKNOWN',round_number:e.round_number || 1,excluded:!!e.excluded})),confirmed:$('confirmReview').checked,rounds_confirmed:$('confirmRounds').checked,coverage_confirmed:$('confirmCoverage').checked}); events = structuredClone(data.events); dirty = false; render(data); renderCards(); }
   catch(e) { error(e.message); }

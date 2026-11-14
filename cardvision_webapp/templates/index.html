@@ -2,25 +2,64 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CardVision</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
 <body><main class="app">
-<header><div><span class="eyebrow">PLAY-MONEY CARD ANALYSIS</span><h1>CardVision</h1></div><p id="status" role="status">Ready</p></header>
+<header class="app-header">
+  <div class="brand"><h1>CardVision</h1><span class="eyebrow">PLAY-MONEY CARD ANALYSIS</span></div>
+  <div class="header-actions"><p id="status" role="status">Ready</p><button id="openSettings" class="subtle">Card regions</button><button id="openHelp" class="subtle">Help</button></div>
+</header>
 <div id="error" class="notice error" role="alert" hidden></div>
-<section class="panel count-panel" aria-live="polite"><div class="count-copy"><h2 id="countHeading">Captured-card count change</h2><span id="countBadge" class="count-badge">Waiting</span><p id="countStatus" class="muted">Record a round, then stop to calculate the count.</p></div><div class="count-value"><div id="countChange" class="count-number">—</div><span id="countValueNote" class="small-label"></span></div></section>
-<p class="muted count-scope">The total starts at zero for this recording and carries across its rounds. It includes cards already visible at the start. Partial captures are not complete rounds. Separate recordings are independent; shoe changes are not detected.</p>
-<section class="panel"><h2>Record one or more rounds</h2><p class="muted">Start before cards are dealt. After the three-second countdown, switch to your table. Keep recording through the cleared table between rounds. Counts appear after you stop and analyze.</p>
-<div class="button-row"><button id="startButton" class="primary">Start recording</button><button id="stopButton" disabled>Stop &amp; analyze</button><button id="resetButton">Reset</button></div><p id="progress" class="muted"></p>
-<details><summary>Analyze saved screenshots</summary><div class="button-row"><select id="sourceSelect" aria-label="Saved recording"><option value="">No frame folders registered</option></select><button id="replayButton">Analyze folder</button></div><p class="muted">Registered frame folders appear here when the app starts with <code>--replay /path/to/frames</code>.</p></details>
+<div class="dashboard">
+<aside class="sidebar" aria-label="Recording and count">
+  <section class="panel count-panel" aria-live="polite">
+    <div class="section-header"><h2 id="countHeading">Captured-card count change</h2><span id="countBadge" class="count-badge">Waiting</span></div>
+    <div class="count-value"><div id="countChange" class="count-number">—</div><span id="countValueNote" class="small-label"></span></div>
+    <p id="countStatus" class="muted">Record a round, then stop to calculate the count.</p>
+    <p class="count-scope">Starts at zero for each recording.<br>Counts update after analysis, not live.</p>
+  </section>
+  <section class="panel recording-panel">
+    <h2>Record rounds</h2><p class="muted">Start before the deal. Switch to your table during the 3-second countdown.</p>
+    <div class="recording-actions"><button id="startButton" class="primary">Start recording</button><button id="stopButton" disabled>Stop &amp; analyze</button></div>
+    <div class="recording-meta"><p id="progress" class="muted" role="status"></p><button id="resetButton" class="subtle">Reset</button></div>
+    <details class="replay"><summary>Analyze saved screenshots</summary><div class="button-row"><select id="sourceSelect" aria-label="Saved recording"><option value="">No frame folders registered</option></select><button id="replayButton">Analyze folder</button></div><p class="muted">Register a folder when starting the app with <code>--replay /path/to/frames</code>.</p></details>
+  </section>
+  <p class="sidebar-note">Review cards, round divisions and coverage before trusting the count.</p>
+</aside>
+<section class="review-workspace panel" aria-label="Recording review">
+  <div class="workspace-header"><h2>Recording review</h2><span id="cardSummary" class="small-label">No recording yet</span></div>
+  <div class="review-tabs" role="tablist" aria-label="Review sections">
+    <button id="cardsTab" role="tab" aria-selected="true" aria-controls="cardsPane" data-review-tab="cards">Cards</button>
+    <button id="roundsTab" role="tab" aria-selected="false" aria-controls="roundsPane" data-review-tab="rounds" tabindex="-1" disabled>Rounds</button>
+    <button id="coverageTab" role="tab" aria-selected="false" aria-controls="coveragePane" data-review-tab="coverage" tabindex="-1" disabled>Coverage</button>
+  </div>
+  <div class="review-content">
+    <div id="cardsPane" role="tabpanel" aria-labelledby="cardsTab" tabindex="0">
+      <div class="section-header card-list-heading"><span class="muted">Candidate cards · check for duplicates</span><span class="small-label">First → last observed</span></div>
+      <div id="warnings" class="notice" hidden></div>
+      <div id="cards" class="cards-list"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">♧</span><h3>Your cards will appear here</h3><p>Record a round or analyze saved screenshots.<br>Then inspect the cards and confirm your review.</p></div></div>
+    </div>
+    <div id="roundsPane" role="tabpanel" aria-labelledby="roundsTab" tabindex="0" hidden>
+      <section id="roundPanel" hidden><h2>Rounds &amp; running total</h2><p class="muted">Each change counts observed cards in that round. The running change adds them together. Use a card's Round field to correct a boundary.</p><div class="round-table-wrap"><table class="round-table"><thead><tr><th>Round</th><th>Cards</th><th>Change</th><th>Running change</th></tr></thead><tbody id="roundRows"></tbody></table></div><div id="roundTransitions" class="muted"></div><label id="roundConfirmation" class="confirmation" hidden><input id="confirmRounds" type="checkbox"> I checked the round divisions, including uncertain transitions.</label></section>
+    </div>
+    <div id="coveragePane" role="tabpanel" aria-labelledby="coverageTab" tabindex="0" hidden>
+      <section id="coveragePanel" hidden><h2>Card coverage across views</h2><p id="coverageStatus" class="muted"></p><div id="sharedSlots"></div><label id="coverageConfirmation" class="confirmation" hidden><input id="confirmCoverage" type="checkbox"> I checked all shared-view candidates and resolved missing or duplicate cards in the Cards tab.</label><p class="muted">Resolved ranks do not prove complete coverage. Counts cover the configured views; other hands, obscured cards and shoe changes still need checking.</p></section>
+    </div>
+  </div>
+  <footer class="review-footer">
+    <label class="confirmation"><input id="confirmReview" type="checkbox" disabled> I checked the card list for missing cards, duplicates and order.</label>
+    <div class="footer-actions"><div class="button-row"><button id="saveReview" class="primary" disabled>Save review</button><button id="addCard" disabled>Add missed card</button></div><div class="downloads"><a id="download" href="/api/result" hidden>Result JSON</a><a id="downloadCrops" href="/api/reviewed-crops" hidden>Reviewed crops</a></div></div>
+  </footer>
 </section>
-<section id="roundPanel" class="panel" hidden><h2>Rounds &amp; running total</h2><p class="muted">Each change counts observed cards in that round. The running change adds these together. Review the divisions; use each card's Round field to correct a missed or incorrect boundary.</p><div class="round-table-wrap"><table class="round-table"><thead><tr><th>Round</th><th>Cards</th><th>Change</th><th>Running change</th></tr></thead><tbody id="roundRows"></tbody></table></div><div id="roundTransitions" class="muted"></div><label id="roundConfirmation" class="confirmation" hidden><input id="confirmRounds" type="checkbox"> I checked the round divisions, including uncertain transitions.</label></section>
-<section class="panel"><details id="calibration"><summary>Check which cards are counted</summary><p class="muted">Primary boxes select the large main hands. The separate central box monitors the shared hand, links an established shared prefix, and adds distinct extra cards. Check all three boxes for your layout. Defaults match the supplied recordings; check the preview when the window layout changes.</p>
-<div class="button-row"><button id="previewButton">Load preview</button><select id="regionSelect" aria-label="Region to draw"><option value="0">Dealer cards</option><option value="1">Your main hand</option><option value="shared">Central shared hand</option></select><button id="saveRegions">Save boxes</button></div>
-<label class="confirmation"><input id="monitorShared" type="checkbox" checked> Check the central shared hand for additional cards.</label><p class="muted">Choose a hand, then drag a box around its cards on the image. Include space for additional cards. Changes apply to the next analysis; reanalyze saved recordings after changing boxes.</p><canvas id="preview" hidden aria-label="Draw card regions on the screenshot"></canvas></details></section>
-<section id="coveragePanel" class="panel" hidden><h2>Card coverage across views</h2><p id="coverageStatus" class="muted"></p><div id="sharedSlots"></div><label id="coverageConfirmation" class="confirmation" hidden><input id="confirmCoverage" type="checkbox"> I checked all shared-view candidates and resolved missing or duplicate cards in the list below.</label><p class="muted">Resolved ranks do not prove complete coverage. Counts cover the configured views; other hands, obscured cards and shoe changes still need checking.</p></section>
-<section class="panel"><div class="section-header"><h2>Observed cards</h2><span class="small-label">First observed → last observed</span></div>
-<div id="warnings" class="notice" hidden></div><p class="muted">Each row is a candidate physical card, not a confirmed unique card. The crops within a row show repeated observations of that candidate. Inspect its first, middle and last view. Correct ranks, exclude duplicates or false detections, add missed cards, and adjust order. Cards first visible in the same screenshot have uncertain relative order.</p>
-<div id="cards" class="cards-list"><p class="empty-state">No cards recorded</p></div>
-<div class="button-row"><button id="addCard">Add missed card</button><button id="saveReview" class="primary">Save review</button><a id="download" href="/api/result" hidden>Download result</a><a id="downloadCrops" href="/api/reviewed-crops" hidden>Download reviewed crops</a></div>
-<label class="confirmation"><input id="confirmReview" type="checkbox"> I checked the recorded card list, including missing cards, duplicate views, and the order of cards.</label>
-<p class="muted">Unknown cards do not contribute to the known-card subtotal. A count with unknown cards is incomplete. Any displayed range covers these detections only; missed or duplicate cards can change it. Model and OCR scores are recognition scores, not measured accuracy or a guarantee that a rank is correct. A reviewed result confirms your corrections, not an independently verified model prediction.</p>
-</section>
-</main><dialog id="frameDialog"><button id="closeFrame">Close screenshot</button><img id="fullFrame" alt="Original screenshot for the selected card"><p>Use this screenshot to check the card in context.</p></dialog>
+</div>
+</main>
+<dialog id="settingsDialog" class="settings-dialog" aria-labelledby="settingsTitle"><div class="section-header"><h2 id="settingsTitle">Card regions</h2><button id="closeSettings">Close</button></div>
+  <details id="calibration" open><summary>Check which cards are counted</summary><p class="muted">Primary boxes select the large main hands. The central box monitors the shared hand and checks for distinct extra cards. Check all three boxes when your window layout changes.</p>
+  <div class="button-row"><button id="previewButton">Load preview</button><select id="regionSelect" aria-label="Region to draw"><option value="0">Dealer cards</option><option value="1">Your main hand</option><option value="shared">Central shared hand</option></select><button id="saveRegions">Save boxes</button></div>
+  <label class="confirmation"><input id="monitorShared" type="checkbox" checked> Check the central shared hand for additional cards.</label><p class="muted">Choose a hand, then drag a box around its cards on the preview. Include space for additional cards. Changes apply to the next analysis; reanalyze existing recordings to use new boxes.</p><canvas id="preview" hidden aria-label="Draw card regions on the screenshot"></canvas></details>
+</dialog>
+<dialog id="helpDialog" class="help-dialog" aria-labelledby="helpTitle"><div class="section-header"><h2 id="helpTitle">Using CardVision</h2><button id="closeHelp">Close</button></div>
+  <h3>Record, analyze, review</h3><p>Start before cards are dealt, switch to your table during the countdown, and keep recording through the cleared table between rounds. Stop and analyze to calculate the count.</p>
+  <h3>Review each candidate</h3><p>A row is a candidate physical card, not a confirmed unique card. Its crops are repeated observations of that candidate. Click a crop to inspect the full screenshot. Correct ranks and suits, exclude duplicates or false detections, add missed cards, and adjust order. Cards first visible in the same screenshot have uncertain relative order.</p>
+  <h3>What the count covers</h3><p>The total starts at zero for each recording and carries across its rounds. Cards already visible at the start are included. Partial captures are not complete rounds. Separate recordings are independent; shoe changes are not detected.</p><p>Unknown cards contribute zero to the known-card subtotal and make the full count incomplete. Any displayed range covers detected candidates only; missing or duplicate cards can change it. Check the Rounds and Coverage tabs before saving a review.</p>
+  <h3>Recognition scores</h3><p>Model and OCR scores are recognition scores, not measured accuracy or a guarantee that a rank is correct. A reviewed result records your corrections, not an independently verified prediction.</p>
+</dialog>
+<dialog id="frameDialog" aria-label="Card source screenshot"><button id="closeFrame">Close screenshot</button><img id="fullFrame" alt="Original screenshot for the selected card"><p>Use this screenshot to check the card in context.</p></dialog>
 <script src="{{ url_for('static', filename='app.js') }}"></script></body></html>
