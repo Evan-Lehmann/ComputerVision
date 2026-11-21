@@ -200,6 +200,7 @@ function render(next) {
   }
   document.querySelectorAll('#cards .card-heading select, #cards .card-heading input, #cards .card-heading button').forEach(el => { if (state.session_status !== 'COMPLETE') el.disabled = true; });
   renderCount();
+  $('reviewQuickStatus').textContent = events.length ? `${events.length} candidates · ${events.filter(e => !e.excluded && e.rank === 'UNKNOWN').length} unknown` : 'No recording yet';
 }
 async function refresh() { try { render(await api('/api/state')); } catch (e) { error(e.message); } }
 async function action(path, body = {}) { try { error(null); await api(path,body); await refresh(); } catch(e) { error(e.message); } }
@@ -241,3 +242,51 @@ $('displaySelect').onchange = async () => {
     data.displays.forEach(d => { const o=document.createElement('option'); o.value=d.index; o.textContent=`Display ${d.index}: ${d.width}×${d.height} (${d.left}, ${d.top})`; o.selected=d.index===data.selected; $('displaySelect').append(o); });
   } catch(e) { error(e.message); }
 })();
+
+// Preview-only annotation: no mouse, keyboard, or site actions.
+let tableRequest = false, tableGeneration = 0;
+async function refreshTable() {
+  if (tableRequest || document.hidden) return;
+  tableRequest = true;
+  const generation = tableGeneration, enabled = $('highlightChip').checked;
+  try {
+    const response = await fetch(`/api/dashboard-preview?highlight=${enabled ? 1 : 0}`, {cache:'no-store'});
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Preview unavailable');
+    if (generation !== tableGeneration) return;
+    const image = $('tablePreview');
+    image.parentElement.style.setProperty('--preview-ratio', data.width/data.height);
+    // Wait for these exact pixels before drawing their annotation.
+    image.onload = () => {
+      if (generation !== tableGeneration) return;
+      image.hidden = false; $('previewEmpty').hidden = true;
+      const box = enabled && $('highlightChip').checked ? data.highlight?.box : null;
+      $('chipHighlight').hidden = !box;
+      if (box) Object.assign($('chipHighlight').style, {
+        left:`${box[0]/data.width*100}%`,top:`${box[1]/data.height*100}%`,
+        width:`${(box[2]-box[0])/data.width*100}%`,height:`${(box[3]-box[1])/data.height*100}%`
+      });
+      $('chipStatus').textContent = !enabled ? 'Highlighting off. Preview annotations only.' : box ? '$1 chip detected · preview only' : 'No matching chip selector visible.';
+      $('previewSource').textContent = data.source;
+    };
+    $('chipHighlight').hidden = true;
+    image.src = data.image;
+  } catch (e) {
+    $('chipHighlight').hidden = true;
+    $('chipStatus').textContent = e.message;
+    $('previewSource').textContent = 'Preview unavailable · any image shown is from an earlier capture';
+  } finally { tableRequest = false; }
+}
+$('refreshTable').onclick = refreshTable;
+$('highlightChip').onchange = () => {
+  tableGeneration++; $('chipHighlight').hidden = true;
+  $('chipStatus').textContent = $('highlightChip').checked ? 'Looking for the $1 chip…' : 'Highlighting off. Preview annotations only.';
+  refreshTable();
+};
+$('displaySelect').addEventListener('change', () => {
+  tableGeneration++; $('tablePreview').hidden = true; $('chipHighlight').hidden = true;
+  $('previewEmpty').hidden = false; $('previewSource').textContent = '';
+});
+setInterval(() => {
+  if ($('highlightChip').checked || ['RECORDING','STOPPING'].includes(state.session_status)) refreshTable();
+}, 1500);

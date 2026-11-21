@@ -23,7 +23,16 @@
   </section>
   <p class="sidebar-note">Review cards, round divisions and coverage before trusting the count.</p>
 </aside>
-<section class="review-workspace panel" aria-label="Recording review">
+<div class="main-workspace">
+<section class="panel table-panel" aria-label="Table preview">
+<div class="section-header"><h2>Table preview</h2><button id="refreshTable" class="subtle">Refresh preview</button></div>
+<label class="confirmation"><input id="highlightChip" type="checkbox"> Highlight $1 chip</label>
+<p id="chipStatus" class="muted" role="status">Highlighting off. Preview annotations only.</p>
+<div class="table-image"><img id="tablePreview" alt="Captured table preview" hidden><div id="chipHighlight" hidden><span>$1 chip</span></div><p id="previewEmpty" class="muted">Start recording or refresh the preview to see your selected display.</p></div>
+<p id="previewSource" class="small-label"></p>
+</section>
+<details id="reviewDetails" class="review-disclosure panel"><summary><span class="review-label">Review &amp; corrections</span> <span id="reviewQuickStatus" class="small-label">No recording yet</span></summary>
+<section class="review-workspace" aria-label="Recording review">
   <div class="workspace-header"><h2>Recording review</h2><span id="cardSummary" class="small-label">No recording yet</span></div>
   <div class="review-tabs" role="tablist" aria-label="Review sections">
     <button id="cardsTab" role="tab" aria-selected="true" aria-controls="cardsPane" data-review-tab="cards">Cards</button>
@@ -48,6 +57,8 @@
     <div class="footer-actions"><div class="button-row"><button id="saveReview" class="primary" disabled>Save review</button><button id="addCard" disabled>Add missed card</button></div><div class="downloads"><a id="download" href="/api/result" hidden>Result JSON</a><a id="downloadCrops" href="/api/reviewed-crops" hidden>Reviewed crops</a></div></div>
   </footer>
 </section>
+</details>
+</div>
 </div>
 </main>
 <dialog id="settingsDialog" class="settings-dialog" aria-labelledby="settingsTitle"><div class="section-header"><h2 id="settingsTitle">Card regions</h2><button id="closeSettings">Close</button></div>

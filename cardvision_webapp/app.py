@@ -8,6 +8,7 @@ import time
 import uuid
 import inspect
 import queue
+import base64
 import cv2
 from flask import Flask, jsonify, render_template, request, send_file
 
@@ -277,6 +278,40 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
             state['regions'] = chosen
             state['shared_view'] = view
         return jsonify(ok=True, regions=chosen,shared_view=view)
+
+    @app.route('/api/dashboard-preview')
+    def dashboard_preview():
+        from cardvision_webapp.chip_preview import locate_chip
+        try:
+            with lock:
+                status = state['session_status']
+                directory = state.get('round_dir')
+                if status == 'STARTING':
+                    return jsonify(error='Waiting for recording to start.'), 409
+                if status not in {'RECORDING', 'STOPPING', 'PROCESSING'}:
+                    image = capture.preview()
+                    source = 'Selected display · current capture'
+                else:
+                    paths = sorted(Path(directory).glob('frame_*.png')) if directory else []
+                    if not paths:
+                        return jsonify(error='Waiting for the first saved frame.'), 409
+                    # The newest PNG may still be writing. Use the prior saved
+                    # frame while capture runs; never share the capture thread.
+                    path = paths[-2] if status == 'RECORDING' and len(paths)>1 else paths[-1]
+                    image = cv2.imread(str(path))
+                    source = 'Saved capture · ' + path.name
+            if image is None:
+                raise ValueError('Preview frame is not ready.')
+            highlight = locate_chip(image) if request.args.get('highlight') == '1' else None
+            ok, encoded = cv2.imencode('.jpg', image, [cv2.IMWRITE_JPEG_QUALITY, 75])
+            if not ok:
+                raise ValueError('Could not encode table preview.')
+            response = jsonify(image='data:image/jpeg;base64,' + base64.b64encode(encoded).decode('ascii'),
+                width=image.shape[1], height=image.shape[0], highlight=highlight, source=source)
+            response.headers['Cache-Control'] = 'no-store'
+            return response
+        except Exception as exc:
+            return jsonify(error=str(exc)), 400
 
     @app.route('/api/preview')
     def preview():
