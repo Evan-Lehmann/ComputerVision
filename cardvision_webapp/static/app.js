@@ -94,7 +94,7 @@ function renderCoverage() {
   const c=state.coverage || {}, requiresReview=!!state.needs_coverage_review || coverageEdited();
   const pending=requiresReview && !(state.coverage_confirmed && !dirty);
   $('coverageConfirmation').hidden=!requiresReview;
-  $('coverageStatus').textContent=pending ? 'Coverage needs review. Resolve shared-view candidates as distinct cards or exclude them as duplicate views; then confirm below.' : requiresReview ? 'You reviewed the coverage issues originally flagged by automatic analysis.' : c.status==='configured_views_reconciled' ? 'Configured views reconciled provisionally. Shared cards are linked once; distinct additional cards are included.' : 'Cross-view coverage was not checked. The subtotal covers selected primary views only.';
+  $('coverageStatus').textContent=pending ? 'Coverage needs review. Check any intervals when the table was hidden for missing cards. Resolve shared-view candidates as distinct cards or exclude duplicate views; then confirm below.' : requiresReview ? 'You reviewed the coverage issues originally flagged by automatic analysis.' : c.status==='configured_views_reconciled' ? 'Configured views reconciled provisionally. Shared cards are linked once; distinct additional cards are included.' : 'Cross-view coverage was not checked. The subtotal covers selected primary views only.';
   if (state.coverage_confirmed && !dirty) $('coverageStatus').textContent+=' You confirmed the coverage review.';
   $('sharedSlots').replaceChildren();
   (c.issues || []).forEach(issue=>{
@@ -123,7 +123,7 @@ function renderCount() {
   $('countValueNote').textContent = !resultId ? '' : unknown || coveragePending ? 'subtotal only' : 'captured cards';
   $('downloadCrops').hidden = dirty || !reviewed || !events.some(e => !e.excluded && e.evidence?.length);
   $('countBadge').dataset.status = reviewed ? 'reviewed' : resultId ? 'provisional' : 'waiting';
-  $('countStatus').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Calculating the count from your saved screenshots…' : 'The count is calculated after you stop recording and analyze.') : unknown ? `${unknown} unknown card${unknown === 1 ? '' : 's'} — possible change for these detections: ${signed(subtotal-unknown)} to ${signed(subtotal+unknown)}.${dirty ? ' Edits are not saved.' : ''}` : coveragePending ? 'Ranks may be resolved, but shared-view coverage is not. Check the coverage panel before trusting a complete count.' : dirty ? 'Count reflects your edits. Save the review to keep them.' : reviewed ? `${included.length} included cards. You confirmed this card list and its round divisions.` : state.review_confirmed && state.needs_round_review ? 'Check and confirm the round divisions, then save the review again.' : `${included.length} included cards across ${roundCount} round${roundCount === 1 ? '' : 's'}. Check the card list and round divisions before trusting this count.`;
+  $('countStatus').textContent = !resultId ? (state.session_status === 'PROCESSING' ? 'Calculating the count from your saved screenshots…' : 'Waiting for the first live analysis. Counts update as frames are processed.') : unknown ? `${unknown} unknown card${unknown === 1 ? '' : 's'} — possible change for these detections: ${signed(subtotal-unknown)} to ${signed(subtotal+unknown)}.${dirty ? ' Edits are not saved.' : ''}` : coveragePending ? 'Ranks may be resolved, but coverage needs review. Check for hidden-table intervals and unresolved shared views before trusting a complete count.' : dirty ? 'Count reflects your edits. Save the review to keep them.' : reviewed ? `${included.length} included cards. You confirmed this card list and its round divisions.` : state.review_confirmed && state.needs_round_review ? 'Check and confirm the round divisions, then save the review again.' : `${included.length} included cards across ${roundCount} round${roundCount === 1 ? '' : 's'}. Check the card list and round divisions before trusting this count.`;
   $('cardSummary').textContent = !resultId ? 'No recording yet' : `${events.length} candidates · ${unknown} unknown`;
   $('roundsTab').disabled = $('coverageTab').disabled = !resultId;
   const checkRounds = !!resultId && !$('roundConfirmation').hidden && !(state.rounds_confirmed && !dirty);
@@ -160,7 +160,7 @@ function renderCards() {
     ['↑','↓'].forEach((arrow,n) => { const button = document.createElement('button'); button.textContent = arrow; button.setAttribute('aria-label',`${n ? 'Move down' : 'Move up'} card ${index+1}`); const target = index + (n ? 1 : -1); button.disabled = target < 0 || target >= events.length; button.onclick = () => { [events[index],events[target]] = [events[target],events[index]]; changed(); renderCards(); }; head.append(button); });
     card.append(head);
     const strip = document.createElement('div'); strip.className = 'evidence';
-    (event.evidence || []).forEach((item,i) => { const button = document.createElement('button'); button.className = 'crop'; button.title = `Open original screenshot ${item.source}`; const image = document.createElement('img'); image.src = `/api/evidence/${resultId}/${encodeURIComponent(item.image)}`; image.alt = ['First','Middle','Last'][i] + ' card crop'; button.append(image); button.onclick = () => { $('fullFrame').src = `/api/frame/${resultId}/${item.frame}`; $('frameDialog').showModal(); }; strip.append(button); });
+    (event.evidence || []).forEach((item,i) => { const button = document.createElement('button'); button.className = 'crop'; button.title = `Open original screenshot ${item.source}`; const image = document.createElement('img'); image.src = `/api/evidence/${resultId}/${encodeURIComponent(item.image)}?v=${state.processed || 0}`; image.alt = ['First','Middle','Last'][i] + ' card crop'; button.append(image); button.onclick = () => { $('fullFrame').src = `/api/frame/${resultId}/${item.frame}`; $('frameDialog').showModal(); }; strip.append(button); });
     card.append(strip);
     const caption = document.createElement('p'); caption.className = 'muted'; caption.textContent = event.observations ? event.recognition_source === 'reference_consensus' ? `Reference agreement: ${event.suggested_rank} (image match ${event.confidence.toFixed(2)}). Click a crop to inspect the screenshot.` : `${event.recognition_source === 'mini_consensus' ? 'Shared-view suggestion' : event.recognition_source === 'shared_identity_unresolved' ? 'Unresolved shared identity; rank suggestion' : event.recognition_source === 'ocr_consensus' ? 'OCR consensus' : 'Model suggestion'}: ${event.suggested_rank} (score ${event.confidence.toFixed(2)}). Click a crop to inspect the screenshot.` : event.recognition_source==='shared_identity_unresolved' ? 'This shared card was already overlapped when observed. Inspect its hand-context image and resolve its identity.' : 'Added during review.'; card.append(caption);
     if(event.identity_basis==='continuous_shared_hand') { const continuity=document.createElement('p');continuity.className='muted';continuity.textContent='Additional card followed in the central hand after the main hand stopped showing these cards.';card.append(continuity); }
@@ -174,25 +174,31 @@ function renderCards() {
   renderCount();
 }
 function render(next) {
+  const previousStatus = state.session_status;
+  const previousResultId = resultId;
+  const previousProcessed = state.processed;
   state = next;
   const busy = busyStates.includes(state.session_status);
-  $('startButton').disabled = busy; $('stopButton').disabled = state.session_status !== 'RECORDING'; $('resetButton').disabled = busy;
+  $('startButton').disabled = busy; $('stopButton').disabled = !['STARTING','RECORDING'].includes(state.session_status) && !(state.session_status === 'STOPPING' && state.error); $('resetButton').disabled = busy;
   $('replayButton').disabled = busy || !$('sourceSelect').value;
-  ['saveRegions','saveReview','addCard','confirmReview','confirmRounds','confirmCoverage'].forEach(id => $(id).disabled = busy || (['saveReview','addCard','confirmReview','confirmRounds','confirmCoverage'].includes(id) && !state.result_id));
-  const names = {IDLE:'Ready', STARTING:`Recording starts in ${state.countdown ?? 3}…`, RECORDING:'Recording', STOPPING:'Saving recording…', PROCESSING:'Analyzing saved frames…', COMPLETE:'Analysis complete', ERROR:'Action needed'};
+  ['saveRegions','saveReview','addCard','confirmReview','confirmRounds','confirmCoverage'].forEach(id => $(id).disabled = busy || (['saveReview','addCard','confirmReview','confirmRounds','confirmCoverage'].includes(id) && (state.session_status !== 'COMPLETE' || !state.result_id)));
+  const names = {IDLE:'Ready', STARTING:`Recording starts in ${state.countdown ?? 3}…`, RECORDING:'Recording', STOPPING:'Capture stopped · draining analysis…', PROCESSING:'Analyzing saved frames…', COMPLETE:'Analysis complete', ERROR:'Action needed'};
   $('status').textContent = names[state.session_status] || state.session_status;
   $('status').dataset.state = state.session_status;
   $('progress').textContent = state.session_status === 'RECORDING' ? `${state.frames_recorded} frames saved` : state.session_status === 'PROCESSING' ? `${state.processed} / ${state.total || '…'} frames processed` : '';
   if (state.error) error(state.error);
   if (!regions.length && state.regions) regions = structuredClone(state.regions);
   if (!viewLoaded && 'shared_view' in state) {sharedView=structuredClone(state.shared_view);viewLoaded=true;$('monitorShared').checked=!!sharedView;}
-  if (state.result_id !== resultId) {
+  $('displaySelect').disabled = busy;
+  $('liveLag').textContent = ['RECORDING','STOPPING'].includes(state.session_status) ? `${state.processed || 0} analyzed · ${state.pending_frames || 0} pending · latest analysis ${state.processing_lag_seconds == null ? 'warming up' : state.processing_lag_seconds.toFixed(1) + 's behind'}` : '';
+  if (state.result_id !== resultId || (busy && previousProcessed !== state.processed) || previousStatus !== state.session_status) {
     resultId = state.result_id; events = structuredClone(state.events || []); dirty = false; $('confirmReview').checked = !!state.review_confirmed;
-    selectReviewTab('cards');
+    if (state.result_id !== previousResultId || previousStatus !== state.session_status) selectReviewTab('cards');
     $('confirmRounds').checked = !!state.rounds_confirmed; $('confirmCoverage').checked=!!state.coverage_confirmed;
-    $('warnings').textContent = (state.warnings || []).join(' '); $('warnings').hidden = !state.warnings?.length; $('download').hidden = !resultId;
+    $('warnings').textContent = (state.warnings || []).join(' '); $('warnings').hidden = !state.warnings?.length; $('download').hidden = !resultId || state.session_status !== 'COMPLETE';
     renderCards();
   }
+  document.querySelectorAll('#cards .card-heading select, #cards .card-heading input, #cards .card-heading button').forEach(el => { if (state.session_status !== 'COMPLETE') el.disabled = true; });
   renderCount();
 }
 async function refresh() { try { render(await api('/api/state')); } catch (e) { error(e.message); } }
@@ -224,3 +230,14 @@ $('monitorShared').onchange=()=>{sharedView=$('monitorShared').checked?(sharedVi
 $('saveRegions').onclick = () => action('/api/regions',{regions,shared_view:sharedView});
 (async () => { try { const data = await api('/api/sources'); $('sourceSelect').replaceChildren(); data.replays.forEach(name => { const option = document.createElement('option'); option.value = name; option.textContent = name; $('sourceSelect').append(option); }); } catch(e) { error(e.message); } await refresh(); })();
 setInterval(refresh,1000);
+
+$('displaySelect').onchange = async () => {
+  try { await api('/api/display', {index:Number($('displaySelect').value)}); previewImage=null; $('preview').hidden=true; }
+  catch(e) { error(e.message); }
+};
+(async () => {
+  try {
+    const data = await api('/api/displays'); $('displaySelect').replaceChildren();
+    data.displays.forEach(d => { const o=document.createElement('option'); o.value=d.index; o.textContent=`Display ${d.index}: ${d.width}×${d.height} (${d.left}, ${d.top})`; o.selected=d.index===data.selected; $('displaySelect').append(o); });
+  } catch(e) { error(e.message); }
+})();

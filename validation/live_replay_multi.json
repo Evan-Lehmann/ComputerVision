@@ -1,0 +1,109 @@
+{
+  "folder": "round_captures/first_two_rounds",
+  "frames": 177,
+  "runs": [
+    {
+      "device": "cpu",
+      "streaming": false,
+      "seconds": 100.94490575,
+      "frames_per_second": 1.7534317228286678,
+      "cards": [
+        "2",
+        "K",
+        "Q",
+        "UNKNOWN",
+        "4",
+        "A",
+        "9",
+        "4",
+        "5",
+        "K",
+        "7",
+        "4",
+        "7"
+      ],
+      "count": null,
+      "subtotal": 1,
+      "round_count": 2,
+      "snapshots": 0,
+      "median_update_seconds": null,
+      "max_update_seconds": null,
+      "peak_process_rss_bytes": 483966976,
+      "matches_cpu": true,
+      "comparison": {
+        "matches": true,
+        "max_box_delta_pixels": 0.0,
+        "box_tolerance_pixels": 0.001
+      }
+    },
+    {
+      "device": "mps",
+      "streaming": false,
+      "seconds": 53.83410795799999,
+      "frames_per_second": 3.2878783862842296,
+      "cards": [
+        "2",
+        "K",
+        "Q",
+        "UNKNOWN",
+        "4",
+        "A",
+        "9",
+        "4",
+        "5",
+        "K",
+        "7",
+        "4",
+        "7"
+      ],
+      "count": null,
+      "subtotal": 1,
+      "round_count": 2,
+      "snapshots": 0,
+      "median_update_seconds": null,
+      "max_update_seconds": null,
+      "peak_process_rss_bytes": 512000000,
+      "matches_cpu": true,
+      "comparison": {
+        "matches": true,
+        "max_box_delta_pixels": 6.103515625e-05,
+        "box_tolerance_pixels": 0.001
+      }
+    },
+    {
+      "device": "mps",
+      "streaming": true,
+      "seconds": 70.390355083,
+      "frames_per_second": 2.5145490428524253,
+      "cards": [
+        "2",
+        "K",
+        "Q",
+        "UNKNOWN",
+        "4",
+        "A",
+        "9",
+        "4",
+        "5",
+        "K",
+        "7",
+        "4",
+        "7"
+      ],
+      "count": null,
+      "subtotal": 1,
+      "round_count": 2,
+      "snapshots": 177,
+      "median_update_seconds": 0.38480824999999186,
+      "max_update_seconds": 0.9871750419999898,
+      "peak_process_rss_bytes": 512000000,
+      "matches_cpu": true,
+      "comparison": {
+        "matches": true,
+        "max_box_delta_pixels": 6.103515625e-05,
+        "box_tolerance_pixels": 0.001
+      }
+    }
+  ],
+  "all_match": true
+}

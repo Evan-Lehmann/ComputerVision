@@ -7,6 +7,7 @@ import threading
 import time
 import uuid
 import inspect
+import queue
 import cv2
 from flask import Flask, jsonify, render_template, request, send_file
 
@@ -15,7 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from cardvision_webapp.round_capture import RoundCapture
 from cardvision_webapp.round_processor import process_round
-from round_pipeline import DEFAULT_REGIONS, apply_review, validate_regions, save_result, validate_shared_view
+from round_pipeline import process_frames, DEFAULT_REGIONS, apply_review, validate_regions, save_result, validate_shared_view
 from shared_cards import DEFAULT_SHARED_VIEW
 from review_export import reviewed_crop_bundle
 
@@ -24,7 +25,9 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     app = Flask(__name__)
     app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
     capture = capture or RoundCapture()
+    live_enabled = processor is None
     processor = processor or process_round
+    live = dict(thread=None, queue=None, last_processed=None)
     replays = {str(name): Path(path).resolve() for name,path in (replays or {}).items()}
     artifact_root = Path(artifact_root or ROOT/'round_captures'/'analysis')
     lock = threading.RLock()
@@ -33,19 +36,28 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
         round_dir=None, error=None, result_id=None, warnings=[], regions=copy.deepcopy(DEFAULT_REGIONS),shared_view=copy.deepcopy(DEFAULT_SHARED_VIEW))
     app.extensions['cardvision'] = dict(state=state, lock=lock, capture=capture)
     busy = {'STARTING', 'RECORDING', 'STOPPING', 'PROCESSING'}
+    cancel_start = threading.Event()
+
+    def active():
+        return (state['session_status'] in busy
+                or bool(live['thread'] and live['thread'].is_alive())
+                or bool(capture.thread and capture.thread.is_alive()))
 
     def snapshot():
         with lock:
-            if state['session_status'] == 'RECORDING':
+            if state['session_status'] in {'RECORDING', 'STOPPING'}:
                 state['frames_recorded'] = capture.frame_count
+                state['pending_frames'] = max(0, capture.frame_count - state.get('processed', 0))
+                state['processing_lag_seconds'] = (max(0, time.monotonic() - live['last_processed'])
+                    if live['last_processed'] is not None else None)
                 if capture.error:
-                    state.update(session_status='ERROR', error=capture.error)
+                    state['error'] = capture.error
             return copy.deepcopy(state)
 
     def fail(exc):
         app.logger.exception('CardVision worker failed')
         with lock:
-            state.update(session_status='ERROR', error=str(exc), countdown=None)
+            state.update(session_status='ERROR', error=str(exc), countdown=None, frames_recorded=capture.frame_count)
 
     def prepare(status):
         # Called under lock; no old predictions survive a new job.
@@ -61,12 +73,71 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
             for remaining in range(delay, 0, -1):
                 with lock:
                     state['countdown'] = remaining
-                time.sleep(1)
+                if cancel_start.wait(1):
+                    with lock:
+                        state.update(session_status="IDLE", countdown=None)
+                    return
+            if cancel_start.is_set():
+                with lock:
+                    state.update(session_status="IDLE", countdown=None)
+                return
+            if live_enabled:
+                live.update(queue=queue.Queue(), last_processed=time.monotonic())
+                def enqueue(path, captured):
+                    live["queue"].put((path, captured))
+                capture.on_frame = enqueue
             directory = capture.start()
             with lock:
                 state.update(session_status='RECORDING', countdown=None, round_dir=str(directory))
+            if live_enabled:
+                live['thread'] = threading.Thread(target=process_live, daemon=True)
+                live['thread'].start()
+            with lock:
+                if cancel_start.is_set() and state['session_status'] == 'RECORDING':
+                    state['session_status'] = 'STOPPING'
+                    spawn(worker_stop)
         except Exception as exc:
             fail(exc)
+
+    def process_live():
+        result_id = uuid.uuid4().hex
+        output = artifact_root/result_id
+        captured_at = [None]
+        def frames():
+            while True:
+                try:
+                    path, stamp = live['queue'].get(timeout=.1)
+                except queue.Empty:
+                    if not capture.recording:
+                        return
+                    continue
+                captured_at[0] = stamp
+                yield path
+        def publish(result):
+            with lock:
+                state.update(result)
+                state.update(result_id=result_id, processed=result['frames_processed'])
+                live['last_processed'] = captured_at[0]
+        try:
+            with lock:
+                regions = copy.deepcopy(state['regions'])
+                view = copy.deepcopy(state['shared_view'])
+            result = process_frames([], output, regions=regions, shared_view=view,
+                                    frame_stream=frames(), live_progress=publish)
+            with lock:
+                state.update(result)
+                state.update(session_status='ERROR' if capture.error else 'COMPLETE',
+                             result_id=result_id, error=capture.error, frames_recorded=capture.frame_count,
+                             pending_frames=max(0,capture.frame_count-result['frames_processed']))
+        except Exception as exc:
+            # Stop the producer before allowing another job to own its callback.
+            try:
+                capture.stop()
+            except Exception:
+                pass
+            fail(exc)
+        finally:
+            capture.on_frame = None
 
     def process(directory):
         result_id = uuid.uuid4().hex
@@ -93,9 +164,14 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
             result = capture.stop()
             with lock:
                 state['frames_recorded'] = result['frames']
-            process(Path(result['round_dir']))
+            if not live_enabled:
+                process(Path(result['round_dir']))
         except Exception as exc:
-            fail(exc)
+            with lock:
+                if capture.thread and capture.thread.is_alive():
+                    state.update(session_status='STOPPING', error=str(exc))
+                else:
+                    fail(exc)
 
     def spawn(target, *args):
         threading.Thread(target=target, args=args, daemon=True).start()
@@ -127,13 +203,35 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     def sources():
         return jsonify(replays=sorted(replays))
 
+    @app.route('/api/displays')
+    def displays():
+        try:
+            return jsonify(displays=capture.displays(), selected=capture.monitor_index)
+        except Exception as exc:
+            return jsonify(error=str(exc)), 503
+
+    @app.route('/api/display', methods=['POST'])
+    def display():
+        index = (request.get_json(silent=True) or {}).get('index')
+        with lock:
+            if active():
+                return jsonify(error='Finish capture and drain before changing display.'), 409
+            try:
+                if type(index) is not int or index not in {d['index'] for d in capture.displays()}:
+                    raise ValueError('Choose an available display.')
+            except (ValueError, RuntimeError) as exc:
+                return jsonify(error=str(exc)), 400
+            capture.monitor_index = index
+        return jsonify(ok=True, selected=index)
+
     @app.route('/api/start', methods=['POST'])
     def start():
         with lock:
-            if state['session_status'] in busy:
+            if active():
                 return jsonify(error='A recording or analysis is already active.'), 409
             if capture.thread is not None and capture.thread.is_alive():
                 return jsonify(error='The previous capture is still stopping.'), 409
+            cancel_start.clear()
             prepare('STARTING')
             spawn(worker_start)
         return jsonify(ok=True), 202
@@ -141,9 +239,12 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     @app.route('/api/stop', methods=['POST'])
     def stop():
         with lock:
-            if state['session_status'] != 'RECORDING':
+            if state['session_status'] == 'STARTING':
+                cancel_start.set()
+                return jsonify(ok=True), 202
+            if state['session_status'] != 'RECORDING' and not (state['session_status'] == 'STOPPING' and state.get('error')):
                 return jsonify(error='No active recording to stop.'), 409
-            state['session_status'] = 'STOPPING'
+            state.update(session_status='STOPPING', error=None)
             spawn(worker_stop)
         return jsonify(ok=True), 202
 
@@ -152,7 +253,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
         data = request.get_json(silent=True) or {}
         key = data.get('source')
         with lock:
-            if state['session_status'] in busy:
+            if active():
                 return jsonify(error='Finish the active recording or analysis first.'), 409
             if not isinstance(key, str) or key not in replays or not replays[key].is_dir():
                 return jsonify(error='Choose a registered frame folder.'), 400
@@ -171,7 +272,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
         except (ValueError, TypeError, AttributeError) as exc:
             return jsonify(error=str(exc)), 400
         with lock:
-            if state['session_status'] in busy:
+            if active():
                 return jsonify(error='Finish the active job before changing regions.'), 409
             state['regions'] = chosen
             state['shared_view'] = view
@@ -182,7 +283,10 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
         try:
             source = request.args.get('source', 'live')
             if source == 'live':
-                image = capture.preview()
+                with lock:
+                    if state['session_status'] in busy:
+                        return jsonify(error='Preview is available after capture and analysis finish.'), 409
+                    image = capture.preview()
             elif source in replays:
                 paths = sorted(p for p in replays[source].iterdir() if p.suffix.lower() in ['.png','.jpg','.jpeg'])
                 if not paths:
@@ -206,7 +310,9 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
             allowed.update(item['image'] for slot in state.get('coverage',{}).get('slots',[]) for item in slot.get('evidence',[]))
             if result_id != state['result_id'] or filename not in allowed:
                 return jsonify(error='Evidence not found.'), 404
-            return send_file(artifact_root/result_id/filename)
+            response = send_file(artifact_root/result_id/filename, max_age=0)
+            response.headers['Cache-Control'] = 'no-store'
+            return response
 
     @app.route('/api/frame/<result_id>/<int:index>')
     def original_frame(result_id, index):
@@ -237,7 +343,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     @app.route('/api/result')
     def export():
         with lock:
-            if not state['result_id']:
+            if active() or state['session_status'] != 'COMPLETE' or not state['result_id']:
                 return jsonify(error='No completed result.'), 404
             return send_file(artifact_root/state['result_id']/'result.json', as_attachment=True,
                              download_name='cardvision-round.json')
@@ -260,7 +366,7 @@ def create_app(capture=None, processor=None, replays=None, artifact_root=None, d
     @app.route('/api/reset', methods=['POST'])
     def reset():
         with lock:
-            if state['session_status'] in busy:
+            if active():
                 return jsonify(error='Finish the current job first.'), 409
             prepare('IDLE')
         return jsonify(snapshot())

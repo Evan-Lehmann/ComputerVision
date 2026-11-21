@@ -1,0 +1,295 @@
+{
+  "recording": "round_20261115_035856_4283c96e",
+  "frame_limit": 707,
+  "device": "cpu",
+  "scope": "development replay; no independent accuracy claim",
+  "method": "Identical source frames and content-addressed CPU detector outputs; baseline bypasses only visible_table.",
+  "default_regions_only": true,
+  "baseline": {
+    "frames_processed": 707,
+    "recording_digest": "39cd9f73a331e9d9fe63f2e645336f38073bed1569d708419c354a7ad4ceafc3",
+    "unresolved": 21,
+    "count_range": {
+      "min": -27,
+      "max": 15
+    },
+    "known_count_change": -6,
+    "count_change": null,
+    "coverage_pending": true,
+    "round_count": 5,
+    "visibility_gaps": [],
+    "candidates": 51
+  },
+  "candidate": {
+    "frames_processed": 707,
+    "recording_digest": "39cd9f73a331e9d9fe63f2e645336f38073bed1569d708419c354a7ad4ceafc3",
+    "unresolved": 6,
+    "count_range": {
+      "min": -10,
+      "max": 2
+    },
+    "known_count_change": -4,
+    "count_change": null,
+    "coverage_pending": true,
+    "round_count": 4,
+    "visibility_gaps": [
+      {
+        "first_frame": 3,
+        "last_frame": 5,
+        "first_source": "frame_000004.png",
+        "last_source": "frame_000006.png",
+        "round_number": 1
+      },
+      {
+        "first_frame": 131,
+        "last_frame": 137,
+        "first_source": "frame_000132.png",
+        "last_source": "frame_000138.png",
+        "round_number": 1
+      },
+      {
+        "first_frame": 278,
+        "last_frame": 288,
+        "first_source": "frame_000279.png",
+        "last_source": "frame_000289.png",
+        "round_number": 2
+      },
+      {
+        "first_frame": 468,
+        "last_frame": 476,
+        "first_source": "frame_000469.png",
+        "last_source": "frame_000477.png",
+        "round_number": 3
+      },
+      {
+        "first_frame": 577,
+        "last_frame": 585,
+        "first_source": "frame_000578.png",
+        "last_source": "frame_000586.png",
+        "round_number": 4
+      },
+      {
+        "first_frame": 588,
+        "last_frame": 607,
+        "first_source": "frame_000589.png",
+        "last_source": "frame_000608.png",
+        "round_number": 4
+      },
+      {
+        "first_frame": 611,
+        "last_frame": 612,
+        "first_source": "frame_000612.png",
+        "last_source": "frame_000613.png",
+        "round_number": 4
+      },
+      {
+        "first_frame": 628,
+        "last_frame": 706,
+        "first_source": "frame_000629.png",
+        "last_source": "frame_000707.png",
+        "round_number": 4
+      }
+    ],
+    "candidates": 33
+  },
+  "remaining_unknowns": [
+    {
+      "id": "shared-2-3",
+      "region": "central",
+      "first_frame": 223,
+      "last_frame": 277,
+      "suggested_rank": "A",
+      "recognition_source": "shared_identity_unresolved"
+    },
+    {
+      "id": "12",
+      "region": "dealer",
+      "first_frame": 273,
+      "last_frame": 273,
+      "suggested_rank": "J",
+      "recognition_source": "cnn"
+    },
+    {
+      "id": "13",
+      "region": "dealer",
+      "first_frame": 273,
+      "last_frame": 273,
+      "suggested_rank": "J",
+      "recognition_source": "cnn"
+    },
+    {
+      "id": "shared-4-1",
+      "region": "central",
+      "first_frame": 509,
+      "last_frame": 627,
+      "suggested_rank": "UNKNOWN",
+      "recognition_source": "shared_identity_unresolved"
+    },
+    {
+      "id": "20",
+      "region": "player",
+      "first_frame": 509,
+      "last_frame": 509,
+      "suggested_rank": "10",
+      "recognition_source": "cnn"
+    },
+    {
+      "id": "shared-4-2",
+      "region": "central",
+      "first_frame": 515,
+      "last_frame": 627,
+      "suggested_rank": "UNKNOWN",
+      "recognition_source": "shared_identity_unresolved"
+    }
+  ],
+  "historical_replay": [
+    {
+      "recording": "r1",
+      "frames": 60,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": [
+        {
+          "first_frame": 58,
+          "last_frame": 59,
+          "first_source": "frame_000059.png",
+          "last_source": "frame_000060.png",
+          "round_number": 1
+        }
+      ]
+    },
+    {
+      "recording": "r2",
+      "frames": 53,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": [
+        {
+          "first_frame": 51,
+          "last_frame": 52,
+          "first_source": "frame_000052.png",
+          "last_source": "frame_000053.png",
+          "round_number": 1
+        }
+      ]
+    },
+    {
+      "recording": "r3",
+      "frames": 58,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r4",
+      "frames": 84,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 2,
+      "visibility_gaps": [
+        {
+          "first_frame": 0,
+          "last_frame": 0,
+          "first_source": "frame_000001.png",
+          "last_source": "frame_000001.png",
+          "round_number": 1
+        }
+      ]
+    },
+    {
+      "recording": "r5",
+      "frames": 69,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": [
+        {
+          "first_frame": 0,
+          "last_frame": 1,
+          "first_source": "frame_000001.png",
+          "last_source": "frame_000002.png",
+          "round_number": 1
+        }
+      ]
+    },
+    {
+      "recording": "r6",
+      "frames": 57,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r7",
+      "frames": 83,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r8",
+      "frames": 52,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r9",
+      "frames": 89,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r10",
+      "frames": 50,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r11",
+      "frames": 118,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r12",
+      "frames": 89,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 0,
+      "visibility_gaps": []
+    },
+    {
+      "recording": "r13",
+      "frames": 99,
+      "events_unchanged": true,
+      "boundaries_unchanged": true,
+      "unknowns": 4,
+      "visibility_gaps": []
+    }
+  ],
+  "models": {
+    "models/rank_detector_v2.pt": "27c926decf47a3b21af99f5eabddd430be3cb6939920a4bd9bdd34f15d995f92",
+    "models/rank_classifier_v5.pt": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026"
+  },
+  "checks": {
+    "tests_run": 197,
+    "passed": 196,
+    "skipped": 1,
+    "skip": "optional native Tesseract",
+    "historical_frames": 961,
+    "all_historical_event_identities_and_boundaries_unchanged": true
+  }
+}

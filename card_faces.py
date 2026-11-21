@@ -77,6 +77,28 @@ def _face(gray, box, height):
     return [int(left),int(top),int(right),int(bottom)]
 
 
+def face_rank_crop(image, detection):
+    """Association-only corner bounded by observed paper, excluding neighbours.
+
+    Never invents a face or replaces recognition input. A clipped exposed strip
+    can support identity only while the whole detector rank box fits on it.
+    """
+    face=detection.get('face_box')
+    if face is None:
+        return None
+    left,top,right,bottom=face
+    box=detection.get('rank_box') or detection['box']
+    x1,y1,x2,y2=box;h=bottom-top
+    if (h<28 or not h*.18 <= x2-x1 <= h*.45
+            or abs(x1-left)>h*.08 or x2>right+1
+            or y1<top-h*.08 or y2>top+h*.45):
+        return None
+    px,py=max(2,int((x2-x1)*.2)),max(2,int((y2-y1)*.2))
+    crop=image[max(top,int(y1)-py):min(bottom,int(y2)+py),
+               max(left,int(x1)-px):min(right,int(x2)+px)]
+    return crop.copy() if crop.size else None
+
+
 def secondary_rank(image, face):
     """Upright opposite rank only on a fully exposed face, not a suit strip."""
     x1,y1,x2,y2=face
@@ -124,8 +146,20 @@ def validate_face_glyphs(image, detections, height):
         if not suit or not suit['accepted']:continue
         for i,d,cx in members:
             if i==ri or i in removed:continue
-            if cx>=x+w*.48 and d['box'][0]>=x+w*.40 and d['box'][0]>=rank['box'][2]-2:
-                removed.add(i);audit.append(dict(box=d['box'],retained_box=rank['box'],face_box=[int(x),int(y),int(x+w),int(y+h)],reason='suit_position_on_same_physical_face'))
+            a,b=d['box'],rank['box']
+            suit_position=(cx>=x+w*.48 and a[0]>=x+w*.40 and a[0]>=b[2]-2)
+            # Tiled inference may clip a box through the rank and the adjacent
+            # suit. Both pieces belong to this independently observed complete
+            # paper face. Require a narrower right fragment of the retained
+            # corner, rather than deleting another full corner by proximity.
+            rank_suit_fragment=(a[2]-a[0] <= (b[2]-b[0])*.85
+                                and b[0]+(b[2]-b[0])*.5 <= a[0] < b[2]
+                                and b[2] < a[2] and a[2] >= x+w*.52)
+            if suit_position or rank_suit_fragment:
+                removed.add(i);audit.append(dict(box=a,retained_box=b,
+                    face_box=[int(x),int(y),int(x+w),int(y+h)],
+                    reason='suit_position_on_same_physical_face' if suit_position else 'rank_suit_fragment_on_same_physical_face',
+                    validated_suit=suit['suit'] if 'suit' in suit else None))
     return [d for i,d in enumerate(detections) if i not in removed],audit
 
 

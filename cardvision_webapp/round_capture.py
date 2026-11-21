@@ -24,6 +24,7 @@ class RoundCapture:
         self.frame_count = 0
         self.error = None
         self.recording = False
+        self.on_frame = None
         self._stop = threading.Event()
         self._ready = threading.Event()
 
@@ -38,6 +39,10 @@ class RoundCapture:
             raise RuntimeError('Monitor %d is unavailable; found %d monitor(s).' %
                                (self.monitor_index, len(screen.monitors) - 1))
         return screen.monitors[self.monitor_index]
+
+    def displays(self):
+        with self._screen() as screen:
+            return [dict(index=i, **dict(monitor)) for i, monitor in enumerate(screen.monitors) if i]
 
     def preview(self):
         with self._screen() as screen:
@@ -92,6 +97,8 @@ class RoundCapture:
                         if not cv2.imwrite(str(filename), image):
                             raise OSError('Could not save screenshot: ' + str(filename))
                         self.frame_count += 1
+                    if self.on_frame:
+                        self.on_frame(filename, started)
                     self._ready.set()
                     self._stop.wait(max(0, 1 / self.fps - (time.monotonic() - started)))
         except Exception as exc:

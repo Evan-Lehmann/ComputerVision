@@ -3,11 +3,12 @@ from pathlib import Path
 from types import SimpleNamespace
 import json
 import hashlib
+import copy
 import cv2
 import numpy as np
 from card_tracking import CardIdentityMatcher, merge_track_fragments
-from round_segmentation import RoundSegmenter, visible_empty_table
-from card_faces import reconcile_faces, estimate_face_height
+from round_segmentation import RoundSegmenter, visible_empty_table, visible_table
+from card_faces import reconcile_faces, estimate_face_height, face_rank_crop
 from shared_cards import SharedMonitor, DEFAULT_SHARED_VIEW, suit_crops
 from card_suits import SuitReader, SUITS
 from mini_rank import MiniRankReader
@@ -63,7 +64,7 @@ def crop_box(image, box):
 
 
 class VisionEngine:
-    def __init__(self, detector_path=None, classifier_path=None):
+    def __init__(self, detector_path=None, classifier_path=None, device='auto', tile_batch_size=1):
         import torch
         from ultralytics import YOLO
         from rank_model import RankCNN, preprocess_crop
@@ -74,24 +75,27 @@ class VisionEngine:
             if not path.is_file():
                 raise FileNotFoundError('Missing model: ' + str(path))
         self.torch, self.preprocess, self.detect_full_frame = torch, preprocess_crop, detect_full_frame
+        if device == 'auto':
+            device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+        self.device, self.tile_batch_size = device, tile_batch_size
         self.detector = YOLO(str(detector_path))
         checkpoint = torch.load(classifier_path, map_location='cpu', weights_only=True)
         if checkpoint.get('ranks') != RANKS or checkpoint.get('image_size') != 64:
             raise ValueError('Classifier class order or image size is incompatible.')
         self.model = RankCNN()
         self.model.load_state_dict(checkpoint['model_state_dict'])
-        self.model.eval()
+        self.model.to(device).eval()
         torch.set_num_threads(min(torch.get_num_threads(), 4))
 
     def detect(self, image, path):
-        return self.detect_full_frame(self.detector, image)[3]
+        return self.detect_full_frame(self.detector, image, device=self.device, tile_batch_size=self.tile_batch_size)[3]
 
     def classify(self, crops):
         if not crops:
             return []
         tensors = self.torch.cat([self.preprocess(crop) for crop in crops])
         with self.torch.no_grad():
-            return self.model(tensors).softmax(1).cpu().numpy()
+            return self.model(tensors.to(self.device)).softmax(1).cpu().numpy()
 
 
 def summarize(result):
@@ -134,10 +138,10 @@ def summarize(result):
 
 
 def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=None, ocr_reader=None,
-                   reference_reader=None, face_evidence=True, shared_view=None, suit_reader=None, mini_reader=None):
+                   reference_reader=None, face_evidence=True, shared_view=None, suit_reader=None, mini_reader=None, frame_stream=None, live_progress=None):
     """Process every frame; callers may inject an engine for replay/testing."""
     frame_paths = sorted(Path(p) for p in frame_paths)
-    if not frame_paths:
+    if not frame_paths and frame_stream is None:
         raise ValueError('No frames were found. Record a round or select a frame folder.')
     regions = validate_regions(regions if regions is not None else DEFAULT_REGIONS)
     if shared_view is None:
@@ -159,10 +163,118 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
     tracks = {r['name']: [] for r in regions}
     next_id, read_frames = 1, 0
     suppressed_detections = []
+    visibility_gaps = []
+    # Only the supported default green-table layout has a scene visibility
+    # model. Custom regions retain their existing processing behavior.
+    check_visibility = sorted(r['rect'] for r in regions) == sorted(r['rect'] for r in DEFAULT_REGIONS)
     expected_shape = None
     recording_digest = hashlib.sha256(b'cardvision-recording-v1\0')
     segmenter = RoundSegmenter()
-    for index, path in enumerate(frame_paths):
+    def result_snapshot():
+        events = []
+        # Fragment repair replaces track attributes, never observation contents.
+        # Copy containers to keep active identities intact without duplicating crops.
+        for originals in tracks.values():
+            regional_tracks = [copy.copy(track) for track in originals]
+            for track in merge_track_fragments(regional_tracks):
+                observations = track.observations
+                average = np.mean([o['probabilities'] for o in observations], axis=0)
+                order = np.argsort(average)[::-1]
+                confidence = float(average[order[0]])
+                margin = float(average[order[0]] - average[order[1]])
+                rank = RANKS[order[0]] if len(observations) >= 2 and confidence >= .8 and margin >= .2 else 'UNKNOWN'
+                cnn_rank,cnn_confidence = RANKS[order[0]],confidence
+                recognition_source,ocr_result,reference_result = 'cnn',None,None
+                if rank == 'UNKNOWN' and reference_reader:
+                    reference_result = reference_reader.consensus(observations, cnn_rank)
+                    if reference_result:
+                        rank = reference_result['rank']
+                        confidence = reference_result['confidence']
+                        recognition_source = 'reference_consensus'
+                if rank == 'UNKNOWN' and ocr_reader:
+                    ocr_result = ocr_reader.consensus(observations)
+                    if ocr_result:
+                        rank = ocr_result['rank']
+                        confidence = ocr_result['confidence']
+                        recognition_source = 'ocr_consensus'
+
+                evidence = []
+                for label, observation in zip(['first','middle','last'], [observations[0], observations[len(observations)//2], observations[-1]]):
+                    filename = 'card_%04d_%s.png' % (track.track_id, label)
+                    if not cv2.imwrite(str(output_dir/filename), observation['crop']):
+                        raise OSError('Could not write card evidence.')
+                    evidence.append(dict(image=filename, frame=observation['frame'], source=observation['source']))
+                suit_result = suit_reader.consensus(observations) if suit_reader else None
+                events.append(dict(id=str(track.track_id),
+                    suit=suit_result['suit'] if suit_result else 'UNKNOWN',
+                    suit_confidence=suit_result['score'] if suit_result else 0,
+                    suit_votes=suit_result['votes'] if suit_result else [], source_views=[track.region], region=track.region, rank=rank,
+                    round_number=track.round_number,
+                    merged_from=getattr(track, 'merged_from', [track.track_id]),
+                    suggested_rank=rank if ocr_result or reference_result else cnn_rank,
+                    confidence=confidence, observations=len(observations),
+                    observation_frames=[o['frame'] for o in observations],
+                    observation_boxes=[o['box'] for o in observations],
+                    observation_rank_boxes=[o.get('rank_box') or o['box'] for o in observations],
+                    observation_faces=[o.get('face_box') for o in observations],
+                    observation_crop_sources=[o.get('crop_source','detector') for o in observations],
+                    recognition_source=recognition_source, cnn_suggested_rank=cnn_rank,
+                    cnn_confidence=cnn_confidence, ocr_votes=ocr_result['votes'] if ocr_result else [],
+                    reference_votes=reference_result['votes'] if reference_result else [],
+                    reference_bank_version=reference_result['bank_version'] if reference_result else None,
+                    confidence_kind='image_similarity' if reference_result else 'model_score',
+                    first_frame=observations[0]['frame'], last_frame=observations[-1]['frame'],
+                    evidence=evidence, excluded=False, reviewed=False,
+                    alternatives=[dict(rank=RANKS[i], probability=float(average[i])) for i in order[:3]]))
+        # Surface possible fragmentation without silently deleting real short-lived
+        # cards. A reviewer can exclude a duplicate while preserving its evidence.
+        for event in events:
+            candidates = [other['id'] for other in events
+                          if other['id'] != event['id'] and other['region'] == event['region']
+                          and other['round_number'] == event['round_number']
+                          and other['suggested_rank'] == event['suggested_rank']
+                          and not set(event['observation_frames']).intersection(other['observation_frames'])
+                          and max(event['first_frame'] - other['last_frame'],
+                                  other['first_frame'] - event['last_frame'], 0) <= 3]
+            event['possible_duplicates'] = candidates
+        # Within-frame ordering is deterministic, not a claim about sub-frame deal order.
+        events.sort(key=lambda event: (event['first_frame'], event['region'], int(event['id'])))
+        coverage = monitor.resolve(events,output_dir) if monitor else dict(status='not_monitored',issues=[],slots=[],links=[])
+        for gap in visibility_gaps:
+            coverage['issues'].append(dict(gap, frame=gap['first_frame'],
+                reason='Table view unavailable in frames %d–%d; cards exposed during this interval may be missing.' % (gap['first_frame'], gap['last_frame'])))
+        events.sort(key=lambda event:(event['first_frame'],event['region'],str(event['id'])))
+        result = summarize(dict(events=events, coverage=coverage, shared_view=shared_view, coverage_confirmed=False,
+            needs_coverage_review=bool(coverage['issues']), frames_processed=read_frames, regions=regions,
+            recording_digest=recording_digest.hexdigest(),
+            boundaries=segmenter.boundaries, uncertain_transitions=segmenter.uncertain_transitions,
+            rounds_confirmed=False,
+            review_confirmed=False, face_evidence_enabled=bool(face_evidence), suppressed_detections=suppressed_detections, visibility_gaps=copy.deepcopy(visibility_gaps), warnings=[
+                'Model predictions are provisional. Review every card and check for missing or duplicate cards.',
+                'Cards first seen in the same frame have uncertain relative deal order.',
+                'Capture may start or end mid-round; completion is not inferred. Check round assignments and boundaries.',
+                'Counts cover the configured primary and shared views only. Check other exposed cards and unresolved cross-view identities during review.'
+            ]))
+        if not events:
+            result['warnings'].append('No ranks detected in the selected regions. Check the region preview before trusting an empty list.')
+        if visibility_gaps and visibility_gaps[-1]['last_frame'] == read_frames-1:
+            result['warnings'].insert(0, 'Table view is hidden or outside the configured layout. Bring the table back into view; other windows are not counted.')
+        result['ocr_available'] = bool(ocr_reader and ocr_reader.available)
+        result['reference_available'] = bool(reference_reader and reference_reader.available)
+        if reference_reader and reference_reader.error:
+            result['warnings'].append(reference_reader.error)
+        if ocr_reader and not ocr_reader.available:
+            result['warnings'].append('Optional OCR cross-check is unavailable. Install Tesseract to enable it; unresolved ranks still need review.')
+        if ocr_reader and ocr_reader.error:
+            result['warnings'].append(ocr_reader.error)
+        if suit_reader and suit_reader.error:result['warnings'].append(suit_reader.error)
+        if mini_reader and mini_reader.error:result['warnings'].append(mini_reader.error)
+        save_result(result, output_dir)
+        return result
+
+    latest_result = None
+    for index, path in enumerate(frame_stream if frame_stream is not None else frame_paths):
+        path = Path(path)
         image = cv2.imread(str(path))
         if image is None:
             raise ValueError('Could not read frame: ' + path.name)
@@ -174,6 +286,22 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
         # Content-based grouping survives reanalysis, folder moves and renaming.
         recording_digest.update(np.asarray(image.shape, dtype='<u4').tobytes())
         recording_digest.update(image.tobytes())
+        if check_visibility and not visible_table(image, regions):
+            if visibility_gaps and visibility_gaps[-1]['last_frame'] == index-1:
+                visibility_gaps[-1].update(last_frame=index, last_source=path.name)
+            else:
+                visibility_gaps.append(dict(first_frame=index, last_frame=index,
+                    first_source=path.name, last_source=path.name, round_number=segmenter.round_number))
+            # A hidden window supplies neither card evidence nor proof of an
+            # empty table. Break any accumulated clear streak.
+            segmenter.observe(index, False, empty_table=False)
+            read_frames += 1
+            if progress:
+                progress(read_frames, len(frame_paths))
+            if live_progress:
+                latest_result = result_snapshot()
+                live_progress(latest_result)
+            continue
         detections = engine.detect(image, path)
         grouped = {r['name']: [] for r in regions}
         for det in detections:
@@ -220,103 +348,18 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 track.observations.append(dict(crop=detection['crop'], box=detection['box'],
                     probabilities=probabilities_i, frame=index, source=path.name,
                     face_box=detection.get('face_box'), secondary_crop=detection.get('secondary_crop'),
+                    face_rank_crop=face_rank_crop(image,detection) if face_evidence else None,
                     suit_crops=suit_crops(image,detection['face_box']) if detection.get('face_box') else [],
                     rank_box=detection.get('rank_box'), crop_source=detection.get('crop_source','detector')))
         read_frames += 1
         if progress:
             progress(read_frames, len(frame_paths))
-    events = []
-    for regional_tracks in tracks.values():
-        for track in merge_track_fragments(regional_tracks):
-            observations = track.observations
-            average = np.mean([o['probabilities'] for o in observations], axis=0)
-            order = np.argsort(average)[::-1]
-            confidence = float(average[order[0]])
-            margin = float(average[order[0]] - average[order[1]])
-            rank = RANKS[order[0]] if len(observations) >= 2 and confidence >= .8 and margin >= .2 else 'UNKNOWN'
-            cnn_rank,cnn_confidence = RANKS[order[0]],confidence
-            recognition_source,ocr_result,reference_result = 'cnn',None,None
-            if rank == 'UNKNOWN' and reference_reader:
-                reference_result = reference_reader.consensus(observations, cnn_rank)
-                if reference_result:
-                    rank = reference_result['rank']
-                    confidence = reference_result['confidence']
-                    recognition_source = 'reference_consensus'
-            if rank == 'UNKNOWN' and ocr_reader:
-                ocr_result = ocr_reader.consensus(observations)
-                if ocr_result:
-                    rank = ocr_result['rank']
-                    confidence = ocr_result['confidence']
-                    recognition_source = 'ocr_consensus'
-
-            evidence = []
-            for label, observation in zip(['first','middle','last'], [observations[0], observations[len(observations)//2], observations[-1]]):
-                filename = 'card_%04d_%s.png' % (track.track_id, label)
-                if not cv2.imwrite(str(output_dir/filename), observation['crop']):
-                    raise OSError('Could not write card evidence.')
-                evidence.append(dict(image=filename, frame=observation['frame'], source=observation['source']))
-            suit_result = suit_reader.consensus(observations) if suit_reader else None
-            events.append(dict(id=str(track.track_id),
-                suit=suit_result['suit'] if suit_result else 'UNKNOWN',
-                suit_confidence=suit_result['score'] if suit_result else 0,
-                suit_votes=suit_result['votes'] if suit_result else [], source_views=[track.region], region=track.region, rank=rank,
-                round_number=track.round_number,
-                merged_from=getattr(track, 'merged_from', [track.track_id]),
-                suggested_rank=rank if ocr_result or reference_result else cnn_rank,
-                confidence=confidence, observations=len(observations),
-                observation_frames=[o['frame'] for o in observations],
-                observation_boxes=[o['box'] for o in observations],
-                observation_rank_boxes=[o.get('rank_box') or o['box'] for o in observations],
-                observation_faces=[o.get('face_box') for o in observations],
-                observation_crop_sources=[o.get('crop_source','detector') for o in observations],
-                recognition_source=recognition_source, cnn_suggested_rank=cnn_rank,
-                cnn_confidence=cnn_confidence, ocr_votes=ocr_result['votes'] if ocr_result else [],
-                reference_votes=reference_result['votes'] if reference_result else [],
-                reference_bank_version=reference_result['bank_version'] if reference_result else None,
-                confidence_kind='image_similarity' if reference_result else 'model_score',
-                first_frame=observations[0]['frame'], last_frame=observations[-1]['frame'],
-                evidence=evidence, excluded=False, reviewed=False,
-                alternatives=[dict(rank=RANKS[i], probability=float(average[i])) for i in order[:3]]))
-    # Surface possible fragmentation without silently deleting real short-lived
-    # cards. A reviewer can exclude a duplicate while preserving its evidence.
-    for event in events:
-        candidates = [other['id'] for other in events
-                      if other['id'] != event['id'] and other['region'] == event['region']
-                      and other['round_number'] == event['round_number']
-                      and other['suggested_rank'] == event['suggested_rank']
-                      and not set(event['observation_frames']).intersection(other['observation_frames'])
-                      and max(event['first_frame'] - other['last_frame'],
-                              other['first_frame'] - event['last_frame'], 0) <= 3]
-        event['possible_duplicates'] = candidates
-    # Within-frame ordering is deterministic, not a claim about sub-frame deal order.
-    events.sort(key=lambda event: (event['first_frame'], event['region'], int(event['id'])))
-    coverage = monitor.resolve(events,output_dir) if monitor else dict(status='not_monitored',issues=[],slots=[],links=[])
-    events.sort(key=lambda event:(event['first_frame'],event['region'],str(event['id'])))
-    result = summarize(dict(events=events, coverage=coverage, shared_view=shared_view, coverage_confirmed=False,
-        needs_coverage_review=bool(coverage['issues']), frames_processed=read_frames, regions=regions,
-        recording_digest=recording_digest.hexdigest(),
-        boundaries=segmenter.boundaries, uncertain_transitions=segmenter.uncertain_transitions,
-        rounds_confirmed=False,
-        review_confirmed=False, face_evidence_enabled=bool(face_evidence), suppressed_detections=suppressed_detections, warnings=[
-            'Model predictions are provisional. Review every card and check for missing or duplicate cards.',
-            'Cards first seen in the same frame have uncertain relative deal order.',
-            'Capture may start or end mid-round; completion is not inferred. Check round assignments and boundaries.',
-            'Counts cover the configured primary and shared views only. Check other exposed cards and unresolved cross-view identities during review.'
-        ]))
-    if not events:
-        result['warnings'].append('No ranks detected in the selected regions. Check the region preview before trusting an empty list.')
-    result['ocr_available'] = bool(ocr_reader and ocr_reader.available)
-    result['reference_available'] = bool(reference_reader and reference_reader.available)
-    if reference_reader and reference_reader.error:
-        result['warnings'].append(reference_reader.error)
-    if ocr_reader and not ocr_reader.available:
-        result['warnings'].append('Optional OCR cross-check is unavailable. Install Tesseract to enable it; unresolved ranks still need review.')
-    if ocr_reader and ocr_reader.error:
-        result['warnings'].append(ocr_reader.error)
-    if suit_reader and suit_reader.error:result['warnings'].append(suit_reader.error)
-    if mini_reader and mini_reader.error:result['warnings'].append(mini_reader.error)
-    save_result(result, output_dir)
-    return result
+        if live_progress:
+            latest_result = result_snapshot()
+            live_progress(latest_result)
+    if not read_frames:
+        raise ValueError("No frames were captured.")
+    return latest_result if latest_result is not None else result_snapshot()
 
 
 def save_result(result, output_dir):

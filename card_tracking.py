@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 from glyph_features import glyph_signature as _animation_glyph
-from card_faces import secondary_animation_similarity, projected_rank_crop
+from card_faces import secondary_animation_similarity, projected_rank_crop, face_rank_crop
 
 
 def crop_appearance(crop):
@@ -201,6 +201,23 @@ class CardIdentityMatcher:
                     if ordered_row else appearance_similarity(
                         crop_appearance(detection.get('crop')), crop_appearance(observation.get('crop')))
                     for observation in track.observations[-2:])
+        # Padded recognition crops may contain a neighbour's differently
+        # coloured ink after compression. Two recent independently bounded
+        # corners must agree strongly before this view can rescue association.
+        # It does not bypass geometry, ordering, or ambiguity checks below.
+        if image is not None and ordered_row:
+            for i,detection in enumerate(detections):
+                clean=face_rank_crop(image,detection)
+                if clean is None:
+                    continue
+                for j,track in enumerate(active):
+                    recent=track.observations[-2:]
+                    if (track.last_sample_index != sample_index-1 or len(recent)<2
+                            or any(o.get('face_rank_crop') is None for o in recent)):
+                        continue
+                    score=min(glyph_similarity(clean,o['face_rank_crop']) for o in recent)
+                    if score>=.94:
+                        similarities[i,j]=max(similarities[i,j],score)
         projections = {}
         if image is not None and ordered_row:
             for i,detection in enumerate(detections):

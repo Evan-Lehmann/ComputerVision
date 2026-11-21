@@ -664,7 +664,11 @@ def final_nms(
 def detect_full_frame(
     model,
     image,
+    device='cpu',
+    tile_batch_size=1,
 ):
+    if type(tile_batch_size) is not int or tile_batch_size < 1:
+        raise ValueError('Tile batch size must be positive.')
     height, width = (
         image.shape[:2]
     )
@@ -707,38 +711,16 @@ def detect_full_frame(
 
     raw_detections = []
 
-    tile_number = 0
+    tiles = [(x, y) for y in ys for x in xs]
     detection_number = 0
-
-    for tile_y1 in ys:
-        for tile_x1 in xs:
-
-            tile_number += 1
-
-            tile_x2 = (
-                tile_x1
-                + tile_w
-            )
-
-            tile_y2 = (
-                tile_y1
-                + tile_h
-            )
-
-            tile = image[
-                tile_y1:tile_y2,
-                tile_x1:tile_x2
-            ]
-
-            results = model.predict(
-                source=tile,
-                imgsz=640,
-                conf=CONF_THRESHOLD,
-                verbose=False,
-            )
-
-            result = results[0]
-
+    for offset in range(0, len(tiles), tile_batch_size):
+        batch = tiles[offset:offset + tile_batch_size]
+        images = [image[y:y + tile_h, x:x + tile_w] for x, y in batch]
+        results = model.predict(source=images if tile_batch_size > 1 else images[0],
+                                imgsz=640, conf=CONF_THRESHOLD, verbose=False,
+                                device=device, rect=True)
+        for j, (result, (tile_x1, tile_y1)) in enumerate(zip(results, batch)):
+            tile_number = offset + j + 1
             if result.boxes is None:
                 continue
 

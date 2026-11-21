@@ -1,0 +1,88 @@
+{
+  "folder": "round_captures/round_20261026_103552_7d8b395b",
+  "frames": 84,
+  "runs": [
+    {
+      "device": "cpu",
+      "streaming": false,
+      "seconds": 62.921563166999995,
+      "frames_per_second": 1.3349954415000111,
+      "cards": [
+        "K",
+        "7",
+        "3",
+        "UNKNOWN",
+        "8",
+        "2"
+      ],
+      "count": null,
+      "subtotal": 1,
+      "round_count": 1,
+      "snapshots": 0,
+      "median_update_seconds": null,
+      "max_update_seconds": null,
+      "peak_process_rss_bytes": 543211520,
+      "matches_cpu": true,
+      "comparison": {
+        "matches": true,
+        "max_box_delta_pixels": 0.0,
+        "box_tolerance_pixels": 0.001
+      }
+    },
+    {
+      "device": "mps",
+      "streaming": false,
+      "seconds": 32.68008095799999,
+      "frames_per_second": 2.570373069392199,
+      "cards": [
+        "K",
+        "7",
+        "3",
+        "UNKNOWN",
+        "8",
+        "2"
+      ],
+      "count": null,
+      "subtotal": 1,
+      "round_count": 1,
+      "snapshots": 0,
+      "median_update_seconds": null,
+      "max_update_seconds": null,
+      "peak_process_rss_bytes": 664076288,
+      "matches_cpu": true,
+      "comparison": {
+        "matches": true,
+        "max_box_delta_pixels": 0.0001220703125,
+        "box_tolerance_pixels": 0.001
+      }
+    },
+    {
+      "device": "mps",
+      "streaming": true,
+      "seconds": 28.560367708,
+      "frames_per_second": 2.9411386036346756,
+      "cards": [
+        "K",
+        "7",
+        "3",
+        "UNKNOWN",
+        "8",
+        "2"
+      ],
+      "count": null,
+      "subtotal": 1,
+      "round_count": 1,
+      "snapshots": 84,
+      "median_update_seconds": 0.31985527049999973,
+      "max_update_seconds": 0.4669149169999969,
+      "peak_process_rss_bytes": 664076288,
+      "matches_cpu": true,
+      "comparison": {
+        "matches": true,
+        "max_box_delta_pixels": 0.0001220703125,
+        "box_tolerance_pixels": 0.001
+      }
+    }
+  ],
+  "all_match": true
+}

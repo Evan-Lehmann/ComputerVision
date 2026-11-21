@@ -1,5 +1,100 @@
 # First-deliverable validation
 
+## Rejecting review-page thumbnails during live capture
+
+The November 15 recording includes switches from the table to CardVision's review page and the editor. Previously, rank thumbnails in those windows entered the physical-card tracker. The repair checks for green felt in each default hand rectangle before detection, association and shared monitoring. At least 20% of each area must match the existing felt colour condition. Custom rectangles are unaffected. This is a layout-specific scene check, not a general window classifier or completeness guarantee.
+
+Skipped frames remain in the source recording and recording digest. Consecutive hidden frames form audited intervals with source filenames, frame indices and round assignment. They neither provide card observations nor establish an empty-table boundary. Coverage remains pending until reviewed; the app displays a hidden-table warning and source buttons for coverage gaps. Missing cards during a hidden interval remain possible.
+
+An actual CPU detector replay froze the first 707 frames of `round_20261115_035856_4283c96e`. Baseline and candidate use identical source frames and content-addressed detector outputs; the baseline bypasses only the visibility check. Candidates drop **51 → 33**, Unknown rows **21 → 6**, and the detected-event range **−27…+15 → −10…+2**. A false fifth round disappears. The full count remains unavailable. Remaining Unknowns include two clipped dealer candidates, a dim 10 fragment, and three unresolved shared identities. This is a development improvement, not an acceptable final automatic count or fresh accuracy result.
+
+All thirteen earlier development recordings (961 frames) were replayed with the saved native-MPS detector boxes and the current CPU classifier. Event identities, ranks, suits, observation frames/boxes, merges, source views, recognition sources and round boundaries match the prior candidate results. Seven rejected historical frames were visually checked: all show the review page or editor, and none supplied observations in the earlier results. Coverage flags intentionally change for those hidden intervals.
+
+**197 tests run: 196 pass and one optional native Tesseract test skips.** New tests cover thumbnail rejection, both-hand felt checks, hidden-gap auditing, no false empty-table boundary, streaming/offline equality, snapshot isolation, custom-layout compatibility and all-hidden recordings withholding a complete zero. Python syntax, JavaScript syntax and `git diff --check` pass. No model weights or recognition acceptance thresholds changed. Screenshots and evidence remain ignored local artifacts. Summary and model hashes: [table_visibility_evaluation.json](validation/table_visibility_evaluation.json).
+
+Reproduce the paired CPU replay:
+
+```sh
+python accuracy_replay.py --phase baseline --source round_captures --rounds round_20261115_035856_4283c96e --work round_captures/visibility_work --device cpu --limit 707 --disable-visibility-check
+python accuracy_replay.py --phase candidate --source round_captures --rounds round_20261115_035856_4283c96e --work round_captures/visibility_work --device cpu --limit 707
+```
+
+## Face boundaries during compression and clipped rank/suit fragments
+
+The live-processing checkout was frozen as the local baseline before these accuracy edits. Its association and face-validation code matched published `f50c567`. All thirteen inspected `v3_new_rounds` recordings were replayed before and after using the same native-MPS detector outputs cached by decoded image content. Three older recordings add continuation, multi-round and historical rank/tracking coverage. No weights, recognition acceptance thresholds, detector tiling or cross-view matching rules changed.
+
+**Two documented failures are repaired:**
+
+| Recording | Before candidates / Unknowns | After candidates / Unknowns | Complete captured-card change |
+|---|---:|---:|---:|
+| r11 | 10 / 3 | 9 / 0 | +3 |
+| r12 | 9 / 4 | 7 / 0 | −1 |
+
+In r11, the dealer hand compresses when the 7 arrives. At zero-based frame 106, black ink from the neighbouring card enters the padded red-2 crop. The old glyph comparison returns zero and starts an extra identity. The new association view bounds the corner by its independently observed paper edges. Both immediately preceding bounded corners must agree at ≥0.94; existing geometry, ordering, retirement and ambiguity gates still apply. This frame scores 0.975 on that view. The same dealer 2 now retains event ID 8 across frames 105–107, replacing the previous 8→11→8 sequence. Classifier crops remain unchanged. Removing that duplicate also lets the existing shared-view logic resolve the genuine central 4 hearts and King clubs.
+
+In r12, a tiled detector box cuts through the King's right strokes and the adjacent club. It produces nine observations across frames 79–87, previously split into two false Unknown candidates. Suppression now also recognizes a narrower right fragment crossing a retained rank toward the verified suit, but only inside independently observed complete upright paper with exactly one supported left-rank counterpart and an accepted suit. Lone fragments, unsupported paper, unverified suits, another full corner and neighbouring faces remain retained. All nine source crops were inspected: each is part of the existing King clubs. Their original boxes, retained counterpart, face, accepted suit and suppression reason remain in the result audit. The existing shared-view matcher can then resolve the distinct 9 spades and 9 diamonds without extra rules or forced guesses.
+
+The repaired lists were checked against visible physical ranks/suits in the source recordings: r11 has 5 hearts, A clubs, 2 spades, 4 hearts, K clubs, 3 clubs, 2 hearts, 8 diamonds and 7 hearts; r12 has Q clubs, 6 spades, Q diamonds, 9 spades, 9 diamonds, 3 spades and K clubs. Lists use first-observed order; tied samples do not establish exact deal order. Incremental processing produces exactly the same final result JSON as offline processing for both repaired recordings.
+
+All other eleven `v3_new_rounds` recordings retain identical event identities, ranks, suits, round assignments, merges, source views, observation frames, boxes and recognition-crop provenance. Across these thirteen recordings (961 frames), total candidates drop from 83 to 80 and Unknown rows from 13 to 6. The three older recordings (391 frames) also retain their event provenance, counts, boundaries and per-round summaries. The 130-frame continuation remains seven cards / −2; the earlier two-round and Oct-26 recordings retain their existing ambiguous shared candidate and incomplete full count. These are regression measurements, not new recognition acceptance data.
+
+**R4 and r13 remain unresolved.** On this Mac, r4 has two Unknown rows, compared with one in the older published report; the optional Tesseract binary is absent, and the same local environment was used before and after this change. Its shared-strip continuity problem remains. R13 still has four Unknown rows because the first shared card lacks a reliable initial rank/suit anchor. These recordings were already inspected, so neither these gains nor the two repaired former holdouts count as fresh independent accuracy. The earlier frozen 0/3 holdout result remains recorded below. A new untouched recording set is still needed.
+
+**193 tests run: 192 pass and one optional native Tesseract test skips.** New synthetic regressions reproduce contamination that fails the original matcher, exercise the actual streamed pipeline, and verify that classifier pixels stay unchanged. Negative tests cover unsupported/clipped faces, different rank/colour, all pairs of thirteen synthetic ranks, competing identical tracks, unverified suits, full second corners, lone fragments and overlapping neighbouring faces. Existing live-stop/drain, identity, shared-view and round-boundary tests continue to pass. Python syntax, JavaScript syntax and `git diff --check` pass. No uploaded screenshots or new source-crop fixtures are added to Git.
+
+Reproduce the comparison without altering the checkout:
+
+```sh
+python accuracy_replay.py --phase baseline --baseline-ref f50c567
+python accuracy_replay.py --phase candidate
+python accuracy_replay.py --phase streamed --rounds r11 r12 --streaming
+python accuracy_replay.py --phase older_baseline --baseline-ref f50c567 --source round_captures --rounds split_round first_two_rounds round_20261026_103552_7d8b395b
+python accuracy_replay.py --phase older_candidate --source round_captures --rounds split_round first_two_rounds round_20261026_103552_7d8b395b
+python -m unittest discover -s tests -q
+```
+
+The helper retains separate results and detector caches under ignored `round_captures/accuracy_work`. It checks detector-code/model/backend context and frame shape; use a fresh `--work` directory when these change. Native MPS access is required to reproduce this report's backend. Detailed before/after summaries, target references, stream equality, old replay checks, source/model hashes and limitations are in [validation/face_continuity_evaluation.json](validation/face_continuity_evaluation.json).
+
+
+## Live counting on the M2 Mac
+
+Starting from the clean published `f50c567` checkout, no cloud-prototype files or repository/ancestor AGENTS.md instructions were present. The existing validation failures above/below remain recognition limitations; this change introduces continuous inference and dashboard updates without retraining or relaxing acceptance thresholds.
+
+Capture commits each PNG before passing its path and monotonic capture timestamp to one sequential worker. The worker retains matcher, shared-monitor and round-segmenter state across incoming frames. Per-frame provisional snapshots reconcile copies of track containers, preserving the active identities; counts are recomputed from included card events and carry over table-clear round boundaries. Pending paths, rather than full-screen arrays, form the backlog. Stop waits for capture to terminate and then drains all saved frames before enabling review, reset, replay or display changes. Countdown cancellation, worker ownership after errors and stop retries are covered by tests. Crops and tracking history still accumulate during a recording; unlimited-duration memory stability is not established.
+
+Native measurements use this Apple M2 / 8 GB Mac, macOS 15.6 arm64, Python 3.9 and PyTorch 2.8. MPS is available outside the execution sandbox; the sandbox reports it unavailable. The engine selects MPS when available and otherwise CPU. Defaults retain two-fps capture and one detector tile per inference call.
+
+The detector benchmark uses three saved 1440×900 frames, one warmup on the first frame per configuration, and three measured repetitions per frame. All nine outputs for each configuration match the CPU baseline after rounding coordinates/confidences to three decimals. These measurements cover the selected frames, not general inference equivalence.
+
+| Backend | Tile batch | Median detector seconds/frame |
+|---|---:|---:|
+| CPU | 1 | 0.492 |
+| CPU | 2 | 0.603 |
+| CPU | 4 | 0.623 |
+| CPU | 8 | 0.586 |
+| MPS | 1 | 0.168 |
+| MPS | 2 | 0.162 |
+| MPS | 4 | 0.196 |
+| MPS | 8 | 0.226 |
+
+One-tile MPS is selected because larger batches offer no consistent improvement across these measurements. Reported MPS driver allocation grew from about 114 MB at batch 1 to about 1.2 GB after batched configurations. Those are allocator readings in a sequential benchmark process, including retained caches, not isolated per-configuration peaks or total application memory. A first encounter with another frame incurred a 2.33-second MPS sample; a warm detector is not a guarantee against stalls. The initial single-frame exploratory run also emitted an Ultralytics NMS time-limit warning during warmup; its timings were superseded by the three-frame report. No thresholds or NMS timeout settings were changed.
+
+Full pipeline replays include detection, classification, tracking, reference checks, shared-view resolution, PNG evidence and result persistence. CPU and MPS offline results and streamed MPS results match on identities, ranks, suits, observation frame memberships, merges, round assignments, boundaries, counts and coverage-pending status. Detector coordinates alone permit a 0.001-pixel numerical tolerance; maximum observed differences were 0.000123 pixels (84 frames) and 0.000062 pixels (177 frames). Exact floating-point equality initially failed this comparison; inspection confirmed only coordinate rounding differences, and the explicit tolerance is recorded in the reproducible validator.
+
+| Recording | Frames / rounds | CPU offline | MPS offline | MPS stream | Stream rate | Snapshots |
+|---|---:|---:|---:|---:|---:|---:|
+| Oct-26 development round | 84 / 1 | 62.92 s | 32.68 s | 28.56 s | 2.94 fps | 84 |
+| Earlier two-round development capture | 177 / 2 | 100.94 s | 53.83 s | 70.39 s | 2.51 fps | 177 |
+
+The multi-round stream's median update time was 0.385 s and its slowest update 0.987 s. The 84-frame stream's median was 0.320 s and maximum 0.467 s. Process peak RSS readings were approximately 664 MB and 512 MB respectively, cumulative across each process's three modes; they do not include all driver/system memory. These runs are sequential saved-frame throughput checks, not simultaneous live-table/browser load or external Retina-display benchmarks. They support the current two-fps default but do not establish a latency guarantee. Both recordings retain their existing ambiguous shared candidate: the full automatic count remains unavailable while the known subtotal is +1. Numerical agreement is not independent recognition accuracy. The two-round synthetic regression separately checks stable first-round identity/count through clearing and a distinct same-rank second-round identity, yielding running subtotals +1 then +2.
+
+Native MSS enumeration found only the built-in 1440×900 display. A real one-second capture saved three PNGs, returned no capture error, and terminated its thread. Synthetic two-display tests cover selection, unavailable/invalid indices and mutation rejection while recording/draining. Physical external-display selection, a real table on one display with the dashboard on the other, and browser visual interaction still require a check when that setup is connected. No browser automation package was available in this checkout.
+
+Validation: **184 tests run, 183 pass and one optional native Tesseract test skips because the binary is absent**. New regressions exercise streamed/offline equivalence, provisional Unknown→rank updates, stable event IDs, counts across rounds, no dropped backlog frames, lag visibility, stop/drain locking, countdown cancellation, capture/inference errors, stop retry, and batched tile coordinate/ID equivalence. JavaScript syntax, dependency consistency and `git diff --check` pass. Existing model/tracker regressions remain intact.
+
+Reproduce with `python benchmark_live.py <frame> [<frame> ...] --repeats 3`, `python validate_live.py <frame_folder>`, and `python -m unittest discover -s tests -q`. Detailed native results: [detector benchmark](validation/live_benchmark.json), [84-frame replay](validation/live_replay.json), [177-frame replay](validation/live_replay_multi.json), and [capture smoke test](validation/live_capture_smoke.json). Screenshots and evidence remain outside Git.
+
+
 ## Physical-face validation and shared-view identity update
 
 The code now groups detection glyphs using independently observed upright card paper. A right-corner detection is suppressed only when it lies on the same complete face as a retained left-rank candidate and the suit reader accepts the face's suit crop. Geometry alone, a lone candidate, or an unrecognized suit cannot authorize deletion. Every suppression retains its source box, face box, counterpart and reason in the result audit. This is a bounded face-validation layer; it is not a complete persistent card-instance representation for crowded or occluded hands.

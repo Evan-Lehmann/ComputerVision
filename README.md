@@ -2,9 +2,9 @@
 
 A local school-project dashboard for reviewing cards across recorded play-money blackjack rounds and calculating their Hi-Lo changes and running total.
 
-**Current status: working record → analyze → review → count prototype, with conservative multi-round segmentation. Automatic recognition, tracking and boundaries still make mistakes. An unreviewed count is provisional; unknown cards make it incomplete.** Counts update after recording stops. Continuous live shoe tracking and betting signals are not implemented.
+**Current status: live record → provisional count → drain → review prototype, with conservative multi-round segmentation.** Incoming saved frames update card identities and the running subtotal while recording. Automatic recognition, tracking and boundaries still make mistakes; Unknown cards and unchecked coverage withhold a complete count. Automatic shoe tracking and betting signals are not implemented.
 
-Physical-face glyph validation and shared-view matching now remove all six false suit/edge candidates and five duplicate central-view rows in the ten development recordings. Exact card-list/count results improve from **4/10 to 9/10**, with Unknown rows reduced from 13 to 1. However, the frozen candidate passes **0/3 untouched recordings**: crowded-hand fragments and insufficient shared-view identity evidence remain unresolved. These development gains do not establish reliable general accuracy. Model weights and recognition thresholds are unchanged. See [VALIDATION.md](VALIDATION.md).
+The latest accuracy fixes preserve a card's identity when neighbouring ink enters its crop during hand compression, and attach verified clipped rank/suit fragments to their existing card face. Two previously failing inspected recordings now return exact lists and provisional counts: r11 has nine cards / +3; r12 has seven cards / −1. Eleven other inspected recordings and three older regression recordings retain their identities and count outcomes. R4 and r13 still need review. These are development fixes, not fresh independent accuracy results; the earlier frozen 0/3 holdout result remains documented in [VALIDATION.md](VALIDATION.md#face-boundaries-during-compression-and-clipped-ranksuit-fragments). No model weights or recognition thresholds changed.
 
 ## Run on your Mac
 
@@ -20,9 +20,9 @@ Open `http://127.0.0.1:5000` locally on your Mac. The models are included in `mo
 
 The desktop dashboard keeps recording controls and the count beside a scrollable review workspace. **Cards**, **Rounds**, and **Coverage** tabs separate the review steps; a “check” label marks outstanding round or coverage checks. Save review stays visible below the workspace. **Card regions** opens calibration, and **Help** contains detailed instructions. Narrow windows and phones use a stacked, scrolling layout so controls remain readable.
 
-1. Open **Card regions**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings: two primary hand boxes plus a separately monitored central shared hand. Check all three in the preview. The shared view is linked to the player hand; it is not counted as an independent duplicate hand.
+1. Choose the **Table display** in the recording panel. Keep the table on that display and the dashboard on the other; recording captures the entire selected display. Open **Card regions**, load a preview and check the hand boxes. Defaults match the supplied 1440×900 recordings: two primary hand boxes plus a separately monitored central shared hand. Check all three in the preview. The shared view is linked to the player hand; it is not counted as an independent duplicate hand.
 2. Start recording before cards appear. The app gives a three-second countdown; switch to the play-money table. It records at two frames per second by default.
-3. For multiple rounds, keep recording through the cleared table between deals. Stop after the last round's face-up cards have appeared. Analysis runs in the background and reports progress.
+3. Cards and provisional counts update automatically. The panel shows analyzed/pending frames and the age of the latest analyzed frame (including processing and queue delay). For multiple rounds, keep recording through the cleared table between deals; round boundaries preserve the accumulated count. **Stop & drain** stops capture, then analyzes every saved pending frame before enabling review. Stop during the countdown cancels startup. Display, region, reset and replay changes are blocked while capture or analysis owns the session.
 4. Inspect each card's first/middle/last crop. Click a crop to open its original screenshot. Correct incorrect/unknown ranks, exclude duplicate or false detections, add missed cards, and adjust order. All original detections remain in the saved audit even when excluded.
 5. Open **Rounds** to check each round's cards and suggested clearing evidence. Correct a missed or false boundary using the **Round** number beside each card; add missed cards to the appropriate round. Check **Coverage** for unresolved shared-view identities. Confirm the card list and, when requested, the round divisions and coverage, then save the review. Use **Result JSON** to download the result.
 
@@ -41,7 +41,27 @@ For global shortcuts, run `python record_rounds.py --hotkeys`. **Option+S starts
 To record successive sessions without waiting for analysis, run `python record_rounds.py` from the project root. Press Enter to begin a three-second countdown, switch to the table, then return to the terminal and press Enter to stop and save. Press Enter again to prepare the next recording, or type `q` then Enter to quit. Each recording gets its own folder in `round_captures/`; no models or Flask analysis run. Keep recording through all round boundaries when collecting a continuous session. Optional flags include `--countdown 5`, `--monitor 2`, and `--output round_captures/fresh_tests`. Screen Recording permission is still required for the app launching Python.
 
 
-### Hand-aware association and rank references
+### Live processing and benchmarks
+
+With the default hand rectangles, analysis requires visible green felt in both hand areas before running recognition. Switching to the review page or editor records a visibility gap instead of counting card thumbnails. The live warning asks you to restore the table; **Coverage** retains the skipped frame interval and source screenshot. Hidden intervals cannot establish an empty-table round boundary and keep the complete count unavailable pending review. This check targets the default green-table layout only; custom hand rectangles retain their existing behavior.
+
+The vision engine selects MPS when PyTorch can access it, otherwise CPU. It uses one tile per detector call: on this Mac, larger batches did not consistently improve latency and increased reported GPU allocator memory. Model weights, confidence gates, frame rate, detector tile geometry and duplicate suppression remain unchanged.
+
+Capture writes PNGs before enqueueing their paths. One inference worker consumes every saved path in order; pending full-screen arrays are not held in RAM and frames are not silently skipped. Identity matchers, shared-view histories and round segmentation persist through the recording. Provisional snapshots reconcile copies of track containers so fragment repair cannot mutate active matcher identities. Evidence, OCR/reference agreement and shared-view checks use the same pipeline as offline analysis. A provisional identity or rank may change as more evidence arrives; the running subtotal is recomputed from unique included events rather than incremented repeatedly on sightings.
+
+Lag is the age of the last successfully analyzed capture timestamp, or startup age while the first frame is pending. It includes idle time since the last capture, so a small nonzero value is normal. If analysis falls behind, pending paths accumulate on disk and Stop may take time to drain. Capture or inference errors remain visible, and saved frames are available for replay. Long sessions retain crop/identity history in memory; the short replay measurements do not establish an unlimited-session memory bound. Separate recordings still begin at zero.
+
+Reproduce the native benchmark with your own representative saved frames:
+
+```sh
+python benchmark_live.py /path/to/frame1.png /path/to/frame2.png --repeats 3
+python validate_live.py /path/to/frame_folder
+python -m unittest discover -s tests -q
+```
+
+The benchmark compares CPU/MPS and tile batches 1/2/4/8 after a warmup. Replay validation compares identity histories, ranks, suits, counts and round assignments; only detector coordinates permit a 0.001-pixel backend tolerance. Measurements use saved 1440×900 frames, not concurrent table/browser load or a Retina external display. Recheck lag and performance at the actual display resolution before increasing capture FPS.
+
+## Hand-aware association and rank references
 
 The current pipeline preserves card order within a configured hand row and estimates shared hand movement. This helps keep an existing card when a new one arrives near its old position. The supplied UI appends new cards on the right; other dealing layouts, splits and arbitrary additional views are not established as supported. Tiny or multiple-row inputs fall back to conservative association. Normalized glyph signatures tolerate tinted backgrounds and detector jitter while preserving compact digits at crop edges. The YOLO V2 detector remains unchanged. The default CNN is now V5; earlier V4 weights are retained for comparison.
 
@@ -96,7 +116,7 @@ Choose another monitor or port if needed:
 python -m cardvision_webapp.app --monitor 2 --fps 2 --port 5002
 ```
 
-The implementation was validated on Linux with recorded frames and a simulated capture source. Actual capture and dependency installation on the original Apple M2 / Python 3.9.6 machine still require a live check.
+Native CPU/MPS benchmarks, streamed replays and a screen-capture smoke test now run on this M2 Mac. Only one display was connected during the native smoke test; the two-display selection flow is covered with a simulated capture source. See [live validation](VALIDATION.md#live-counting-on-the-m2-mac).
 
 ## Analyze existing screenshots
 

@@ -234,4 +234,138 @@ class PhysicalFaceGlyphTests(unittest.TestCase):
             self.assertEqual(len(kept),2);self.assertFalse(audit)
 
 
+
+class FaceBoundedAssociationTests(unittest.TestCase):
+    def test_neighbour_ink_cannot_fragment_a_face_bounded_rank(self):
+        from card_faces import face_rank_crop
+        before,after=canvas(),canvas()
+        fa=paper(before,160,text='2',red=True);fb=paper(after,130,text='2',red=True)
+        # A neighbouring black corner lies outside the current card's paper.
+        after[202:221,122:130]=0
+        old_box=[160,200,177,222];new_box=[126,200,147,222]
+        history=[]
+        for i in [0,1]:
+            old=observation(before,old_box,fa,i)
+            old['face_rank_crop']=face_rank_crop(before,old)
+            history.append(old)
+        track=SimpleNamespace(track_id=1,last_box=old_box,last_sample_index=1,observations=history)
+        d=dict(box=new_box,crop=crop_box(after,new_box),face_box=fb)
+        from card_tracking import glyph_similarity
+        self.assertLess(glyph_similarity(d['crop'],history[-1]['crop']),.78)
+        unbounded=[dict(o) for o in history]
+        for o in unbounded:o.pop('face_rank_crop')
+        unsupported=SimpleNamespace(track_id=1,last_box=old_box,last_sample_index=1,observations=unbounded)
+        self.assertFalse(CardIdentityMatcher(ordered_hand=True).match([dict(d)],[unsupported],2,image=after))
+        matches=CardIdentityMatcher(ordered_hand=True).match([d],[track],2,image=after)
+        self.assertIs(matches.get(0),track)
+        # Classifier input must retain its original pixels, including padding.
+        self.assertTrue(np.array_equal(d['crop'],crop_box(after,new_box)))
+
+    def test_pipeline_preserves_one_identity_through_contaminated_compression(self):
+        import tempfile
+        from pathlib import Path
+        from round_pipeline import process_frames
+        before,after=canvas(),canvas()
+        paper(before,160,text='2',red=True);paper(after,130,text='2',red=True)
+        after[202:221,122:130]=0
+        class Engine:
+            def detect(self,image,path):
+                box=[126,200,147,222] if path.stem=='frame_2' else [160,200,177,222]
+                return [dict(zip(['x1','y1','x2','y2'],box))]
+            def classify(self,crops):
+                p=np.full(13,.001);p[1]=.988
+                return [p for _ in crops]
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);paths=[]
+            for i,image in enumerate([before,before,after]):
+                path=root/f'frame_{i}.png';cv2.imwrite(str(path),image);paths.append(path)
+            kwargs=dict(engine=Engine(),regions=[dict(name='hand',rect=[0,0,1,1])],
+                        shared_view=False,ocr_reader=False,reference_reader=False)
+            snapshots=[]
+            result=process_frames([],root/'enabled',frame_stream=iter(paths),live_progress=snapshots.append,**kwargs)
+            unbounded=process_frames(paths,root/'disabled',face_evidence=False,**kwargs)
+            self.assertEqual(result['cards'],['2'])
+            self.assertEqual(result['events'][0]['observation_frames'],[0,1,2])
+            self.assertEqual(result['known_count_change'],1)
+            self.assertEqual([r['events'][0]['id'] for r in snapshots],['1']*3)
+            self.assertEqual(unbounded['cards'],['2','UNKNOWN'])
+            self.assertIsNone(unbounded['count_change'])
+
+    def test_bounded_view_requires_supported_face_and_complete_rank_width(self):
+        from card_faces import face_rank_crop
+        image=canvas();face=paper(image)
+        for box,fb in [([100,200,117,222],None),([100,200,106,222],face),
+                       ([100,200,117,222],[100,200,110,260]),([120,200,137,222],face)]:
+            self.assertIsNone(face_rank_crop(image,dict(box=box,face_box=fb)))
+
+    def test_bounded_view_cannot_link_different_rank_or_colour(self):
+        from card_faces import face_rank_crop
+        before=canvas();fa=paper(before,160,text='2',red=True);box=[160,200,177,222]
+        history=[]
+        for i in [0,1]:
+            old=observation(before,box,fa,i);old['face_rank_crop']=face_rank_crop(before,old);history.append(old)
+        track=SimpleNamespace(track_id=1,last_box=box,last_sample_index=1,observations=history)
+        for rank,red in [('3',True),('2',False)]:
+            after=canvas();fb=paper(after,130,text=rank,red=red)
+            d=dict(box=[130,200,147,222],crop=crop_box(after,[130,200,147,222]),face_box=fb)
+            self.assertFalse(CardIdentityMatcher(ordered_hand=True).match([d],[track],2,image=after))
+
+    def test_different_synthetic_ranks_do_not_pass_the_bounded_identity_gate(self):
+        from card_faces import face_rank_crop
+        from card_tracking import glyph_similarity
+        ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K']
+        crops={}
+        for rank in ranks:
+            image=canvas();face=paper(image,text=rank)
+            crops[rank]=face_rank_crop(image,dict(box=[100,200,117,222],face_box=face))
+        for a in ranks:
+            for b in ranks:
+                if a!=b:self.assertLess(glyph_similarity(crops[a],crops[b]),.94,(a,b))
+
+    def test_near_ties_in_bounded_view_still_abstain(self):
+        from card_faces import face_rank_crop
+        image=canvas();f=paper(image,text='2',red=True);box=[100,200,117,222]
+        history=[]
+        for i in [0,1]:
+            o=observation(image,box,f,i);o['face_rank_crop']=face_rank_crop(image,o);history.append(o)
+        tracks=[SimpleNamespace(track_id=i,last_box=box,last_sample_index=1,observations=history) for i in [1,2]]
+        d=dict(box=box,crop=crop_box(image,box),face_box=f)
+        self.assertFalse(CardIdentityMatcher(ordered_hand=True).match([d],tracks,2,image=image))
+
+
+class RankSuitFragmentTests(unittest.TestCase):
+    def test_fragment_requires_verified_suit_and_independent_complete_paper(self):
+        from unittest.mock import patch,Mock
+        from card_faces import validate_face_glyphs
+        for accepted in [True,False]:
+            image=canvas();paper(image,text='K')
+            full=candidate(image,width=17)
+            partial=candidate(image,112,width=10)
+            with patch('card_faces._suit_validator',return_value=Mock(read=Mock(return_value={'accepted':accepted,'suit':'clubs'}))):
+                kept,audit=validate_face_glyphs(image,[full,partial],60)
+            self.assertEqual(len(kept),1 if accepted else 2)
+            if accepted:
+                self.assertEqual(audit[0]['reason'],'rank_suit_fragment_on_same_physical_face')
+                self.assertEqual(audit[0]['validated_suit'],'clubs')
+                self.assertEqual(audit[0]['retained_box'],full['box'])
+
+    def test_full_second_corner_and_lone_fragment_are_kept(self):
+        from unittest.mock import patch,Mock
+        from card_faces import validate_face_glyphs
+        image=canvas();paper(image,text='K')
+        for ds in [[candidate(image,112,width=17),candidate(image)], [candidate(image,112,width=10)]]:
+            with patch('card_faces._suit_validator',return_value=Mock(read=Mock(return_value={'accepted':True,'suit':'clubs'}))):
+                kept,audit=validate_face_glyphs(image,ds,60)
+            self.assertEqual(kept,ds);self.assertFalse(audit)
+
+    def test_partial_on_neighbouring_overlapping_face_is_kept(self):
+        from unittest.mock import patch,Mock
+        from card_faces import validate_face_glyphs
+        image=canvas();paper(image,100,text='K');paper(image,112,text='7')
+        ds=[candidate(image),candidate(image,112,width=10)]
+        with patch('card_faces._suit_validator',return_value=Mock(read=Mock(return_value={'accepted':True,'suit':'clubs'}))):
+            kept,audit=validate_face_glyphs(image,ds,60)
+        self.assertEqual(kept,ds);self.assertFalse(audit)
+
+
 if __name__=='__main__':unittest.main()

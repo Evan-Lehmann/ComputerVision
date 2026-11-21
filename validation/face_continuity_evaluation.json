@@ -1,0 +1,990 @@
+{
+  "evaluation": "Face-bounded association and verified rank/suit fragment suppression",
+  "date": "2026-11-15",
+  "baseline_vision_revision": "f50c567",
+  "baseline_runtime": "Uncommitted live-processing checkout from prior task; baseline ran before accuracy edits.",
+  "environment": {
+    "platform": "macOS-15.6-arm64-arm-64bit",
+    "torch": "2.8.0",
+    "numpy": "1.26.4",
+    "opencv": "4.10.0",
+    "ocr_available": false
+  },
+  "candidate_code_sha256": {
+    "card_faces.py": "7878edc6ad7af948243fe8466f2684bc08981c6b531c756e635449cde5b209a1",
+    "card_tracking.py": "a1ec9d36270fbb1743002b4748bed9c2f5b601377db33573ac56f17616813bc6",
+    "round_pipeline.py": "906b172a5e2e679f1e8f8e12287f9c3b6c676eb3e56ae7ccb497e5f26fdfbab2",
+    "accuracy_replay.py": "814df552f5936aa2cd4f9112cdc19dac79ec8fad765c6fb25ed02aa9d2f7681f"
+  },
+  "published_vision_sha256": {
+    "card_faces.py": "b2e6522a614066056180ae5168a013ca17f802764a686c982a8fe972b3da7eb3",
+    "card_tracking.py": "59b7ced65ac5e0602fd1519dadda2f880c74fff2606b0d709cb5957f5995a208"
+  },
+  "model_weights_changed": false,
+  "model_sha256": {
+    "rank_classifier_v4.pt": "fab0c394e428ba9e9ad3faff3f36b4ff6bfe224f9594db217f1c39c80b8d24ae",
+    "rank_classifier_v5.pt": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026",
+    "suit_classifier_v1.pt": "24c13ee1619656c38ad894b23efc5e37d9c7aee032792b2a920f7cdf8cb370f3",
+    "rank_classifier_mini_v1.pt": "efb36342b8252741db7355d85032164d1fe84b1e14a3f9a40bc302a368185fed",
+    "rank_classifier_v2.pt": "a8cecebee63b60f333104b5d1290f5d351625f1ee717a65763cb9e51d1626a7e",
+    "rank_detector_v2.pt": "27c926decf47a3b21af99f5eabddd430be3cb6939920a4bd9bdd34f15d995f92",
+    "rank_classifier_v3.pt": "c15100b0bb0c3e1ff41e551ec4671bfaa768b6657e957f1d4f4d99ffd9b7d6bb"
+  },
+  "rounds": [
+    {
+      "recording": "r1",
+      "frames": 60,
+      "baseline": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "6",
+          "6",
+          "K",
+          "8",
+          "K"
+        ],
+        "suits": [
+          "clubs",
+          "hearts",
+          "hearts",
+          "spades",
+          "hearts"
+        ],
+        "count": 0,
+        "known_subtotal": 0,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "6",
+          "6",
+          "K",
+          "8",
+          "K"
+        ],
+        "suits": [
+          "clubs",
+          "hearts",
+          "hearts",
+          "spades",
+          "hearts"
+        ],
+        "count": 0,
+        "known_subtotal": 0,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "fbbd5a54cf90137c4d1eaa95c35a117abe7e47a9f5e335d738eb128eece18889",
+      "candidate_result_sha256": "2f4c3efd3165c42cfb3b5a8d27ee7bfffe461c57c4fa48a517b8c7873b3d0d82"
+    },
+    {
+      "recording": "r2",
+      "frames": 53,
+      "baseline": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "J",
+          "7",
+          "9",
+          "3",
+          "A"
+        ],
+        "suits": [
+          "spades",
+          "clubs",
+          "diamonds",
+          "clubs",
+          "spades"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "J",
+          "7",
+          "9",
+          "3",
+          "A"
+        ],
+        "suits": [
+          "spades",
+          "clubs",
+          "diamonds",
+          "clubs",
+          "spades"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "f86fad23b515f7560059290305c252855180e333a95fc018f7704d5efbad56e0",
+      "candidate_result_sha256": "d197045aa39cee4e3511120067b555981d86bde2b8f8c4469be2a904190cbee6"
+    },
+    {
+      "recording": "r3",
+      "frames": 58,
+      "baseline": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "A",
+          "4",
+          "10",
+          "4",
+          "Q"
+        ],
+        "suits": [
+          "diamonds",
+          "spades",
+          "clubs",
+          "hearts",
+          "diamonds"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "A",
+          "4",
+          "10",
+          "4",
+          "Q"
+        ],
+        "suits": [
+          "diamonds",
+          "spades",
+          "clubs",
+          "hearts",
+          "diamonds"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "d67d6e1d44829f86fad83f386e462055b2853daaf3cce81c5b2738ea20988e6e",
+      "candidate_result_sha256": "d67d6e1d44829f86fad83f386e462055b2853daaf3cce81c5b2738ea20988e6e"
+    },
+    {
+      "recording": "r4",
+      "frames": 84,
+      "baseline": {
+        "candidates": 7,
+        "unknowns": 2,
+        "cards": [
+          "10",
+          "UNKNOWN",
+          "5",
+          "UNKNOWN",
+          "3",
+          "9",
+          "2"
+        ],
+        "suits": [
+          "hearts",
+          "diamonds",
+          "spades",
+          "diamonds",
+          "diamonds",
+          "spades",
+          "spades"
+        ],
+        "count": null,
+        "known_subtotal": 2,
+        "coverage_pending": true
+      },
+      "candidate": {
+        "candidates": 7,
+        "unknowns": 2,
+        "cards": [
+          "10",
+          "UNKNOWN",
+          "5",
+          "UNKNOWN",
+          "3",
+          "9",
+          "2"
+        ],
+        "suits": [
+          "hearts",
+          "diamonds",
+          "spades",
+          "diamonds",
+          "diamonds",
+          "spades",
+          "spades"
+        ],
+        "count": null,
+        "known_subtotal": 2,
+        "coverage_pending": true
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "bf01fb2e96ca9a93d5ebc5131519e45e0835e3bb540199541f11800afbf41712",
+      "candidate_result_sha256": "bf01fb2e96ca9a93d5ebc5131519e45e0835e3bb540199541f11800afbf41712"
+    },
+    {
+      "recording": "r5",
+      "frames": 69,
+      "baseline": {
+        "candidates": 6,
+        "unknowns": 0,
+        "cards": [
+          "9",
+          "5",
+          "2",
+          "9",
+          "Q",
+          "4"
+        ],
+        "suits": [
+          "clubs",
+          "spades",
+          "clubs",
+          "spades",
+          "spades",
+          "spades"
+        ],
+        "count": 2,
+        "known_subtotal": 2,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 6,
+        "unknowns": 0,
+        "cards": [
+          "9",
+          "5",
+          "2",
+          "9",
+          "Q",
+          "4"
+        ],
+        "suits": [
+          "clubs",
+          "spades",
+          "clubs",
+          "spades",
+          "spades",
+          "spades"
+        ],
+        "count": 2,
+        "known_subtotal": 2,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "d63b2292576237bbf0e1f11c234d960438db0496f1d56c02aac329fd73897955",
+      "candidate_result_sha256": "31f6463b68ac694c752663424cc3b34f6f340d7485153ab8904e8a6ac48deb3a"
+    },
+    {
+      "recording": "r6",
+      "frames": 57,
+      "baseline": {
+        "candidates": 4,
+        "unknowns": 0,
+        "cards": [
+          "6",
+          "6",
+          "J",
+          "A"
+        ],
+        "suits": [
+          "hearts",
+          "hearts",
+          "diamonds",
+          "clubs"
+        ],
+        "count": 0,
+        "known_subtotal": 0,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 4,
+        "unknowns": 0,
+        "cards": [
+          "6",
+          "6",
+          "J",
+          "A"
+        ],
+        "suits": [
+          "hearts",
+          "hearts",
+          "diamonds",
+          "clubs"
+        ],
+        "count": 0,
+        "known_subtotal": 0,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "1e1608074fc1664a999aaf7ea1a2f57d5de088e9d31df9706a7cb83b6029c8d7",
+      "candidate_result_sha256": "77fcafeb280ba128de15343756f2ad0ffaf351cc1870e308caee6cbbd9d6671d"
+    },
+    {
+      "recording": "r7",
+      "frames": 83,
+      "baseline": {
+        "candidates": 6,
+        "unknowns": 0,
+        "cards": [
+          "5",
+          "10",
+          "6",
+          "6",
+          "2",
+          "8"
+        ],
+        "suits": [
+          "diamonds",
+          "spades",
+          "hearts",
+          "hearts",
+          "spades",
+          "spades"
+        ],
+        "count": 3,
+        "known_subtotal": 3,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 6,
+        "unknowns": 0,
+        "cards": [
+          "5",
+          "10",
+          "6",
+          "6",
+          "2",
+          "8"
+        ],
+        "suits": [
+          "diamonds",
+          "spades",
+          "hearts",
+          "hearts",
+          "spades",
+          "spades"
+        ],
+        "count": 3,
+        "known_subtotal": 3,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "e254e7edf968c996ce10f479466e2aeb1f94dc62995ba5036339e1ff34a592ab",
+      "candidate_result_sha256": "c7eaa25c66499a5b4f0b0e169d73dc33152c63f5c6012f5ebe3ac0a5a74a779d"
+    },
+    {
+      "recording": "r8",
+      "frames": 52,
+      "baseline": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "A",
+          "8",
+          "9",
+          "6",
+          "K"
+        ],
+        "suits": [
+          "diamonds",
+          "clubs",
+          "spades",
+          "hearts",
+          "spades"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "A",
+          "8",
+          "9",
+          "6",
+          "K"
+        ],
+        "suits": [
+          "diamonds",
+          "clubs",
+          "spades",
+          "hearts",
+          "spades"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "5fd3b47edb75e756bc14b7b850b9ea858ad937e128e89cb63604dbf6a0360a0a",
+      "candidate_result_sha256": "5fd3b47edb75e756bc14b7b850b9ea858ad937e128e89cb63604dbf6a0360a0a"
+    },
+    {
+      "recording": "r9",
+      "frames": 89,
+      "baseline": {
+        "candidates": 6,
+        "unknowns": 0,
+        "cards": [
+          "A",
+          "5",
+          "4",
+          "K",
+          "10",
+          "5"
+        ],
+        "suits": [
+          "diamonds",
+          "clubs",
+          "spades",
+          "spades",
+          "hearts",
+          "clubs"
+        ],
+        "count": 0,
+        "known_subtotal": 0,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 6,
+        "unknowns": 0,
+        "cards": [
+          "A",
+          "5",
+          "4",
+          "K",
+          "10",
+          "5"
+        ],
+        "suits": [
+          "diamonds",
+          "clubs",
+          "spades",
+          "spades",
+          "hearts",
+          "clubs"
+        ],
+        "count": 0,
+        "known_subtotal": 0,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "db22ed277ab9999417722c4a6c6ee6661bd43a32360a201f388894681db2a36a",
+      "candidate_result_sha256": "a48dd93bcddf8709ca51463f6afa7e8e86619cad4f321a2141db5e601db43191"
+    },
+    {
+      "recording": "r10",
+      "frames": 50,
+      "baseline": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "8",
+          "7",
+          "Q",
+          "9",
+          "10"
+        ],
+        "suits": [
+          "clubs",
+          "diamonds",
+          "clubs",
+          "hearts",
+          "diamonds"
+        ],
+        "count": -2,
+        "known_subtotal": -2,
+        "coverage_pending": false
+      },
+      "candidate": {
+        "candidates": 5,
+        "unknowns": 0,
+        "cards": [
+          "8",
+          "7",
+          "Q",
+          "9",
+          "10"
+        ],
+        "suits": [
+          "clubs",
+          "diamonds",
+          "clubs",
+          "hearts",
+          "diamonds"
+        ],
+        "count": -2,
+        "known_subtotal": -2,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "d7546d24144fe68e32a802abe31aeec2b003ffc7355611e5317fe8b615210e72",
+      "candidate_result_sha256": "d7546d24144fe68e32a802abe31aeec2b003ffc7355611e5317fe8b615210e72"
+    },
+    {
+      "recording": "r11",
+      "frames": 118,
+      "baseline": {
+        "candidates": 10,
+        "unknowns": 3,
+        "cards": [
+          "5",
+          "A",
+          "2",
+          "UNKNOWN",
+          "UNKNOWN",
+          "3",
+          "2",
+          "8",
+          "7",
+          "UNKNOWN"
+        ],
+        "suits": [
+          "hearts",
+          "clubs",
+          "spades",
+          "hearts",
+          "clubs",
+          "clubs",
+          "hearts",
+          "diamonds",
+          "hearts",
+          "UNKNOWN"
+        ],
+        "count": null,
+        "known_subtotal": 3,
+        "coverage_pending": true
+      },
+      "candidate": {
+        "candidates": 9,
+        "unknowns": 0,
+        "cards": [
+          "5",
+          "A",
+          "2",
+          "4",
+          "K",
+          "3",
+          "2",
+          "8",
+          "7"
+        ],
+        "suits": [
+          "hearts",
+          "clubs",
+          "spades",
+          "hearts",
+          "clubs",
+          "clubs",
+          "hearts",
+          "diamonds",
+          "hearts"
+        ],
+        "count": 3,
+        "known_subtotal": 3,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": false,
+      "baseline_result_sha256": "b450b94b9215a6c7af19a37111a8d762d9176fcdd44555c0b0aa4c774950494b",
+      "candidate_result_sha256": "78baf3a490b51ee3b4390d8d661b56ca50908307e014a40eb8054cfc76b22dd2",
+      "reviewed_rank_suit_sequence": [
+        [
+          "5",
+          "hearts"
+        ],
+        [
+          "A",
+          "clubs"
+        ],
+        [
+          "2",
+          "spades"
+        ],
+        [
+          "4",
+          "hearts"
+        ],
+        [
+          "K",
+          "clubs"
+        ],
+        [
+          "3",
+          "clubs"
+        ],
+        [
+          "2",
+          "hearts"
+        ],
+        [
+          "8",
+          "diamonds"
+        ],
+        [
+          "7",
+          "hearts"
+        ]
+      ],
+      "matches_reviewed_reference": true,
+      "streamed_result_exactly_matches_offline": true,
+      "streamed_result_sha256": "78baf3a490b51ee3b4390d8d661b56ca50908307e014a40eb8054cfc76b22dd2"
+    },
+    {
+      "recording": "r12",
+      "frames": 89,
+      "baseline": {
+        "candidates": 9,
+        "unknowns": 4,
+        "cards": [
+          "Q",
+          "6",
+          "Q",
+          "UNKNOWN",
+          "UNKNOWN",
+          "3",
+          "K",
+          "UNKNOWN",
+          "UNKNOWN"
+        ],
+        "suits": [
+          "clubs",
+          "spades",
+          "diamonds",
+          "spades",
+          "diamonds",
+          "spades",
+          "clubs",
+          "UNKNOWN",
+          "UNKNOWN"
+        ],
+        "count": null,
+        "known_subtotal": -1,
+        "coverage_pending": true
+      },
+      "candidate": {
+        "candidates": 7,
+        "unknowns": 0,
+        "cards": [
+          "Q",
+          "6",
+          "Q",
+          "9",
+          "9",
+          "3",
+          "K"
+        ],
+        "suits": [
+          "clubs",
+          "spades",
+          "diamonds",
+          "spades",
+          "diamonds",
+          "spades",
+          "clubs"
+        ],
+        "count": -1,
+        "known_subtotal": -1,
+        "coverage_pending": false
+      },
+      "event_provenance_unchanged": false,
+      "baseline_result_sha256": "670a7fff5de5b771145c0cfa48b18d31513fe8f9dfe48b00a33f6f26203f169e",
+      "candidate_result_sha256": "3e6f28bfbce0b73f744888a3496dd7ea348f5cd0d11e0942a0ab6271baf187d9",
+      "reviewed_rank_suit_sequence": [
+        [
+          "Q",
+          "clubs"
+        ],
+        [
+          "6",
+          "spades"
+        ],
+        [
+          "Q",
+          "diamonds"
+        ],
+        [
+          "9",
+          "spades"
+        ],
+        [
+          "9",
+          "diamonds"
+        ],
+        [
+          "3",
+          "spades"
+        ],
+        [
+          "K",
+          "clubs"
+        ]
+      ],
+      "matches_reviewed_reference": true,
+      "streamed_result_exactly_matches_offline": true,
+      "streamed_result_sha256": "3e6f28bfbce0b73f744888a3496dd7ea348f5cd0d11e0942a0ab6271baf187d9"
+    },
+    {
+      "recording": "r13",
+      "frames": 99,
+      "baseline": {
+        "candidates": 10,
+        "unknowns": 4,
+        "cards": [
+          "UNKNOWN",
+          "K",
+          "4",
+          "UNKNOWN",
+          "A",
+          "UNKNOWN",
+          "UNKNOWN",
+          "3",
+          "A",
+          "5"
+        ],
+        "suits": [
+          "UNKNOWN",
+          "spades",
+          "spades",
+          "hearts",
+          "hearts",
+          "hearts",
+          "diamonds",
+          "spades",
+          "spades",
+          "spades"
+        ],
+        "count": null,
+        "known_subtotal": 0,
+        "coverage_pending": true
+      },
+      "candidate": {
+        "candidates": 10,
+        "unknowns": 4,
+        "cards": [
+          "UNKNOWN",
+          "K",
+          "4",
+          "UNKNOWN",
+          "A",
+          "UNKNOWN",
+          "UNKNOWN",
+          "3",
+          "A",
+          "5"
+        ],
+        "suits": [
+          "UNKNOWN",
+          "spades",
+          "spades",
+          "hearts",
+          "hearts",
+          "hearts",
+          "diamonds",
+          "spades",
+          "spades",
+          "spades"
+        ],
+        "count": null,
+        "known_subtotal": 0,
+        "coverage_pending": true
+      },
+      "event_provenance_unchanged": true,
+      "baseline_result_sha256": "9ab0a4f9dfea8715e6155401c5d1f305812eb9e1449d00be4dbb39e4c3614918",
+      "candidate_result_sha256": "9ab0a4f9dfea8715e6155401c5d1f305812eb9e1449d00be4dbb39e4c3614918"
+    }
+  ],
+  "older_replays": [
+    {
+      "recording": "split_round",
+      "frames": 130,
+      "summary": {
+        "candidates": 7,
+        "unknowns": 0,
+        "cards": [
+          "J",
+          "4",
+          "Q",
+          "J",
+          "6",
+          "Q",
+          "7"
+        ],
+        "suits": [
+          "spades",
+          "clubs",
+          "spades",
+          "spades",
+          "spades",
+          "diamonds",
+          "diamonds"
+        ],
+        "count": -2,
+        "known_subtotal": -2,
+        "coverage_pending": false
+      },
+      "event_provenance_counts_and_rounds_unchanged": true,
+      "baseline_result_sha256": "5733f1d72e5b927b1a604df86d1929db2b793560ce8a8407d6323a56ae3adaf6",
+      "candidate_result_sha256": "5733f1d72e5b927b1a604df86d1929db2b793560ce8a8407d6323a56ae3adaf6"
+    },
+    {
+      "recording": "first_two_rounds",
+      "frames": 177,
+      "summary": {
+        "candidates": 13,
+        "unknowns": 1,
+        "cards": [
+          "2",
+          "K",
+          "Q",
+          "UNKNOWN",
+          "4",
+          "A",
+          "9",
+          "4",
+          "5",
+          "K",
+          "7",
+          "4",
+          "7"
+        ],
+        "suits": [
+          "hearts",
+          "hearts",
+          "hearts",
+          "UNKNOWN",
+          "diamonds",
+          "diamonds",
+          "spades",
+          "hearts",
+          "spades",
+          "diamonds",
+          "clubs",
+          "clubs",
+          "clubs"
+        ],
+        "count": null,
+        "known_subtotal": 1,
+        "coverage_pending": true
+      },
+      "event_provenance_counts_and_rounds_unchanged": true,
+      "baseline_result_sha256": "5aa9af7a3e1c4722296614da053641690157b0e4162f065a25790532b2b93734",
+      "candidate_result_sha256": "5aa9af7a3e1c4722296614da053641690157b0e4162f065a25790532b2b93734"
+    },
+    {
+      "recording": "round_20261026_103552_7d8b395b",
+      "frames": 84,
+      "summary": {
+        "candidates": 6,
+        "unknowns": 1,
+        "cards": [
+          "K",
+          "7",
+          "3",
+          "UNKNOWN",
+          "8",
+          "2"
+        ],
+        "suits": [
+          "clubs",
+          "hearts",
+          "spades",
+          "UNKNOWN",
+          "clubs",
+          "diamonds"
+        ],
+        "count": null,
+        "known_subtotal": 1,
+        "coverage_pending": true
+      },
+      "event_provenance_counts_and_rounds_unchanged": true,
+      "baseline_result_sha256": "a96450444740f35701e574b34484a228c7230621d3662c359d9b400fd47f3435",
+      "candidate_result_sha256": "a96450444740f35701e574b34484a228c7230621d3662c359d9b400fd47f3435"
+    }
+  ],
+  "r11_compression_audit": {
+    "frames": [
+      105,
+      106,
+      107
+    ],
+    "event_ids": {
+      "baseline": [
+        "8",
+        "11",
+        "8"
+      ],
+      "candidate": [
+        "8",
+        "8",
+        "8"
+      ]
+    },
+    "baseline_padded_similarity": 0.0,
+    "face_bounded_similarity": 0.9752058982849121
+  },
+  "r12_fragment_audit": {
+    "suppressed_observations": 9,
+    "frames": [
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87
+    ],
+    "accepted_suit": "clubs",
+    "visual_check": "All nine source crops show the fragment crossing the retained King corner toward its club on the same complete paper face."
+  },
+  "summary": {
+    "new_round_frames": 961,
+    "older_frames": 391,
+    "new_rounds": 13,
+    "older_recordings": 3,
+    "unchanged_new_rounds": 11,
+    "repaired_rounds": [
+      "r11",
+      "r12"
+    ],
+    "remaining_incomplete": [
+      "r4",
+      "r13"
+    ],
+    "baseline_candidates": 83,
+    "candidate_candidates": 80,
+    "baseline_unknowns": 13,
+    "candidate_unknowns": 6
+  },
+  "tests": {
+    "run": 193,
+    "passed": 192,
+    "skipped": 1,
+    "skip_reason": "Optional native Tesseract binary absent"
+  },
+  "limitations": [
+    "All recordings have been inspected and are development data. No fresh acceptance accuracy is claimed.",
+    "R4 has two Unknowns locally versus one in the historical report; Tesseract is unavailable on this Mac. Same local environment before/after.",
+    "R13 still lacks a reliable initial shared-card anchor; its four Unknown rows and duplicate prefixes remain.",
+    "Per-observation identity audit is targeted to the repaired transition and fragment observations, not a new exhaustive identity annotation of all source frames.",
+    "Detector outputs are frozen in content-addressed caches; no detector or recognition model was retrained.",
+    "Prior live-processing changes remain uncommitted in the same checkout."
+  ]
+}

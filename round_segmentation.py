@@ -8,6 +8,24 @@ import cv2
 import numpy as np
 
 
+def visible_table(image, regions, min_felt_fraction=.20):
+    """Require felt in each configured hand area of the supported green layout.
+
+    This tests scene visibility, not detection completeness. Card thumbnails on
+    another window must not become new physical-card observations.
+    """
+    h, w = image.shape[:2]
+    for region in regions:
+        x1, y1, x2, y2 = region['rect']
+        crop = image[int(y1*h):int(y2*h), int(x1*w):int(x2*w)].astype(np.float32)
+        if not crop.size:
+            return False
+        b, g, r = cv2.split(crop)
+        if float(((g > r+3) & (g > b+1) & (g >= 20)).mean()) < min_felt_fraction:
+            return False
+    return True
+
+
 def visible_empty_table(image, regions):
     h, w = image.shape[:2]
     for region in regions:

@@ -1,0 +1,16 @@
+{
+  "displays": [
+    {
+      "index": 1,
+      "left": 0,
+      "top": 0,
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "selected": 1,
+  "frames": 3,
+  "recording": false,
+  "capture_thread_alive": false,
+  "error": null
+}
