@@ -1,5 +1,20 @@
 # First-deliverable validation
 
+## Round assignment when the shared card appears before the primary card
+
+The 281-frame `round_20261121_035002_7aebd0c9` recording exposes a boundary error present in `9fb1951` and the supplied post-tracking-update Result JSON. In source frame 86, the central 7 clubs is visible while the large card is still fading. The old segmenter waits for a primary detection in frame 87. Its round-1 shared slot therefore contains 6-hearts observations from frames 14–16 and the next round's 7 clubs from frame 86, invalidating consensus and blocking reconciliation of all three round-1 shared slots. A matching known subtotal conceals the identity error.
+
+The boundary decision now uses presence in either configured view, before either view receives a round assignment. A visible shared hand also prevents declaring the table empty merely because primary detections disappear. Empty-table checks include the configured shared rectangle. The miniature hand is located once and passed to the shared monitor, avoiding duplicate work. Primary-only mode, scene visibility guards and recognition thresholds remain unchanged. No weights changed.
+
+The CPU baseline reproduces the supplied Mac result's **21 candidates, three Unknowns, subtotal −2 and detection range −5…+1**. The corrected CPU replay returns **19 candidates for 19 exposed cards, zero Unknowns, subtotal −2 and range −2…−2**. Per-round changes **0, 0, 0, −2** match the visible card list. The second round now starts at zero-based frame 85 (source frame 86), and its first 7 no longer enters round 1. Recording digests match the supplied JSON exactly. Both replays use the actual models and identical cached CPU detector outputs, with optional OCR disabled. This is a development recording inspected before the fix, not independent accuracy evidence.
+
+The final table-hidden interval (source frames 278–281) still requires coverage review; the full automatic `count_change` remains null despite zero Unknowns. A zero-width detected-card range does not establish coverage of missing cards.
+
+Both earlier three-round development recordings (690 frames) were replayed with cached detector outputs. Event ranks, suits, round assignments, observation frames/boxes, source views, card lists and count ranges remain unchanged.
+
+**203 tests run: 202 pass, one optional native OCR test skips**, using the OpenCV 4.10/no-Tesseract test profile documented above. New regressions check shared-before-primary birth, no false clear while the shared hand persists, live/offline equality, causal live round assignment, and primary-only compatibility. The old boundary implementation fails the two behavioral regressions. Syntax and `git diff --check` pass. Model hashes remain those in the previous animation report. Source images and generated evidence remain outside Git; detailed before/after results are in [shared_round_boundary_evaluation.json](validation/shared_round_boundary_evaluation.json).
+
+
 ## Animation and reflow identity continuity
 
 Two visually reviewed three-round recordings expose both duplicate counts and cascaded cross-view Unknowns. A single physical 3 hearts previously became five candidates, and one 3 diamonds became three; five accepted duplicate low-card tracks inflated the second recording's known subtotal. Full-frame CPU replays reproduce the supplied second Result JSON summary and the previously observed first recording summary.

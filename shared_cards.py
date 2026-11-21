@@ -8,6 +8,7 @@ import cv2
 import numpy as np
 
 DEFAULT_SHARED_VIEW=dict(name='central',rect=[.45,.68,.57,.75],linked_region='player')
+_UNSET_HAND = object()
 
 
 def mini_hand(image, rect):
@@ -140,9 +141,9 @@ def continuation_frames(snapshots,primary,common):
 class SharedMonitor:
     def __init__(self,view,rank_reader,suit_reader):
         self.view=view;self.rank_reader=rank_reader;self.suit_reader=suit_reader;self.snapshots={};self.primary_frames={};self.unreadable={}
-    def observe(self,image,frame,source,round_number,primary_visible=True):
+    def observe(self,image,frame,source,round_number,primary_visible=True,detected_hand=_UNSET_HAND):
         if primary_visible:self.primary_frames.setdefault(round_number,[]).append(frame)
-        hand=mini_hand(image,self.view['rect'])
+        hand=mini_hand(image,self.view['rect']) if detected_hand is _UNSET_HAND else detected_hand
         if hand is None:return
         if hand.get('unsupported'):
             self.unreadable.setdefault(round_number,[]).append(frame);return

@@ -9,7 +9,7 @@ import numpy as np
 from card_tracking import CardIdentityMatcher, merge_track_fragments
 from round_segmentation import RoundSegmenter, visible_empty_table, visible_table
 from card_faces import reconcile_faces, estimate_face_height, face_rank_crop
-from shared_cards import SharedMonitor, DEFAULT_SHARED_VIEW, suit_crops
+from shared_cards import SharedMonitor, DEFAULT_SHARED_VIEW, suit_crops, mini_hand
 from card_suits import SuitReader, SUITS
 from mini_rank import MiniRankReader
 
@@ -320,13 +320,21 @@ def process_frames(frame_paths, output_dir, engine=None, regions=None, progress=
                 grouped[name], suppressed = reconcile_faces(image, current, face_height)
                 suppressed_detections.extend(dict(row, frame=index, region=name) for row in suppressed)
         has_cards = any(grouped.values())
-        if segmenter.observe(index, has_cards,
-                empty_table=not has_cards and visible_empty_table(image, regions)):
+        # The compressed view can appear before the large card finishes its
+        # fade-in. Establish the boundary before assigning *either* view to a
+        # round; otherwise the early shared observation contaminates the old
+        # round's ordinal slot. Shared-only cards also prevent a false clear.
+        shared_hand = mini_hand(image, shared_view['rect']) if monitor else None
+        any_cards = has_cards or shared_hand is not None
+        clear_regions = regions + [shared_view] if monitor else regions
+        if segmenter.observe(index, any_cards,
+                empty_table=not any_cards and visible_empty_table(image, clear_regions)):
             for name, matcher in matchers.items():
                 matcher.retired_ids.update(t.track_id for t in tracks[name])
                 matcher.scene_id += 1
         if monitor:
-            monitor.observe(image,index,path.name,segmenter.round_number,primary_visible=has_cards)
+            monitor.observe(image,index,path.name,segmenter.round_number,primary_visible=has_cards,
+                            detected_hand=shared_hand)
         for region in regions:
             name = region['name']
             current = grouped[name]

@@ -1,0 +1,880 @@
+{
+  "recording": "round_20261121_035002_7aebd0c9",
+  "recording_digest": "0399bfaba600c438f6a992b48050e3b0e0210c2c75cf1ddbb2cc71df272c8874",
+  "source_frames": 281,
+  "reference": {
+    "physical_cards": 19,
+    "round_changes": [
+      0,
+      0,
+      0,
+      -2
+    ],
+    "total": -2
+  },
+  "original_mac_result": {
+    "frames_processed": 281,
+    "unresolved": 3,
+    "known_count_change": -2,
+    "count_change": null,
+    "count_range": {
+      "min": -5,
+      "max": 1
+    },
+    "boundaries": [
+      {
+        "round_number": 2,
+        "previous_last_frame": 50,
+        "first_frame": 86,
+        "clear_start": 51,
+        "clear_end": 85,
+        "source": "visible_empty_table",
+        "confirmed": false
+      },
+      {
+        "round_number": 3,
+        "previous_last_frame": 119,
+        "first_frame": 155,
+        "clear_start": 120,
+        "clear_end": 154,
+        "source": "visible_empty_table",
+        "confirmed": false
+      },
+      {
+        "round_number": 4,
+        "previous_last_frame": 211,
+        "first_frame": 247,
+        "clear_start": 212,
+        "clear_end": 246,
+        "source": "visible_empty_table",
+        "confirmed": false
+      }
+    ],
+    "rounds": [
+      {
+        "round_number": 1,
+        "cards": [
+          "UNKNOWN",
+          "6",
+          "J",
+          "UNKNOWN",
+          "9",
+          "UNKNOWN",
+          "7"
+        ],
+        "unresolved": 3,
+        "known_count_change": 0,
+        "count_change": null,
+        "coverage_pending": true,
+        "count_range": {
+          "min": -3,
+          "max": 3
+        },
+        "running_known_count_change": 0,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -3,
+          "max": 3
+        }
+      },
+      {
+        "round_number": 2,
+        "cards": [
+          "7",
+          "3",
+          "8",
+          "10",
+          "9"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -3,
+          "max": 3
+        }
+      },
+      {
+        "round_number": 3,
+        "cards": [
+          "5",
+          "J",
+          "9",
+          "4",
+          "A"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -3,
+          "max": 3
+        }
+      },
+      {
+        "round_number": 4,
+        "cards": [
+          "9",
+          "Q",
+          "Q",
+          "8"
+        ],
+        "unresolved": 0,
+        "known_count_change": -2,
+        "count_change": null,
+        "coverage_pending": true,
+        "count_range": {
+          "min": -2,
+          "max": -2
+        },
+        "running_known_count_change": -2,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -5,
+          "max": 1
+        }
+      }
+    ],
+    "coverage_pending": true,
+    "visibility_gaps": [
+      {
+        "first_frame": 277,
+        "last_frame": 280,
+        "first_source": "frame_000278.png",
+        "last_source": "frame_000281.png",
+        "round_number": 4
+      }
+    ],
+    "candidates": 21
+  },
+  "cpu_baseline_9fb1951": {
+    "frames_processed": 281,
+    "unresolved": 3,
+    "known_count_change": -2,
+    "count_change": null,
+    "count_range": {
+      "min": -5,
+      "max": 1
+    },
+    "boundaries": [
+      {
+        "round_number": 2,
+        "previous_last_frame": 50,
+        "first_frame": 86,
+        "clear_start": 51,
+        "clear_end": 85,
+        "source": "visible_empty_table",
+        "confirmed": false
+      },
+      {
+        "round_number": 3,
+        "previous_last_frame": 119,
+        "first_frame": 155,
+        "clear_start": 120,
+        "clear_end": 154,
+        "source": "visible_empty_table",
+        "confirmed": false
+      },
+      {
+        "round_number": 4,
+        "previous_last_frame": 211,
+        "first_frame": 247,
+        "clear_start": 212,
+        "clear_end": 246,
+        "source": "visible_empty_table",
+        "confirmed": false
+      }
+    ],
+    "rounds": [
+      {
+        "round_number": 1,
+        "cards": [
+          "UNKNOWN",
+          "6",
+          "J",
+          "UNKNOWN",
+          "9",
+          "UNKNOWN",
+          "7"
+        ],
+        "unresolved": 3,
+        "known_count_change": 0,
+        "count_change": null,
+        "coverage_pending": true,
+        "count_range": {
+          "min": -3,
+          "max": 3
+        },
+        "running_known_count_change": 0,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -3,
+          "max": 3
+        }
+      },
+      {
+        "round_number": 2,
+        "cards": [
+          "7",
+          "3",
+          "8",
+          "10",
+          "9"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -3,
+          "max": 3
+        }
+      },
+      {
+        "round_number": 3,
+        "cards": [
+          "5",
+          "J",
+          "9",
+          "4",
+          "A"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -3,
+          "max": 3
+        }
+      },
+      {
+        "round_number": 4,
+        "cards": [
+          "9",
+          "Q",
+          "Q",
+          "8"
+        ],
+        "unresolved": 0,
+        "known_count_change": -2,
+        "count_change": null,
+        "coverage_pending": true,
+        "count_range": {
+          "min": -2,
+          "max": -2
+        },
+        "running_known_count_change": -2,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -5,
+          "max": 1
+        }
+      }
+    ],
+    "coverage_pending": true,
+    "visibility_gaps": [
+      {
+        "first_frame": 277,
+        "last_frame": 280,
+        "first_source": "frame_000278.png",
+        "last_source": "frame_000281.png",
+        "round_number": 4
+      }
+    ],
+    "candidates": 21
+  },
+  "candidate": {
+    "frames_processed": 281,
+    "unresolved": 0,
+    "known_count_change": -2,
+    "count_change": null,
+    "count_range": {
+      "min": -2,
+      "max": -2
+    },
+    "boundaries": [
+      {
+        "round_number": 2,
+        "previous_last_frame": 50,
+        "first_frame": 85,
+        "clear_start": 51,
+        "clear_end": 84,
+        "source": "visible_empty_table",
+        "confirmed": false
+      },
+      {
+        "round_number": 3,
+        "previous_last_frame": 119,
+        "first_frame": 155,
+        "clear_start": 120,
+        "clear_end": 154,
+        "source": "visible_empty_table",
+        "confirmed": false
+      },
+      {
+        "round_number": 4,
+        "previous_last_frame": 211,
+        "first_frame": 247,
+        "clear_start": 212,
+        "clear_end": 246,
+        "source": "visible_empty_table",
+        "confirmed": false
+      }
+    ],
+    "rounds": [
+      {
+        "round_number": 1,
+        "cards": [
+          "6",
+          "J",
+          "9",
+          "7",
+          "7"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": 0,
+        "running_coverage_pending": false,
+        "running_count_range": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      {
+        "round_number": 2,
+        "cards": [
+          "7",
+          "3",
+          "8",
+          "10",
+          "9"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": 0,
+        "running_coverage_pending": false,
+        "running_count_range": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      {
+        "round_number": 3,
+        "cards": [
+          "5",
+          "J",
+          "9",
+          "4",
+          "A"
+        ],
+        "unresolved": 0,
+        "known_count_change": 0,
+        "count_change": 0,
+        "coverage_pending": false,
+        "count_range": {
+          "min": 0,
+          "max": 0
+        },
+        "running_known_count_change": 0,
+        "running_count_change": 0,
+        "running_coverage_pending": false,
+        "running_count_range": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      {
+        "round_number": 4,
+        "cards": [
+          "9",
+          "Q",
+          "Q",
+          "8"
+        ],
+        "unresolved": 0,
+        "known_count_change": -2,
+        "count_change": null,
+        "coverage_pending": true,
+        "count_range": {
+          "min": -2,
+          "max": -2
+        },
+        "running_known_count_change": -2,
+        "running_count_change": null,
+        "running_coverage_pending": true,
+        "running_count_range": {
+          "min": -2,
+          "max": -2
+        }
+      }
+    ],
+    "coverage_pending": true,
+    "visibility_gaps": [
+      {
+        "first_frame": 277,
+        "last_frame": 280,
+        "first_source": "frame_000278.png",
+        "last_source": "frame_000281.png",
+        "round_number": 4
+      }
+    ],
+    "candidates": 19
+  },
+  "baseline_first_shared_slot": {
+    "id": "shared-1-1",
+    "region": "central",
+    "round_number": 1,
+    "rank": "UNKNOWN",
+    "suit": "UNKNOWN",
+    "suggested_rank": "UNKNOWN",
+    "confidence": 0,
+    "suit_confidence": 0,
+    "observations": 4,
+    "first_frame": 13,
+    "last_frame": 85,
+    "observation_frames": [
+      13,
+      14,
+      15,
+      85
+    ],
+    "observation_boxes": [
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ],
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ],
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ],
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ]
+    ],
+    "observation_rank_boxes": [
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ],
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ],
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ],
+      [
+        722,
+        635,
+        735.08,
+        646.88
+      ]
+    ],
+    "observation_faces": [
+      [
+        721,
+        636,
+        760,
+        668
+      ],
+      [
+        721,
+        636,
+        760,
+        668
+      ],
+      [
+        721,
+        636,
+        760,
+        668
+      ],
+      [
+        721,
+        636,
+        760,
+        668
+      ]
+    ],
+    "observation_crop_sources": [
+      "shared_view",
+      "shared_view",
+      "shared_view",
+      "shared_view"
+    ],
+    "evidence": [
+      {
+        "image": "shared-1-1_first.png",
+        "frame": 13,
+        "source": "frame_000014.png",
+        "rank_crop": true
+      },
+      {
+        "image": "shared-1-1_middle.png",
+        "frame": 15,
+        "source": "frame_000016.png",
+        "rank_crop": true
+      },
+      {
+        "image": "shared-1-1_last.png",
+        "frame": 85,
+        "source": "frame_000086.png",
+        "rank_crop": true
+      }
+    ],
+    "recognition_source": "shared_identity_unresolved",
+    "identity_status": "needs_review",
+    "source_views": [
+      "central"
+    ],
+    "identity_basis": null,
+    "excluded": false,
+    "reviewed": false,
+    "alternatives": [],
+    "possible_duplicates": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ]
+  },
+  "candidate_events": [
+    {
+      "id": "1",
+      "rank": "6",
+      "suit": "hearts",
+      "round_number": 1,
+      "region": "player",
+      "first_frame": 13,
+      "last_frame": 50,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "2",
+      "rank": "J",
+      "suit": "hearts",
+      "round_number": 1,
+      "region": "dealer",
+      "first_frame": 15,
+      "last_frame": 50,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "3",
+      "rank": "9",
+      "suit": "hearts",
+      "round_number": 1,
+      "region": "player",
+      "first_frame": 16,
+      "last_frame": 50,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "shared-1-3",
+      "rank": "7",
+      "suit": "spades",
+      "round_number": 1,
+      "region": "central",
+      "first_frame": 38,
+      "last_frame": 50,
+      "source_views": [
+        "central"
+      ]
+    },
+    {
+      "id": "4",
+      "rank": "7",
+      "suit": "diamonds",
+      "round_number": 1,
+      "region": "dealer",
+      "first_frame": 42,
+      "last_frame": 50,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "5",
+      "rank": "7",
+      "suit": "clubs",
+      "round_number": 2,
+      "region": "player",
+      "first_frame": 86,
+      "last_frame": 119,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "6",
+      "rank": "3",
+      "suit": "spades",
+      "round_number": 2,
+      "region": "dealer",
+      "first_frame": 87,
+      "last_frame": 119,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "7",
+      "rank": "8",
+      "suit": "clubs",
+      "round_number": 2,
+      "region": "player",
+      "first_frame": 88,
+      "last_frame": 119,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "8",
+      "rank": "10",
+      "suit": "diamonds",
+      "round_number": 2,
+      "region": "dealer",
+      "first_frame": 108,
+      "last_frame": 119,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "9",
+      "rank": "9",
+      "suit": "diamonds",
+      "round_number": 2,
+      "region": "dealer",
+      "first_frame": 110,
+      "last_frame": 119,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "10",
+      "rank": "5",
+      "suit": "spades",
+      "round_number": 3,
+      "region": "player",
+      "first_frame": 155,
+      "last_frame": 196,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "11",
+      "rank": "J",
+      "suit": "spades",
+      "round_number": 3,
+      "region": "dealer",
+      "first_frame": 157,
+      "last_frame": 211,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "12",
+      "rank": "9",
+      "suit": "spades",
+      "round_number": 3,
+      "region": "player",
+      "first_frame": 158,
+      "last_frame": 196,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "13",
+      "rank": "4",
+      "suit": "diamonds",
+      "round_number": 3,
+      "region": "player",
+      "first_frame": 189,
+      "last_frame": 196,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "14",
+      "rank": "A",
+      "suit": "hearts",
+      "round_number": 3,
+      "region": "dealer",
+      "first_frame": 203,
+      "last_frame": 211,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "15",
+      "rank": "9",
+      "suit": "hearts",
+      "round_number": 4,
+      "region": "player",
+      "first_frame": 247,
+      "last_frame": 257,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "16",
+      "rank": "Q",
+      "suit": "hearts",
+      "round_number": 4,
+      "region": "dealer",
+      "first_frame": 249,
+      "last_frame": 276,
+      "source_views": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "17",
+      "rank": "Q",
+      "suit": "diamonds",
+      "round_number": 4,
+      "region": "player",
+      "first_frame": 250,
+      "last_frame": 257,
+      "source_views": [
+        "central",
+        "player"
+      ]
+    },
+    {
+      "id": "18",
+      "rank": "8",
+      "suit": "hearts",
+      "round_number": 4,
+      "region": "dealer",
+      "first_frame": 272,
+      "last_frame": 276,
+      "source_views": [
+        "dealer"
+      ]
+    }
+  ],
+  "tests": {
+    "run": 203,
+    "passed": 202,
+    "skipped_optional_ocr": 1,
+    "profile": "Linux CPU; isolated OpenCV 4.10.0.84; Tesseract absent from PATH; matches previously documented test profile",
+    "baseline_boundary_test_failures": 2,
+    "candidate_boundary_test_failures": 0
+  },
+  "weights_changed": false,
+  "recognition_thresholds_changed": false,
+  "limitations": [
+    "Recording inspected to diagnose this fix; a development result, not untouched accuracy validation.",
+    "Full-recording replays use CPU and disabled OCR, not live Mac MPS performance.",
+    "Hidden table frames 278\u2013281 retain a coverage warning; complete automatic count is still withheld."
+  ],
+  "prior_recording_regressions": {
+    "frames": 690,
+    "recordings": [
+      "round_20261120_224453_d7eaa7ba",
+      "round_20261120_225454_3b58d291"
+    ],
+    "unchanged": [
+      "event ranks",
+      "suits",
+      "round assignments",
+      "observation frames and boxes",
+      "source views",
+      "card lists",
+      "count ranges"
+    ]
+  }
+}
