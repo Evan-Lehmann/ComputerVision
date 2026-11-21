@@ -1,5 +1,27 @@
 # First-deliverable validation
 
+## Animation and reflow identity continuity
+
+Two visually reviewed three-round recordings expose both duplicate counts and cascaded cross-view Unknowns. A single physical 3 hearts previously became five candidates, and one 3 diamonds became three; five accepted duplicate low-card tracks inflated the second recording's known subtotal. Full-frame CPU replays reproduce the supplied second Result JSON summary and the previously observed first recording summary.
+
+Association now compares both printed rank corners on independently observed complete paper when padding is contaminated. Complete ordered hand prefixes can retain identity through consecutive dealing/reflow frames, including movement larger than a tiny detector rank box. This route requires bounded paper dimensions, corner/glyph evidence, order, nonoverlapping visible faces, bounded movement and consecutive observations. It cannot use predicted rank labels, cross a missing-frame/scene boundary, or authorize a missing face. Existing conservative association remains the fallback. Recognition acceptance thresholds and all model weights remain unchanged. The shared-view matcher benefits from corrected primary identities; its rules are unchanged.
+
+| Recording | Candidates before → after | Unknowns before → after | Known subtotal before → after | Detection range before → after | Visual total |
+|---|---:|---:|---:|---|---:|
+| `round_20261120_224453_d7eaa7ba` (372 frames) | 27 → 23 | 10 → 3 | 0 → +1 | −10…+10 → −2…+4 | +1 |
+| `round_20261120_225454_3b58d291` (318 frames) | 31 → 20 | 8 → 1 | +7 → +1 | −1…+15 → 0…+2 | +1 |
+
+Visual references count the initial player/central repeats once. First recording: round changes +1, 0, 0 across 23 exposed cards. Second: +3, −1, −1 across 19 exposed cards. Real same-rank/suit cards remain distinct, including the two dealer 2 diamonds in the first recording and two dealer 8 hearts in the second. These are development results from recordings inspected before tuning, not independent accuracy measurements.
+
+Remaining failures are explicit. The first recording retains the genuine central 8 diamonds, Queen diamonds and 3 hearts as Unknown identities because its compressed strip continuity is not established. The second retains one false candidate on a card-back/suit-edge transition (source `frame_000296.png`). It is not a genuine ten. Neither recording supplies a complete automatic count; the final window switches also retain coverage warnings. A matching known subtotal does not establish completeness.
+
+New recorded regression fixtures contain only cropped player-hand pixels and retained detector boxes, with visually established physical card counts/order. They cover Queen birth motion, two simultaneous tens, repeated 3-heart fragments, and 3-diamond compression. Streaming/offline tests use those pixels and boxes with deliberately identical injected classifier outputs for every card: physical identities must still remain separate and stable. Negative tests reject changed glyphs and ink colour. Full-recording measurements use the actual CPU detector/classifier/reference/suit/miniature models, with optional OCR disabled to match the user's unavailable-Tesseract state. A final source-image shared-view reconciliation checks that removing an unused experimental continuation change leaves the measured event ranks/identities unchanged.
+
+Validation: **200 tests run: 199 pass and one optional native OCR test skips** using an isolated OpenCV 4.10 runtime with Tesseract absent from PATH, matching the user's reported OpenCV/OCR configuration (the runner is still Linux CPU, not macOS). The recorded tests produce eight failing subcases on unchanged `9fb1951` and pass with this fix. `git diff --check` passes. Two synthetic face tests also fail on the unchanged baseline under the cloud's OpenCV 5.0; the installed native Tesseract misreads a synthetic 3 under OpenCV 4.10 on both baseline and candidate. These environment-dependent failures are recorded rather than altered or attributed to the tracking change. The optional OCR path remains unvalidated here; actual recording replays explicitly disable it.
+
+See [animation_identity_evaluation.json](validation/animation_identity_evaluation.json) for source digests, model hashes, remaining candidates and per-round summaries. Large source recordings and generated evidence stay outside Git.
+
+
 ## Rejecting review-page thumbnails during live capture
 
 The November 15 recording includes switches from the table to CardVision's review page and the editor. Previously, rank thumbnails in those windows entered the physical-card tracker. The repair checks for green felt in each default hand rectangle before detection, association and shared monitoring. At least 20% of each area must match the existing felt colour condition. Custom rectangles are unaffected. This is a layout-specific scene check, not a general window classifier or completeness guarantee.

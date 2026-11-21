@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 from glyph_features import glyph_signature as _animation_glyph
-from card_faces import secondary_animation_similarity, projected_rank_crop, face_rank_crop
+from card_faces import secondary_animation_similarity, projected_rank_crop, face_rank_crop, secondary_similarity
 
 
 def crop_appearance(crop):
@@ -129,6 +129,23 @@ def _center(box):
     return np.array([(box[0]+box[2])/2, (box[1]+box[3])/2])
 
 
+def face_continuity(detection, observation, image):
+    """Two independently visible rank corners on complete paper, for identity only."""
+    a, b = observation.get('face_box'), detection.get('face_box')
+    if a is None or b is None:
+        return 0.0
+    ha, hb = a[3]-a[1], b[3]-b[1]
+    if (min(ha, hb) < 28 or max(ha/hb, hb/ha) > 1.15
+            or any(not .55 <= (f[2]-f[0])/(f[3]-f[1]) <= .85 for f in (a,b))
+            or abs(a[1]-b[1]) > max(ha,hb)*.15):
+        return 0.0
+    bounded = glyph_similarity(face_rank_crop(image, detection), observation.get('face_rank_crop'))
+    opposite = secondary_similarity(detection.get('secondary_crop'), observation.get('secondary_crop'))
+    # Both corners must support the match. A similar suit or a clipped digit
+    # alone cannot establish physical continuity.
+    return min(bounded, opposite) if bounded >= .88 and opposite >= .95 else 0.0
+
+
 def _ordered_assignment(costs, active):
     """Sequence alignment: match, birth, or missing card; never swap order."""
     n, m = costs.shape
@@ -218,6 +235,44 @@ class CardIdentityMatcher:
                     score=min(glyph_similarity(clean,o['face_rank_crop']) for o in recent)
                     if score>=.94:
                         similarities[i,j]=max(similarities[i,j],score)
+        # A complete opposite corner can survive contamination of the padded
+        # top crop. Require agreement of both independently bounded corners.
+        if image is not None and ordered_row:
+            for i, detection in enumerate(detections):
+                for j, track in enumerate(active):
+                    if track.last_sample_index == sample_index-1:
+                        score = face_continuity(detection, track.observations[-1], image)
+                        if score:
+                            similarities[i,j] = max(similarities[i,j], score)
+        # The supported UI appends on the right. Complete paper and matching
+        # glyphs can establish a whole ordered prefix even while an animation
+        # moves farther than a tiny rank box. Never use predicted ranks here.
+        if (image is not None and ordered_row and len(detections) in (len(active), len(active)+1)
+                and all(t.last_sample_index == sample_index-1 for t in active)):
+            prefix = True
+            for i, track in enumerate(active):
+                d, o = detections[i], track.observations[-1]
+                a, b = o.get('face_box'), d.get('face_box')
+                if a is None or b is None:
+                    prefix = False; break
+                ha, hb = a[3]-a[1], b[3]-b[1]
+                if (min(ha,hb)<28 or max(ha/hb,hb/ha)>1.15
+                        or any(not .55 <= (f[2]-f[0])/(f[3]-f[1]) <= .85 for f in (a,b))
+                        or abs(a[1]-b[1])>max(ha,hb)*.15
+                        or abs(a[0]-b[0])>max(ha,hb)*2.2
+                        or similarities[i,i]<.88):
+                    prefix = False; break
+                # Long motion additionally requires an intact, strongly matching
+                # top glyph; two-corner evidence covers short reflow and tint.
+                if abs(a[0]-b[0])>max(ha,hb)*.6:
+                    if (glyph_similarity(d['crop'],o['crop'])<.90
+                            or glyph_similarity(face_rank_crop(image,d),o.get('face_rank_crop'))<.90):
+                        prefix = False; break
+            boxes = [d.get('face_box') for d in detections]
+            if any(b is None for b in boxes) or any(a[2]>b[0]+2 for a,b in zip(boxes,boxes[1:])):
+                prefix = False
+            if prefix:
+                return {detection_order[i]: track for i,track in enumerate(active)}
         projections = {}
         if image is not None and ordered_row:
             for i,detection in enumerate(detections):

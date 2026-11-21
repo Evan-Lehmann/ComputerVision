@@ -1,0 +1,324 @@
+{
+  "baseline_commit": "9fb1951",
+  "development_recordings": true,
+  "recognition_thresholds_changed": false,
+  "weights_changed": false,
+  "backend": "CPU",
+  "optional_ocr": false,
+  "detector_outputs": "Content-addressed cached CPU outputs, identical between baseline and candidate; full-frame classification and tracking rerun.",
+  "models": {
+    "models/rank_reference_v1.npz": "118ca48dccbe2c91c86cf74e6ca67c4392a4a20d4de1208648e137f9d013c774",
+    "models/rank_classifier_v4.pt": "fab0c394e428ba9e9ad3faff3f36b4ff6bfe224f9594db217f1c39c80b8d24ae",
+    "models/suit_classifier_v1.pt": "24c13ee1619656c38ad894b23efc5e37d9c7aee032792b2a920f7cdf8cb370f3",
+    "models/rank_classifier_v2.pt": "a8cecebee63b60f333104b5d1290f5d351625f1ee717a65763cb9e51d1626a7e",
+    "models/rank_classifier_v3.pt": "c15100b0bb0c3e1ff41e551ec4671bfaa768b6657e957f1d4f4d99ffd9b7d6bb",
+    "models/rank_classifier_mini_v1.pt": "efb36342b8252741db7355d85032164d1fe84b1e14a3f9a40bc302a368185fed",
+    "models/rank_detector_v2.pt": "27c926decf47a3b21af99f5eabddd430be3cb6939920a4bd9bdd34f15d995f92",
+    "models/rank_classifier_v5.pt": "97938c1e00f4c1d4e29a10c86c61f19ee050e8bf9d3f559b9a9084fab0dd8026"
+  },
+  "recordings": [
+    {
+      "recording": "round_20261120_224453_d7eaa7ba",
+      "frames": 372,
+      "recording_digest": "ccde517e138074574c5f09362f49eae5b1d88c0b9866afce1aaf3b0c69fa8c73",
+      "reference": {
+        "physical_cards": 23,
+        "round_changes": [
+          1,
+          0,
+          0
+        ],
+        "total": 1
+      },
+      "baseline": {
+        "candidates": 27,
+        "unknowns": 10,
+        "known_subtotal": 0,
+        "range": [
+          -10,
+          10
+        ]
+      },
+      "candidate": {
+        "candidates": 23,
+        "unknowns": 3,
+        "known_subtotal": 1,
+        "range": {
+          "min": -2,
+          "max": 4
+        },
+        "complete_count": null,
+        "coverage_pending": true,
+        "rounds": [
+          {
+            "round_number": 1,
+            "cards": [
+              "Q",
+              "A",
+              "J",
+              "6",
+              "UNKNOWN",
+              "3",
+              "Q",
+              "2",
+              "2",
+              "2"
+            ],
+            "unresolved": 1,
+            "known_count_change": 1,
+            "count_change": null,
+            "coverage_pending": true,
+            "count_range": {
+              "min": 0,
+              "max": 2
+            },
+            "running_known_count_change": 1,
+            "running_count_change": null,
+            "running_coverage_pending": true,
+            "running_count_range": {
+              "min": 0,
+              "max": 2
+            }
+          },
+          {
+            "round_number": 2,
+            "cards": [
+              "10",
+              "3",
+              "10",
+              "UNKNOWN",
+              "UNKNOWN",
+              "Q",
+              "3",
+              "3"
+            ],
+            "unresolved": 2,
+            "known_count_change": 0,
+            "count_change": null,
+            "coverage_pending": true,
+            "count_range": {
+              "min": -2,
+              "max": 2
+            },
+            "running_known_count_change": 1,
+            "running_count_change": null,
+            "running_coverage_pending": true,
+            "running_count_range": {
+              "min": -2,
+              "max": 4
+            }
+          },
+          {
+            "round_number": 3,
+            "cards": [
+              "5",
+              "K",
+              "8",
+              "5",
+              "K"
+            ],
+            "unresolved": 0,
+            "known_count_change": 0,
+            "count_change": null,
+            "coverage_pending": true,
+            "count_range": {
+              "min": 0,
+              "max": 0
+            },
+            "running_known_count_change": 1,
+            "running_count_change": null,
+            "running_coverage_pending": true,
+            "running_count_range": {
+              "min": -2,
+              "max": 4
+            }
+          }
+        ]
+      },
+      "unresolved": [
+        {
+          "id": "shared-1-4",
+          "region": "central",
+          "round_number": 1,
+          "suggested_rank": "8",
+          "suit": "diamonds",
+          "observations": 2,
+          "first_frame": 93,
+          "last_frame": 134,
+          "recognition_source": "shared_identity_unresolved"
+        },
+        {
+          "id": "shared-2-3",
+          "region": "central",
+          "round_number": 2,
+          "suggested_rank": "Q",
+          "suit": "diamonds",
+          "observations": 15,
+          "first_frame": 201,
+          "last_frame": 245,
+          "recognition_source": "shared_identity_unresolved"
+        },
+        {
+          "id": "shared-2-4",
+          "region": "central",
+          "round_number": 2,
+          "suggested_rank": "3",
+          "suit": "hearts",
+          "observations": 30,
+          "first_frame": 216,
+          "last_frame": 245,
+          "recognition_source": "shared_identity_unresolved"
+        }
+      ]
+    },
+    {
+      "recording": "round_20261120_225454_3b58d291",
+      "frames": 318,
+      "recording_digest": "fbf6231a613248f51eb47f1c02f0949eb5b787bb33ea1205bfb13b9b73a07c13",
+      "reference": {
+        "physical_cards": 19,
+        "round_changes": [
+          3,
+          -1,
+          -1
+        ],
+        "total": 1
+      },
+      "baseline": {
+        "candidates": 31,
+        "unknowns": 8,
+        "known_subtotal": 7,
+        "range": [
+          -1,
+          15
+        ]
+      },
+      "candidate": {
+        "candidates": 20,
+        "unknowns": 1,
+        "known_subtotal": 1,
+        "range": {
+          "min": 0,
+          "max": 2
+        },
+        "complete_count": null,
+        "coverage_pending": true,
+        "rounds": [
+          {
+            "round_number": 1,
+            "cards": [
+              "2",
+              "5",
+              "10",
+              "6",
+              "7",
+              "4",
+              "8"
+            ],
+            "unresolved": 0,
+            "known_count_change": 3,
+            "count_change": 3,
+            "coverage_pending": false,
+            "count_range": {
+              "min": 3,
+              "max": 3
+            },
+            "running_known_count_change": 3,
+            "running_count_change": 3,
+            "running_coverage_pending": false,
+            "running_count_range": {
+              "min": 3,
+              "max": 3
+            }
+          },
+          {
+            "round_number": 2,
+            "cards": [
+              "3",
+              "A",
+              "8",
+              "Q",
+              "A",
+              "6"
+            ],
+            "unresolved": 0,
+            "known_count_change": -1,
+            "count_change": -1,
+            "coverage_pending": false,
+            "count_range": {
+              "min": -1,
+              "max": -1
+            },
+            "running_known_count_change": 2,
+            "running_count_change": 2,
+            "running_coverage_pending": false,
+            "running_count_range": {
+              "min": 2,
+              "max": 2
+            }
+          },
+          {
+            "round_number": 3,
+            "cards": [
+              "3",
+              "8",
+              "7",
+              "Q",
+              "UNKNOWN",
+              "8",
+              "K"
+            ],
+            "unresolved": 1,
+            "known_count_change": -1,
+            "count_change": null,
+            "coverage_pending": true,
+            "count_range": {
+              "min": -2,
+              "max": 0
+            },
+            "running_known_count_change": 1,
+            "running_count_change": null,
+            "running_coverage_pending": true,
+            "running_count_range": {
+              "min": 0,
+              "max": 2
+            }
+          }
+        ]
+      },
+      "unresolved": [
+        {
+          "id": "20",
+          "region": "dealer",
+          "round_number": 3,
+          "suggested_rank": "10",
+          "suit": "UNKNOWN",
+          "observations": 1,
+          "first_frame": 295,
+          "last_frame": 295,
+          "recognition_source": "cnn"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Already visually reviewed and used to develop this fix; no independent accuracy claim.",
+    "First recording retains three genuine central-view Unknown cards with unresolved source continuity.",
+    "Second recording retains a one-frame card-back/suit-edge Unknown candidate at frame index 295.",
+    "Final hidden-window intervals still require coverage review; neither recording returns a complete automatic count.",
+    "Real Mac MPS throughput and untouched full recordings have not been revalidated for this change."
+  ],
+  "validation": {
+    "tests_run": 200,
+    "passed": 199,
+    "skipped": 1,
+    "profile": "Linux CPU, OpenCV 4.10.0.84, optional Tesseract unavailable on PATH",
+    "recorded_regression_baseline_failing_subcases": 8,
+    "recorded_regression_candidate_failing_subcases": 0,
+    "existing_environment_failures": [
+      "OpenCV 5.0: two synthetic face tests also fail on unchanged baseline.",
+      "OpenCV 4.10 with installed Tesseract: native synthetic OCR 3 is read as 4 on unchanged baseline and candidate."
+    ],
+    "full_live_table_performance_retested": false
+  }
+}
